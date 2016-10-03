@@ -38,13 +38,13 @@ public class MapInfo {
     Log.i("MATT-TEST", "Phone width is: " + phoneWidth + "pix");
 
 
-    this.initialXOffset = (phoneWidth/1440) * 157;
-    this.initialYOffset = (phoneWidth/1440) * 161;
+    this.initialXOffset = (int) ((phoneWidth*1.0/1440) * 157);
+    this.initialYOffset = (int) ((phoneWidth*1.0/1440) * 161);
 
-    this.xIterateOffset = (phoneWidth/1440) *  99;
-    this.yIterateOffset = (phoneWidth/1440) *  99;
+    this.xIterateOffset = (int) ((phoneWidth*1.0/1440) *  99);
+    this.yIterateOffset = (int) ((phoneWidth*1.0/1440) *  99);
 
-    this.circleRadius = (phoneWidth/1440) * 40;
+    this.circleRadius = (int) ((phoneWidth*1.0/1440) * 40);
 
     this.redPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.redPaint.setColor(Color.RED);
