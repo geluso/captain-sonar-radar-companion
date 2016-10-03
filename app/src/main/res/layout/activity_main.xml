@@ -64,4 +64,14 @@
         android:textColor="#fff"
         android:background="#c22"
         android:text="Reset"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/startButton"
+        android:layout_margin="4dp"
+        android:textColor="#fff"
+        android:background="#2c2"
+        android:text="Start"/>
 </LinearLayout>

@@ -37,18 +37,14 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
+    gameTracker = new RadarTracker(new Map());
     initializeMap();
-    initializeGame();
 
   }
 
   private void initializeGame() {
-    gameTracker = new RadarTracker(new Map());
     for (GridPoint gp : gameTracker.getStartingPoints()) {
       mapInfo.addCircle(gp.row,gp.col,Color.GREEN);
-    }
-    for (GridPoint gp : gameTracker.getInvalidatedPoints()) {
-      mapInfo.addCircle(gp.row,gp.col,Color.RED);
     }
   }
 
@@ -105,6 +101,11 @@ public class MainActivity extends AppCompatActivity {
   @OnClick({R.id.resetButton})
   void resetButtonClick() {
     textView.setText("");
+  }
+
+  @OnClick({R.id.startButton})
+  void startButtonClick() {
+    initializeGame();
   }
 
 }
