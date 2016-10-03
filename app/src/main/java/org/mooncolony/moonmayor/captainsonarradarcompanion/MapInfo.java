@@ -5,6 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.Display;
@@ -35,13 +37,14 @@ public class MapInfo {
     int phoneWidth = display.getWidth();
     Log.i("MATT-TEST", "Phone width is: " + phoneWidth + "pix");
 
-    this.initialXOffset = 157;
-    this.initialYOffset = 161;
 
-    this.xIterateOffset = 99;
-    this.yIterateOffset = 99;
+    this.initialXOffset = (phoneWidth/1440) * 157;
+    this.initialYOffset = (phoneWidth/1440) * 161;
 
-    this.circleRadius = 40;
+    this.xIterateOffset = (phoneWidth/1440) *  99;
+    this.yIterateOffset = (phoneWidth/1440) *  99;
+
+    this.circleRadius = (phoneWidth/1440) * 40;
 
     this.redPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.redPaint.setColor(Color.RED);
@@ -53,11 +56,17 @@ public class MapInfo {
     this.greenPaint.setStyle(Paint.Style.STROKE);
   }
 
-  public void addCircle(int xVal, int yVal, int greenOrRed) {
+  public void clearCanvas() {
+    Paint clearPaint = new Paint();
+    clearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
+    canvas.drawRect(0, 0, newBitmap.getWidth(), newBitmap.getHeight(), clearPaint);
+  }
+
+  public void addCircle(int col, int row, int greenOrRed) {
 
     Paint paint = greenOrRed == Color.RED ? redPaint : greenPaint;
 
-    canvas.drawCircle(initialXOffset+xVal*xIterateOffset, initialYOffset+yVal*yIterateOffset, circleRadius, paint);
+    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, circleRadius, paint);
 
     mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), newBitmap));
   }

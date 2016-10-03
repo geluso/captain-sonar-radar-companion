@@ -32,9 +32,10 @@ public class Map {
   protected boolean[][] templateToArray(String template) {
     String[] rows = template.split("\n");
     int numCols = rows[0].length();
+    int numRows = rows.length;
 
-    boolean[][] water = new boolean[rows.length][numCols];
-    for (int row  = 0; row < rows.length; row++) {
+    boolean[][] water = new boolean[numRows][numCols];
+    for (int row  = 0; row < numRows; row++) {
       for (int col  = 0; col < numCols; col++) {
         water[row][col] = rows[row].charAt(col) == '.';
       }

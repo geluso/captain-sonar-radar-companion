@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
   private void initializeGame() {
     for (GridPoint gp : gameTracker.getStartingPoints()) {
-      mapInfo.addCircle(gp.row,gp.col,Color.GREEN);
+      mapInfo.addCircle(gp.col,gp.row,Color.GREEN);
     }
   }
 
@@ -63,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
     mapImageView.setImageDrawable(new BitmapDrawable(getResources(), newBitmap));
 
     mapInfo = new MapInfo(this,mapImageView,canvas,newBitmap);
+  }
+
+  private void updateMap() {
+
   }
 
   @OnClick({R.id.northButton})
@@ -101,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
   @OnClick({R.id.resetButton})
   void resetButtonClick() {
     textView.setText("");
+    mapInfo.clearCanvas();
   }
 
   @OnClick({R.id.startButton})
