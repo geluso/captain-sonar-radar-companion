@@ -25,13 +25,8 @@ public class MainActivity extends AppCompatActivity {
 
   MapInfo mapInfo;
 
-  @BindView(R.id.mapView) ImageView texty;
-
-  @OnClick({R.id.button})
-  void buttonClick() {
-    mapInfo.addCircle(0,0,Color.RED);
-    mapInfo.addCircle(3,5,Color.GREEN);
-  }
+  @BindView(R.id.mapView) ImageView mapView;
+  @BindView(R.id.textView) TextView textView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
   }
 
-  public void initializeMap() {
+  private void initializeMap() {
     ImageView mapImageView = (ImageView) findViewById(R.id.mapView);
     Bitmap mapBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.map);
 
@@ -59,4 +54,43 @@ public class MainActivity extends AppCompatActivity {
 
     mapInfo = new MapInfo(this,mapImageView,canvas,newBitmap);
   }
+
+  @OnClick({R.id.northButton})
+  void northButtonClick() {
+    String newString = textView.getText().toString();
+    if (newString.length() != 0) {
+      newString+=", ";
+    }
+    textView.setText(newString + "N");
+  }
+  @OnClick({R.id.eastButton})
+  void eastButtonClick() {
+    String newString = textView.getText().toString();
+    if (newString.length() != 0) {
+      newString+=", ";
+    }
+    textView.setText(newString + "E");
+  }
+  @OnClick({R.id.southButton})
+  void southButtonClick() {
+    String newString = textView.getText().toString();
+    if (newString.length() != 0) {
+      newString+=", ";
+    }
+    textView.setText(newString + "S");
+  }
+  @OnClick({R.id.westButton})
+  void westButtonClick() {
+    String newString = textView.getText().toString();
+    if (newString.length() != 0) {
+      newString+=", ";
+    }
+    textView.setText(newString + "W");
+  }
+
+  @OnClick({R.id.resetButton})
+  void resetButtonClick() {
+    textView.setText("");
+  }
+
 }
