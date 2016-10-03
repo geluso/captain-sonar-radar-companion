@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.drawable.BitmapDrawable;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -14,15 +15,28 @@ import android.view.Display;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MainActivity extends AppCompatActivity {
 
   MapInfo mapInfo;
 
+  @BindView(R.id.mapView) ImageView texty;
+
+  @OnClick({R.id.button})
+  void buttonClick() {
+    mapInfo.addCircle(0,0);
+  }
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
+    ButterKnife.bind(this);
 
     initializeMap();
 
@@ -43,13 +57,5 @@ public class MainActivity extends AppCompatActivity {
     mapImageView.setImageDrawable(new BitmapDrawable(getResources(), newBitmap));
 
     mapInfo = new MapInfo(this,mapImageView,canvas,newBitmap);
-
-    Button button = (Button) findViewById(R.id.button);
-    button.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        mapInfo.addCircle(0,0);
-      }
-    });
   }
 }
