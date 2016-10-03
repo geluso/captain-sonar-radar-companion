@@ -1,5 +1,7 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion.maps;
 
+import org.mooncolony.moonmayor.captainsonarradarcompanion.GridPoint;
+
 /**
  * Created by moonmayor on 10/3/16.
  */
@@ -9,6 +11,10 @@ public class Map {
 
   // true for water, false for land.
   public boolean[][] water;
+
+  public boolean getCoord(GridPoint point) {
+    return this.getCoord(point.row, point.col);
+  }
 
   public boolean getCoord(int row, int col) {
     if (row < 0 || row >= height || col < 0 || col >= width) {
