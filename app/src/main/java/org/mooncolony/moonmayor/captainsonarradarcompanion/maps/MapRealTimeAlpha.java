@@ -4,7 +4,7 @@ package org.mooncolony.moonmayor.captainsonarradarcompanion.maps;
  * Created by moonmayor on 10/3/16.
  */
 public class MapRealTimeAlpha extends Map {
-  private static final String template =
+  public static final String template =
      //ABCDEFGHIJKLMNO
       "...............\n" + // 1
       "..X...X.....XX.\n" + // 2
@@ -23,6 +23,6 @@ public class MapRealTimeAlpha extends Map {
       "...X...........";  // 15
 
   public MapRealTimeAlpha() {
-    this.water = templateToArray(this.template);
+    this.water = templateToArray(template);
   }
 }

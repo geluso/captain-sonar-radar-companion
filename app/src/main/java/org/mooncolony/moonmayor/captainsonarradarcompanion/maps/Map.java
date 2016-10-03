@@ -15,7 +15,7 @@ public class Map {
   public Map() {
     this.width = 15;
     this.height = 15;
-    this.water = new MapRealTimeAlpha().water;
+    this.water = templateToArray(MapRealTimeAlpha.template);
   }
 
   public boolean getCoord(GridPoint point) {
@@ -34,7 +34,7 @@ public class Map {
     int numCols = rows[0].length();
 
     boolean[][] water = new boolean[rows.length][numCols];
-    for (int row  = 0; row < water.length; row++) {
+    for (int row  = 0; row < rows.length; row++) {
       for (int col  = 0; col < numCols; col++) {
         water[row][col] = rows[row].charAt(col) == '.';
       }

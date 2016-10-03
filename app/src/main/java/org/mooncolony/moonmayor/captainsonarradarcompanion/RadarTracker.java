@@ -43,7 +43,6 @@ public class RadarTracker {
         invalidatedPoints.add(start);
       }
     }
-
     startingPoints = filteredStarts;
   }
 
@@ -64,5 +63,13 @@ public class RadarTracker {
     }
 
     return true;
+  }
+
+  public Set<GridPoint> getStartingPoints() {
+    return startingPoints;
+  }
+
+  public Set<GridPoint> getInvalidatedPoints() {
+    return invalidatedPoints;
   }
 }

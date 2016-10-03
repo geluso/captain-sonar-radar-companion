@@ -44,6 +44,12 @@ public class MainActivity extends AppCompatActivity {
 
   private void initializeGame() {
     gameTracker = new RadarTracker(new Map());
+    for (GridPoint gp : gameTracker.getStartingPoints()) {
+      mapInfo.addCircle(gp.row,gp.col,Color.GREEN);
+    }
+    for (GridPoint gp : gameTracker.getInvalidatedPoints()) {
+      mapInfo.addCircle(gp.row,gp.col,Color.RED);
+    }
   }
 
   private void initializeMap() {
