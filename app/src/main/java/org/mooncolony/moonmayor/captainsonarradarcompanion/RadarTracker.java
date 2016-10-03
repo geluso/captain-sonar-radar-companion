@@ -65,6 +65,10 @@ public class RadarTracker {
     return true;
   }
 
+  public void setStartingPoints(Set<GridPoint> startingPoints) {
+    this.startingPoints = startingPoints;
+  }
+
   public Set<GridPoint> getStartingPoints() {
     return startingPoints;
   }

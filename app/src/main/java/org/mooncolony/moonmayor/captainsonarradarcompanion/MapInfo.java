@@ -12,6 +12,12 @@ import android.util.Log;
 import android.view.Display;
 import android.widget.ImageView;
 
+import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.Map;
+
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
 /**
  * Created by matthewtduffin on 03/10/16.
  */
@@ -22,16 +28,22 @@ public class MapInfo {
   Activity activity;
   ImageView mapImageView;
   Canvas canvas;
-  Bitmap newBitmap;
+  Bitmap newBitmap, mapBitmap;
   Paint redPaint, greenPaint;
+  List<GridPoint> currentPath;
+  RadarTracker gameTracker;
 
 
-  public MapInfo(Activity activity, ImageView mapImageView, Canvas canvas, Bitmap newBitmap) {
+  public MapInfo(Activity activity, ImageView mapImageView, Canvas canvas,
+                 Bitmap newBitmap, RadarTracker gameTracker, Bitmap mapBitmap) {
 
+    this.mapBitmap = mapBitmap;
+    this.gameTracker = gameTracker;
     this.activity = activity;
     this.mapImageView = mapImageView;
     this.canvas = canvas;
     this.newBitmap = newBitmap;
+    this.currentPath = new ArrayList<>();
 
     Display display = activity.getWindowManager().getDefaultDisplay();
     int phoneWidth = display.getWidth();
@@ -56,7 +68,28 @@ public class MapInfo {
     this.greenPaint.setStyle(Paint.Style.STROKE);
   }
 
-  public void clearCanvas(Bitmap mapBitmap) {
+  public void updatePath(GridPoint gp) {
+    clearCanvas();
+    this.currentPath.add(gp);
+    gameTracker.track(this.currentPath);
+    for (GridPoint g : gameTracker.getStartingPoints()) {
+      this.addCircle(g.col,g.row,Color.GREEN);
+    }
+  }
+
+  public void initialize() {
+    clearCanvas();
+    for (GridPoint gp : gameTracker.getStartingPoints()) {
+      this.addCircle(gp.col,gp.row,Color.GREEN);
+    }
+  }
+
+  public void resetPath() {
+    this.gameTracker = new RadarTracker(new Map());
+    clearCanvas();
+  }
+
+  public void clearCanvas() {
     newBitmap = Bitmap.createBitmap(mapBitmap.getWidth(), mapBitmap.getHeight(), Bitmap.Config.RGB_565);
     canvas = new Canvas(newBitmap);
 
