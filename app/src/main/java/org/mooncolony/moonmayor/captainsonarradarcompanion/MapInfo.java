@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.Display;
@@ -71,6 +69,10 @@ public class MapInfo {
     mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), newBitmap));
   }
 
+  public void addCircle(GridPoint point, int greenOrRed) {
+    addCircle(point.col, point.row, greenOrRed);
+  }
+
   public void addCircle(int col, int row, int greenOrRed) {
 
     Paint paint = greenOrRed == Color.RED ? redPaint : greenPaint;
@@ -78,6 +80,10 @@ public class MapInfo {
     canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, circleRadius, paint);
 
     mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), newBitmap));
+  }
+
+  public void addMine(GridPoint point) {
+    addMine(point.col, point.row);
   }
 
   public void addMine(int col, int row) {

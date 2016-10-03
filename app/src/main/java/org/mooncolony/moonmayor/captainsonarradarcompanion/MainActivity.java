@@ -38,11 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
   private void initializeGame() {
     for (GridPoint gp : gameTracker.getStartingPoints()) {
-      mapInfo.addCircle(gp.col,gp.row,Color.GREEN);
+      mapInfo.addCircle(gp, Color.GREEN);
     }
 
     for (GridPoint non : gameTracker.getInvalidatedPoints()) {
-      mapInfo.addMine(non.col,non.row);
+      mapInfo.addMine(non);
     }
   }
 
