@@ -40,10 +40,6 @@ public class MainActivity extends AppCompatActivity {
     for (GridPoint gp : gameTracker.getStartingPoints()) {
       mapInfo.addCircle(gp, Color.GREEN);
     }
-
-    for (GridPoint non : gameTracker.getInvalidatedPoints()) {
-      mapInfo.addMine(non);
-    }
   }
 
   private void initializeMap() {
