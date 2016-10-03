@@ -17,6 +17,7 @@ public class RadarTracker {
   public RadarTracker(Map map) {
     this.map = map;
     startingPoints = new HashSet<>();
+    invalidatedPoints = new HashSet<>();
 
     // initialize the new Radar Tracker with all starting positions that are
     // not on islands.

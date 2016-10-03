@@ -12,6 +12,12 @@ public class Map {
   // true for water, false for land.
   public boolean[][] water;
 
+  public Map() {
+    this.width = 15;
+    this.height = 15;
+    this.water = new MapRealTimeAlpha().water;
+  }
+
   public boolean getCoord(GridPoint point) {
     return this.getCoord(point.row, point.col);
   }

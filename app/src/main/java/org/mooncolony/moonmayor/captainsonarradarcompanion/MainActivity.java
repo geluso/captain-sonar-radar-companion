@@ -17,6 +17,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.Map;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -24,6 +26,7 @@ import butterknife.OnClick;
 public class MainActivity extends AppCompatActivity {
 
   MapInfo mapInfo;
+  RadarTracker gameTracker;
 
   @BindView(R.id.mapView) ImageView mapView;
   @BindView(R.id.textView) TextView textView;
@@ -35,7 +38,12 @@ public class MainActivity extends AppCompatActivity {
     ButterKnife.bind(this);
 
     initializeMap();
+    initializeGame();
 
+  }
+
+  private void initializeGame() {
+    gameTracker = new RadarTracker(new Map());
   }
 
   private void initializeMap() {
