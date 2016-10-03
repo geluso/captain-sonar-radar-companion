@@ -29,7 +29,8 @@ public class MainActivity extends AppCompatActivity {
 
   @OnClick({R.id.button})
   void buttonClick() {
-    mapInfo.addCircle(0,0);
+    mapInfo.addCircle(0,0,Color.RED);
+    mapInfo.addCircle(3,5,Color.GREEN);
   }
 
   @Override

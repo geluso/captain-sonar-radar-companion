@@ -12,6 +12,7 @@ import java.util.Set;
 public class RadarTracker {
   private Map map;
   private Set<GridPoint> startingPoints;
+  private Set<GridPoint> invalidatedPoints;
 
   public RadarTracker(Map map) {
     this.map = map;
@@ -24,6 +25,8 @@ public class RadarTracker {
         GridPoint startingLocation = new GridPoint(row, col);
         if (map.getCoord(startingLocation)) {
           startingPoints.add(startingLocation);
+        } else {
+          invalidatedPoints.add(startingLocation);
         }
       }
     }
@@ -35,6 +38,8 @@ public class RadarTracker {
     for (GridPoint start : startingPoints) {
       if (isValidPath(start, path)) {
         filteredStarts.add(start);
+      } else {
+        invalidatedPoints.add(start);
       }
     }
 
