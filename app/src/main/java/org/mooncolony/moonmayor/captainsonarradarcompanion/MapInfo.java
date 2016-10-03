@@ -5,8 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.Log;
 import android.view.Display;
@@ -22,16 +20,16 @@ import java.util.List;
  * Created by matthewtduffin on 03/10/16.
  */
 public class MapInfo {
-  int circleRadius;
-  int initialXOffset, initialYOffset;
-  int xIterateOffset, yIterateOffset;
+  float circleRadius;
+  float initialXOffset, initialYOffset;
+  float xIterateOffset, yIterateOffset;
   Activity activity;
   ImageView mapImageView;
   Canvas canvas;
   Bitmap newBitmap, mapBitmap;
-  Paint redPaint, greenPaint;
   List<GridPoint> currentPath;
   RadarTracker gameTracker;
+  Paint redPaint, greenPaint, whitePaint;
 
 
   public MapInfo(Activity activity, ImageView mapImageView, Canvas canvas,
@@ -50,13 +48,13 @@ public class MapInfo {
     Log.i("MATT-TEST", "Phone width is: " + phoneWidth + "pix");
 
 
-    this.initialXOffset = (int) ((phoneWidth*1.0/1440) * 157);
-    this.initialYOffset = (int) ((phoneWidth*1.0/1440) * 161);
+    this.initialXOffset = (float) ((phoneWidth*1.0/1440) * 157);
+    this.initialYOffset = (float) ((phoneWidth*1.0/1440) * 161);
 
-    this.xIterateOffset = (int) ((phoneWidth*1.0/1440) *  99);
-    this.yIterateOffset = (int) ((phoneWidth*1.0/1440) *  99);
+    this.xIterateOffset = (float) ((phoneWidth*1.0/1440) *  99);
+    this.yIterateOffset = (float) ((phoneWidth*1.0/1440) *  99);
 
-    this.circleRadius = (int) ((phoneWidth*1.0/1440) * 40);
+    this.circleRadius = (float) ((phoneWidth*1.0/1440) * 40);
 
     this.redPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.redPaint.setColor(Color.RED);
@@ -66,6 +64,10 @@ public class MapInfo {
     this.greenPaint.setStrokeWidth(10.0f);
     this.greenPaint.setColor(Color.GREEN);
     this.greenPaint.setStyle(Paint.Style.STROKE);
+
+    this.whitePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    this.whitePaint.setColor(Color.WHITE);
+    this.whitePaint.setStyle(Paint.Style.FILL);
   }
 
   public void updatePath(GridPoint gp) {
@@ -84,9 +86,10 @@ public class MapInfo {
     }
   }
 
-  public void resetPath() {
+  public void restartGame() {
     this.gameTracker = new RadarTracker(new Map());
     clearCanvas();
+    this.currentPath = new ArrayList<>();
   }
 
   public void clearCanvas() {
@@ -100,11 +103,27 @@ public class MapInfo {
     mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), newBitmap));
   }
 
+  public void addCircle(GridPoint point, int greenOrRed) {
+    addCircle(point.col, point.row, greenOrRed);
+  }
+
   public void addCircle(int col, int row, int greenOrRed) {
 
     Paint paint = greenOrRed == Color.RED ? redPaint : greenPaint;
 
     canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, circleRadius, paint);
+
+    mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), newBitmap));
+  }
+
+  public void addMine(GridPoint point) {
+    addMine(point.col, point.row);
+  }
+
+  public void addMine(int col, int row) {
+    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, circleRadius, redPaint);
+    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, (float) .66 * circleRadius, whitePaint);
+    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, (float) .33 * circleRadius, redPaint);
 
     mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), newBitmap));
   }

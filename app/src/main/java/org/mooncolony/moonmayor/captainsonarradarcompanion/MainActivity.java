@@ -6,6 +6,10 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -37,6 +41,13 @@ public class MainActivity extends AppCompatActivity {
 
   private void initializeGame() {
     mapInfo.initialize();
+    for (GridPoint gp : gameTracker.getStartingPoints()) {
+      mapInfo.addCircle(gp, Color.GREEN);
+    }
+
+    for (GridPoint non : gameTracker.getInvalidatedPoints()) {
+      mapInfo.addMine(non);
+    }
   }
 
   private void initializeMap() {
@@ -96,11 +107,19 @@ public class MainActivity extends AppCompatActivity {
     textView.setText(newString + "W");
     updateMap(GridPoint.WEST);
   }
+  @OnClick({R.id.mineButton})
+  void mineButtonClick() {
+    String newString = textView.getText().toString();
+    if (newString.length() != 0) {
+      newString+=", ";
+    }
+    textView.setText(newString + "mine");
+  }
 
   @OnClick({R.id.resetButton})
   void resetButtonClick() {
     textView.setText("");
-    mapInfo.resetPath();
+    mapInfo.restartGame();
   }
 
   @OnClick({R.id.startButton})
