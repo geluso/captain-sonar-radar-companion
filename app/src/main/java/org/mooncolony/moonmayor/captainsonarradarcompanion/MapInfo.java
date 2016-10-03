@@ -60,10 +60,15 @@ public class MapInfo {
     this.whitePaint.setStyle(Paint.Style.FILL);
   }
 
-  public void clearCanvas() {
-    Paint clearPaint = new Paint();
-    clearPaint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.CLEAR));
-    canvas.drawRect(0, 0, newBitmap.getWidth(), newBitmap.getHeight(), clearPaint);
+  public void clearCanvas(Bitmap mapBitmap) {
+    newBitmap = Bitmap.createBitmap(mapBitmap.getWidth(), mapBitmap.getHeight(), Bitmap.Config.RGB_565);
+    canvas = new Canvas(newBitmap);
+
+    //Draw the image bitmap into the canvas
+    canvas.drawBitmap(mapBitmap, 0, 0, null);
+
+    //Attach the canvas to the ImageView
+    mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), newBitmap));
   }
 
   public void addCircle(int col, int row, int greenOrRed) {

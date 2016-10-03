@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
   MapInfo mapInfo;
   RadarTracker gameTracker;
+  public Bitmap mapBitmap;
 
   @BindView(R.id.mapView) ImageView mapView;
   @BindView(R.id.textView) TextView textView;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
   private void initializeMap() {
     ImageView mapImageView = (ImageView) findViewById(R.id.mapView);
-    Bitmap mapBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.map);
+    mapBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.map);
 
     //Create a new image bitmap and attach a brand new canvas to it
     Bitmap newBitmap = Bitmap.createBitmap(mapBitmap.getWidth(), mapBitmap.getHeight(), Bitmap.Config.RGB_565);
@@ -110,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
   @OnClick({R.id.resetButton})
   void resetButtonClick() {
     textView.setText("");
-    mapInfo.clearCanvas();
+    mapInfo.clearCanvas(mapBitmap);
   }
 
   @OnClick({R.id.startButton})
