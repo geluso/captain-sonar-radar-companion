@@ -23,7 +23,7 @@ public class MapInfo {
   ImageView mapImageView;
   Canvas canvas;
   Bitmap newBitmap;
-  Paint redPaint, greenPaint;
+  Paint redPaint, greenPaint, whitePaint;
 
 
   public MapInfo(Activity activity, ImageView mapImageView, Canvas canvas, Bitmap newBitmap) {
@@ -54,6 +54,10 @@ public class MapInfo {
     this.greenPaint.setStrokeWidth(10.0f);
     this.greenPaint.setColor(Color.GREEN);
     this.greenPaint.setStyle(Paint.Style.STROKE);
+
+    this.whitePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    this.whitePaint.setColor(Color.WHITE);
+    this.whitePaint.setStyle(Paint.Style.FILL);
   }
 
   public void clearCanvas() {
@@ -67,6 +71,14 @@ public class MapInfo {
     Paint paint = greenOrRed == Color.RED ? redPaint : greenPaint;
 
     canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, circleRadius, paint);
+
+    mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), newBitmap));
+  }
+
+  public void addMine(int col, int row) {
+    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, circleRadius, redPaint);
+    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, (float) .66 * circleRadius, whitePaint);
+    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, (float) .33 * circleRadius, redPaint);
 
     mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), newBitmap));
   }
