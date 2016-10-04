@@ -13,9 +13,10 @@ public class Map {
   public boolean[][] water;
 
   public Map() {
-    this.water = templateToArray(MapRealTimeAlpha.template);
-    this.rows = 15;
-    this.cols = 15;
+    //this.water = templateToArray(MapRealTimeAlpha.template);
+    this.water = templateToArray(MapTiny.template);
+    this.rows = water.length;
+    this.cols = water[0].length;
   }
 
   public boolean getCoord(GridPoint point) {
