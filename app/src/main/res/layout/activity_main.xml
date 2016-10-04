@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,81 +8,100 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:orientation="vertical"
     tools:context="org.mooncolony.moonmayor.captainsonarradarcompanion.MainActivity">
-
-    <ImageView
-        android:id="@+id/mapView"
-        android:layout_width="match_parent"
-        android:adjustViewBounds="true"
-        android:layout_height="wrap_content"/>
-
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_margin="4dp"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_margin="4dp"
-            android:textSize="24sp"
-            android:id="@+id/textView"
-            android:layout_height="wrap_content"
-            android:maxLines="1"/>
-
-    </HorizontalScrollView>
-
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:id="@+id/buttons"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:entries="@array/mapList"
+            android:layout_height="wrap_content"
+            android:prompt="@string/mapList_prompt"/>
+
+        <ImageView
+            android:id="@+id/mapView"
+            android:layout_width="match_parent"
+            android:adjustViewBounds="true"
+            android:layout_height="wrap_content"/>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_margin="4dp"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_margin="4dp"
+                android:textSize="24sp"
+                android:id="@+id/textView"
+                android:layout_height="wrap_content"
+                android:maxLines="1"/>
+
+        </HorizontalScrollView>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:id="@+id/buttons"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="N"
+                android:id="@+id/northButton"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="E"
+                android:id="@+id/eastButton"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="S"
+                android:id="@+id/southButton"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="W"
+                android:id="@+id/westButton"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Mine"
+                android:id="@+id/mineButton"/>
+
+        </LinearLayout>
 
         <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="N"
-            android:id="@+id/northButton"/>
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="E"
-            android:id="@+id/eastButton"/>
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="S"
-            android:id="@+id/southButton"/>
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="W"
-            android:id="@+id/westButton"/>
-        <Button
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:text="Mine"
-            android:id="@+id/mineButton"/>
+            android:id="@+id/resetButton"
+            android:layout_margin="4dp"
+            android:textColor="#fff"
+            android:background="#c22"
+            android:text="Reset"/>
 
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/newActivityButton"
+            android:text="new activity"/>
     </LinearLayout>
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/resetButton"
-        android:layout_margin="4dp"
-        android:textColor="#fff"
-        android:background="#c22"
-        android:text="Reset"/>
+    <!--<include-->
+        <!--android:layout_width="160dp"-->
+        <!--android:layout_gravity="end|bottom"-->
+        <!--android:layout_margin="16dp"-->
+        <!--android:layout_height="160dp"-->
+        <!--layout="@layout/compass" />-->
 
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/newActivityButton"
-        android:text="new activity"/>
-</LinearLayout>
+</FrameLayout>
