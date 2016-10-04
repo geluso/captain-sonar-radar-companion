@@ -31,7 +31,7 @@ public class MapInfo {
   Bitmap bitmap;
   List<GridPoint> currentPath;
   RadarTracker gameTracker;
-  Paint redPaint, greenPaint, whitePaint;
+  Paint redPaint, greenPaint, whitePaint, blackPaint;
   Paint waterPaint, islandPaint;
 
 
@@ -70,13 +70,17 @@ public class MapInfo {
     this.redPaint.setStyle(Paint.Style.FILL);
 
     this.greenPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.greenPaint.setStrokeWidth(10.0f);
+    this.greenPaint.setStrokeWidth(6.0f);
     this.greenPaint.setColor(Color.GREEN);
     this.greenPaint.setStyle(Paint.Style.STROKE);
 
     this.whitePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.whitePaint.setColor(Color.WHITE);
     this.whitePaint.setStyle(Paint.Style.FILL);
+
+    this.blackPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    this.blackPaint.setColor(Color.BLACK);
+    this.blackPaint.setStyle(Paint.Style.FILL);
 
     this.waterPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.waterPaint.setColor(Color.BLUE);
@@ -89,6 +93,19 @@ public class MapInfo {
 
   public void initialize() {
     clearCanvas();
+
+    for (int row = 0; row < gameTracker.map.rows; row++) {
+      float x = this.initialXOffset + row * this.xIterateOffset;
+      this.canvas.drawLine(x, 0, x, this.width, blackPaint);
+    }
+
+    for (int col = 0; col < gameTracker.map.cols; col++) {
+      float y = this.initialYOffset + col * this.yIterateOffset;
+      this.canvas.drawLine(0, y, this.width, y, blackPaint);
+    }
+
+    mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
+
     for (GridPoint gp : gameTracker.getStartingPoints()) {
       this.addCircle(gp.col,gp.row,Color.GREEN);
     }
