@@ -176,11 +176,15 @@ public class MapInfo {
     mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
   }
 
-  public void addMine(GridPoint point) {
-    addMine(point.col, point.row);
+  public void addMine() {
+    currentPath.add(GridPoint.MINE);
   }
 
-  public void addMine(int col, int row) {
+  public void drawMine(GridPoint point) {
+    drawMine(point.col, point.row);
+  }
+
+  public void drawMine(int col, int row) {
     // adjust the radius of the circle so it's slightly smaller than really defined.
     float radius = (float) (this.circleRadius * .9);
 
@@ -204,20 +208,23 @@ public class MapInfo {
     float xx = x - this.initialXOffset;
     float yy = y - this.initialYOffset;
 
-    xx = x / this.xIterateOffset;
-    yy = y / this.yIterateOffset;
+    xx = xx / this.xIterateOffset;
+    yy = yy / this.yIterateOffset;
 
     xx = Math.round(xx);
     yy = Math.round(yy);
 
-    int col1 = (int) xx - 1;
-    int row1 = (int) yy - 1;
+    int col1 = (int) xx;
+    int row1 = (int) yy;
 
     for (GridPoint direction : currentPath) {
       int col2 = col1;
       int row2 = row1;
 
-      if (direction == GridPoint.NORTH) {
+      if (direction == GridPoint.MINE) {
+        drawMine(col1, row1);
+        continue;
+      }else if (direction == GridPoint.NORTH) {
         row2--;
       } else if (direction == GridPoint.SOUTH) {
         row2++;

@@ -91,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
   @OnClick({R.id.mineButton})
   void mineButtonClick() {
     appendText("mine");
+    mapInfo.addMine();
   }
 
   private void appendText(String message) {

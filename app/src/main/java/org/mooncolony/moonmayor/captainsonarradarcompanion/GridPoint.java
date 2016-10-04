@@ -9,6 +9,8 @@ public class GridPoint {
   public static final GridPoint EAST =  new GridPoint(0, 1);
   public static final GridPoint WEST =  new GridPoint(0, -1);
 
+  public static final GridPoint MINE =  new GridPoint(0, 0);
+
   public int row;
   public int col;
 
