@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +13,7 @@ import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.Map;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnTouch;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,20 +36,18 @@ public class MainActivity extends AppCompatActivity {
     // initialize the map
     ImageView mapImageView = (ImageView) findViewById(R.id.mapView);
     mapInfo = new MapInfo(this, mapImageView, gameTracker);
+  }
 
-    mapView.setOnTouchListener(new View.OnTouchListener() {
-      @Override
-      public boolean onTouch(View v, MotionEvent event) {
-        int action = event.getAction();
-        if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_MOVE || action == MotionEvent.ACTION_DOWN) {
-          float x = event.getX();
-          float y = event.getY();
+  @OnTouch({R.id.mapView})
+  boolean mapTouch(MotionEvent event) {
+    int action = event.getAction();
+    if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_MOVE || action == MotionEvent.ACTION_DOWN) {
+      float x = event.getX();
+      float y = event.getY();
 
-          mapInfo.drawPath(x, y);
-        }
-        return true;
-      }
-    });
+      mapInfo.drawPath(x, y);
+    }
+    return true;
   }
 
   @OnClick({R.id.resetButton})
