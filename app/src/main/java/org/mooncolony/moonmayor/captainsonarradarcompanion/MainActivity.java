@@ -1,10 +1,10 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -24,8 +24,11 @@ public class MainActivity extends AppCompatActivity {
 
   MapInfo mapInfo;
 
+  @BindView(R.id.mapSpinner) Spinner spinner;
   @BindView(R.id.mapView) ImageView mapView;
   @BindView(R.id.textView) TextView textView;
+
+  private String currentMapTemplate;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -33,9 +36,13 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
+    String[] options = Map.AVAILABLE_MAPS;
+    ArrayAdapter<String> mapChoices = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, options);
+    spinner.setAdapter(mapChoices);
+
     // initialize the map
-    ImageView mapImageView = (ImageView) findViewById(R.id.mapView);
-    mapInfo = new MapInfo(this, mapImageView, new RadarTracker(new Map(MapRealTimeAlpha.template)));
+    this.currentMapTemplate = MapRealTimeAlpha.template;
+    mapInfo = new MapInfo(this, mapView, new RadarTracker(new Map(this.currentMapTemplate)));
   }
 
   @OnTouch({R.id.mapView})
@@ -52,9 +59,28 @@ public class MainActivity extends AppCompatActivity {
 
   @OnItemSelected(R.id.mapSpinner)
   public void spinnerItemSelected(Spinner spinner, int position) {
-    Toast.makeText(MainActivity.this,"Spinner item "+position, Toast.LENGTH_SHORT).show();
-    //TODO: Add in method to change over board
-//    resetGame();
+    String mapName = Map.AVAILABLE_MAPS[position];
+    String template = null;
+
+    if (mapName.equals(MapRealTimeAlpha.name)) {
+      template = MapRealTimeAlpha.template;
+    } else if (mapName.equals(MapTiny.name)) {
+      template = MapTiny.template;
+    }
+
+    if (template == null) {
+      Toast.makeText(MainActivity.this, "Unknown map.", Toast.LENGTH_SHORT).show();
+      return;
+    }
+
+    this.currentMapTemplate = template;
+    Map newMap = new Map(template);
+
+    String size = newMap.name + " rows:" + newMap.rows + " cols:" + newMap.cols;
+    Toast.makeText(MainActivity.this, size, Toast.LENGTH_SHORT).show();
+
+    mapInfo = new MapInfo(this, mapView, new RadarTracker(newMap));
+    resetButtonClick();
   }
 
 
@@ -62,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
   @OnClick({R.id.resetButton})
   void resetButtonClick() {
     textView.setText("");
-    mapInfo.restartGame();
+    mapInfo.restartGame(this.currentMapTemplate);
     mapInfo.initialize();
   }
 
