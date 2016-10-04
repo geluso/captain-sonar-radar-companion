@@ -12,9 +12,11 @@ public class Map {
   // true for water, false for land.
   public boolean[][] water;
 
-  public Map() {
-    //this.water = templateToArray(MapRealTimeAlpha.template);
-    this.water = templateToArray(MapTiny.template);
+  //required empty constructor
+  public Map() {}
+
+  public Map(String s) {
+    this.water = templateToArray(s);
     this.rows = water.length;
     this.cols = water[0].length;
   }

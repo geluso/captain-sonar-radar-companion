@@ -4,7 +4,6 @@
     <string-array name="mapList">
         <item>Map Real Time Alpha</item>
         <item>Map Tiny</item>
-        <item>Map 3</item>
         <item>Custom Map</item>
     </string-array>
 </resources>

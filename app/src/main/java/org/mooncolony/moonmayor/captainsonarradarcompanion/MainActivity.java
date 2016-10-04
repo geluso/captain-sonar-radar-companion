@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.Map;
+import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MapRealTimeAlpha;
+import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MapTiny;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,8 +20,6 @@ import butterknife.OnTouch;
 public class MainActivity extends AppCompatActivity {
 
   MapInfo mapInfo;
-  RadarTracker gameTracker;
-  public Bitmap mapBitmap;
 
   @BindView(R.id.mapView) ImageView mapView;
   @BindView(R.id.textView) TextView textView;
@@ -27,15 +27,12 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
-    gameTracker = new RadarTracker(new Map());
-
     // initialize the map
     ImageView mapImageView = (ImageView) findViewById(R.id.mapView);
-    mapInfo = new MapInfo(this, mapImageView, gameTracker);
+    mapInfo = new MapInfo(this, mapImageView, new RadarTracker(new Map(MapRealTimeAlpha.template)));
   }
 
   @OnTouch({R.id.mapView})
