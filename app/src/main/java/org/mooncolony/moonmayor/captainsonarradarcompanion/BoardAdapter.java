@@ -1,6 +1,8 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion;
 
 import android.content.Context;
+import android.provider.ContactsContract;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,11 +21,13 @@ public class BoardAdapter extends
 
   public static class ViewHolder extends RecyclerView.ViewHolder {
     public FrameLayout frame;
+    public ImageView cross;
 
     public ViewHolder(View itemView) {
       super(itemView);
 
       frame = (FrameLayout) itemView.findViewById(R.id.recyclerFrame);
+      cross = (ImageView) itemView.findViewById(R.id.recyclerImage);
     }
   }
 
@@ -55,6 +59,9 @@ public class BoardAdapter extends
     boolean isWater = mModel.get(position);
     if (!isWater) {
       viewHolder.frame.setBackgroundResource(R.drawable.land);
+      GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) viewHolder.frame.getLayoutParams();
+      params.setMargins(0,0,0,0);
+      viewHolder.cross.setVisibility(View.INVISIBLE);
     }
   }
 

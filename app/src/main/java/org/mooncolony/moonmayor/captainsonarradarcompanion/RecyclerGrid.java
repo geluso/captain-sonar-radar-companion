@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MapRealTimeAlpha;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -22,8 +24,20 @@ public class RecyclerGrid extends AppCompatActivity {
 
     ArrayList<Boolean> waterOrLand = new ArrayList<>();
     for (int i=0;i<225;i++) {
-      waterOrLand.add(i != 2);
+      waterOrLand.add(true);
     }
+
+    String[] rows = MapRealTimeAlpha.template.split("\n");
+    int count = 0;
+    for (String s : rows) {
+      for (int i = 0; i < s.length(); i++) {
+        if (s.charAt(i) == 'X') {
+          waterOrLand.set(count,false);
+        }
+        count++;
+      }
+    }
+
 
     BoardAdapter adapty = new BoardAdapter(this, waterOrLand);
     gameBoard.setAdapter(adapty);
