@@ -6,7 +6,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.Map;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MapRealTimeAlpha;
@@ -15,6 +17,7 @@ import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MapTiny;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import butterknife.OnItemSelected;
 import butterknife.OnTouch;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,6 +49,15 @@ public class MainActivity extends AppCompatActivity {
     }
     return true;
   }
+
+  @OnItemSelected(R.id.mapSpinner)
+  public void spinnerItemSelected(Spinner spinner, int position) {
+    Toast.makeText(MainActivity.this,"Spinner item "+position, Toast.LENGTH_SHORT).show();
+    //TODO: Add in method to change over board
+//    resetGame();
+  }
+
+
 
   @OnClick({R.id.resetButton})
   void resetButtonClick() {
