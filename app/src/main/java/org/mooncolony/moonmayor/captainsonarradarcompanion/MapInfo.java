@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.Map;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 /**

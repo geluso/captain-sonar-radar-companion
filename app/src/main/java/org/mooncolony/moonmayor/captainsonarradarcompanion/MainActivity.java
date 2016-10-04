@@ -3,9 +3,6 @@ package org.mooncolony.moonmayor.captainsonarradarcompanion;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.drawable.BitmapDrawable;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -31,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
@@ -69,47 +67,35 @@ public class MainActivity extends AppCompatActivity {
 
   @OnClick({R.id.northButton})
   void northButtonClick() {
-    String newString = textView.getText().toString();
-    if (newString.length() != 0) {
-      newString+=", ";
-    }
-    textView.setText(newString + "N");
+    appendText("N");
     updateMap(GridPoint.NORTH);
   }
   @OnClick({R.id.eastButton})
   void eastButtonClick() {
-    String newString = textView.getText().toString();
-    if (newString.length() != 0) {
-      newString+=", ";
-    }
-    textView.setText(newString + "E");
+    appendText("E");
     updateMap(GridPoint.EAST);
   }
   @OnClick({R.id.southButton})
   void southButtonClick() {
-    String newString = textView.getText().toString();
-    if (newString.length() != 0) {
-      newString+=", ";
-    }
-    textView.setText(newString + "S");
+    appendText("S");
     updateMap(GridPoint.SOUTH);
   }
   @OnClick({R.id.westButton})
   void westButtonClick() {
-    String newString = textView.getText().toString();
-    if (newString.length() != 0) {
-      newString+=", ";
-    }
-    textView.setText(newString + "W");
+    appendText("W");
     updateMap(GridPoint.WEST);
   }
   @OnClick({R.id.mineButton})
   void mineButtonClick() {
+    appendText("mine");
+  }
+
+  private void appendText(String message) {
     String newString = textView.getText().toString();
     if (newString.length() != 0) {
       newString+=", ";
     }
-    textView.setText(newString + "mine");
+    textView.setText(newString + message);
   }
 
   @OnClick({R.id.resetButton})
