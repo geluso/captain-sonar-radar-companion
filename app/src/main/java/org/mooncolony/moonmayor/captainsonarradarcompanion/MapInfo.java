@@ -87,13 +87,23 @@ public class MapInfo {
     this.waterPaint.setStyle(Paint.Style.FILL);
 
     this.islandPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.islandPaint.setColor(Color.rgb(125, 255, 125));
+    this.islandPaint.setColor(Color.rgb(255,248,220));
     this.islandPaint.setStyle(Paint.Style.FILL);
   }
 
   public void initialize() {
     clearCanvas();
+    drawGrid();
+    drawIslands();
 
+    for (GridPoint gp : gameTracker.getStartingPoints()) {
+      this.addCircle(gp.col,gp.row,Color.GREEN);
+    }
+
+    mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
+  }
+
+  public void drawGrid() {
     for (int row = 0; row < gameTracker.map.rows; row++) {
       float x = this.initialXOffset + row * this.xIterateOffset;
       this.canvas.drawLine(x, 0, x, this.width, blackPaint);
@@ -103,11 +113,16 @@ public class MapInfo {
       float y = this.initialYOffset + col * this.yIterateOffset;
       this.canvas.drawLine(0, y, this.width, y, blackPaint);
     }
+  }
 
-    mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
+  public void drawIslands() {
+    for (GridPoint island : gameTracker.islands) {
+      int x = Math.round(this.circleRadius + island.col * this.xIterateOffset);
+      int y = Math.round(this.circleRadius + island.row * this.yIterateOffset);
+      int squareSize = Math.round(2 * circleRadius);
 
-    for (GridPoint gp : gameTracker.getStartingPoints()) {
-      this.addCircle(gp.col,gp.row,Color.GREEN);
+      Rect rect = new Rect(x, y, x + squareSize, y + squareSize);
+      this.canvas.drawRect(rect, islandPaint);
     }
   }
 

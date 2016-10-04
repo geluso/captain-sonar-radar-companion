@@ -11,11 +11,13 @@ import java.util.Set;
  */
 public class RadarTracker {
   public Map map;
+  public Set<GridPoint> islands;
   private Set<GridPoint> startingPoints;
   private Set<GridPoint> invalidatedPoints;
 
   public RadarTracker(Map map) {
     this.map = map;
+    islands = new HashSet<>();
     startingPoints = new HashSet<>();
     invalidatedPoints = new HashSet<>();
 
@@ -27,6 +29,7 @@ public class RadarTracker {
         if (map.getCoord(startingLocation)) {
           startingPoints.add(startingLocation);
         } else {
+          islands.add(startingLocation);
           invalidatedPoints.add(startingLocation);
         }
       }
