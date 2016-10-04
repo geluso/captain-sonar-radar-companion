@@ -6,16 +6,16 @@ import org.mooncolony.moonmayor.captainsonarradarcompanion.GridPoint;
  * Created by moonmayor on 10/3/16.
  */
 public class Map {
-  public int width;
-  public int height;
+  public int rows;
+  public int cols;
 
   // true for water, false for land.
   public boolean[][] water;
 
   public Map() {
-    this.width = 15;
-    this.height = 15;
     this.water = templateToArray(MapRealTimeAlpha.template);
+    this.rows = 15;
+    this.cols = 15;
   }
 
   public boolean getCoord(GridPoint point) {
@@ -23,7 +23,7 @@ public class Map {
   }
 
   public boolean getCoord(int row, int col) {
-    if (row < 0 || row >= height || col < 0 || col >= width) {
+    if (row < 0 || row >= rows || col < 0 || col >= cols) {
       return false;
     }
     return water[row][col];

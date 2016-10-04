@@ -1,10 +1,7 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
@@ -33,8 +30,10 @@ public class MainActivity extends AppCompatActivity {
     ButterKnife.bind(this);
 
     gameTracker = new RadarTracker(new Map());
-    initializeMap();
 
+    // initialize the map
+    ImageView mapImageView = (ImageView) findViewById(R.id.mapView);
+    mapInfo = new MapInfo(this, mapImageView, gameTracker);
   }
 
   private void initializeGame() {
@@ -42,23 +41,6 @@ public class MainActivity extends AppCompatActivity {
     for (GridPoint gp : gameTracker.getStartingPoints()) {
       mapInfo.addCircle(gp, Color.GREEN);
     }
-  }
-
-  private void initializeMap() {
-    ImageView mapImageView = (ImageView) findViewById(R.id.mapView);
-    mapBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.map);
-
-    //Create a new image bitmap and attach a brand new canvas to it
-    Bitmap newBitmap = Bitmap.createBitmap(mapBitmap.getWidth(), mapBitmap.getHeight(), Bitmap.Config.RGB_565);
-    Canvas canvas = new Canvas(newBitmap);
-
-    //Draw the image bitmap into the canvas
-    canvas.drawBitmap(mapBitmap, 0, 0, null);
-
-    //Attach the canvas to the ImageView
-    mapImageView.setImageDrawable(new BitmapDrawable(getResources(), newBitmap));
-
-    mapInfo = new MapInfo(this,mapImageView,canvas,newBitmap, gameTracker, mapBitmap);
   }
 
   private void updateMap(GridPoint gp) {
