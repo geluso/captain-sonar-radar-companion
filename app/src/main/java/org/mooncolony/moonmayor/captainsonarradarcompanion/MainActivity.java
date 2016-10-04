@@ -36,6 +36,17 @@ public class MainActivity extends AppCompatActivity {
     mapInfo = new MapInfo(this, mapImageView, gameTracker);
   }
 
+  @OnClick({R.id.startButton})
+  void startButtonClick() {
+    initializeGame();
+  }
+
+  @OnClick({R.id.resetButton})
+  void resetButtonClick() {
+    textView.setText("");
+    mapInfo.restartGame();
+  }
+
   private void initializeGame() {
     mapInfo.initialize();
     for (GridPoint gp : gameTracker.getStartingPoints()) {
@@ -79,16 +90,4 @@ public class MainActivity extends AppCompatActivity {
     }
     textView.setText(newString + message);
   }
-
-  @OnClick({R.id.resetButton})
-  void resetButtonClick() {
-    textView.setText("");
-    mapInfo.restartGame();
-  }
-
-  @OnClick({R.id.startButton})
-  void startButtonClick() {
-    initializeGame();
-  }
-
 }
