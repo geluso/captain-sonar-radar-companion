@@ -1,5 +1,6 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -65,6 +66,12 @@ public class MainActivity extends AppCompatActivity {
 
   private void updateMap(GridPoint gp) {
     mapInfo.updatePath(gp);
+  }
+
+  @OnClick(R.id.newActivityButton)
+  void newActivityButtonClick() {
+    Intent i = new Intent(MainActivity.this,RecyclerGrid.class);
+    startActivity(i);
   }
 
   @OnClick({R.id.northButton})
