@@ -21,6 +21,8 @@ import java.util.List;
  */
 public class MapInfo {
   int width, height;
+  boolean showingPath = false;
+  float pathX, pathY;
 
   float circleRadius;
   float initialXOffset, initialYOffset;
@@ -144,6 +146,10 @@ public class MapInfo {
   }
 
   public void restartGame() {
+    this.showingPath = false;
+    this.pathX = 0;
+    this.pathY = 0;
+
     this.gameTracker = new RadarTracker(new Map());
     clearCanvas();
     this.currentPath = new ArrayList<>();
@@ -156,6 +162,8 @@ public class MapInfo {
     gameTracker.track(this.currentPath);
 
     drawPossibleStartingLocations();
+
+    drawPath();
   }
 
   public void drawPossibleStartingLocations() {
@@ -178,6 +186,7 @@ public class MapInfo {
 
   public void addMine() {
     currentPath.add(GridPoint.MINE);
+    drawPath();
   }
 
   public void drawMine(GridPoint point) {
@@ -195,7 +204,17 @@ public class MapInfo {
     mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
   }
 
+  public void drawPath() {
+    if (this.showingPath) {
+      drawPath(this.pathX, this.pathY);
+    }
+  }
+
   public void drawPath(float x, float y) {
+    this.showingPath = true;
+    this.pathX = x;
+    this.pathY = y;
+
     // clear the board, draw the map, draw the possibilities and draw the path from the click position.
     drawBase();
     drawPossibleStartingLocations();
