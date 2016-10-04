@@ -32,7 +32,7 @@ public class MapInfo {
   List<GridPoint> currentPath;
   RadarTracker gameTracker;
   Paint redPaint, greenPaint, whitePaint, blackPaint;
-  Paint waterPaint, islandPaint;
+  Paint waterPaint, islandPaint, pathPaint;
 
 
   public MapInfo(Activity activity, ImageView mapImageView, RadarTracker gameTracker) {
@@ -81,6 +81,11 @@ public class MapInfo {
     this.blackPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.blackPaint.setColor(Color.BLACK);
     this.blackPaint.setStyle(Paint.Style.FILL);
+
+    this.pathPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    this.pathPaint.setColor(Color.BLACK);
+    this.pathPaint.setStrokeWidth(8.0f);
+    this.pathPaint.setStyle(Paint.Style.FILL);
 
     this.waterPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.waterPaint.setColor(Color.BLUE);
@@ -149,6 +154,11 @@ public class MapInfo {
 
     this.currentPath.add(gp);
     gameTracker.track(this.currentPath);
+
+    drawPossibleStartingLocations();
+  }
+
+  public void drawPossibleStartingLocations() {
     for (GridPoint g : gameTracker.getStartingPoints()) {
       this.addCircle(g.col,g.row,Color.GREEN);
     }
@@ -177,6 +187,63 @@ public class MapInfo {
     canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, radius, redPaint);
     canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, (float) .66 * radius, whitePaint);
     canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, (float) .33 * radius, redPaint);
+
+    mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
+  }
+
+  public void drawPath(float x, float y) {
+    // clear the board, draw the map, draw the possibilities and draw the path from the click position.
+    drawBase();
+    drawPossibleStartingLocations();
+
+    // don't try and draw a path if there's no path to draw.
+    if (currentPath.size() == 0) {
+      return;
+    }
+
+    float xx = x - this.initialXOffset;
+    float yy = y - this.initialYOffset;
+
+    xx = x / this.xIterateOffset;
+    yy = y / this.yIterateOffset;
+
+    xx = Math.round(xx);
+    yy = Math.round(yy);
+
+    int col1 = (int) xx - 1;
+    int row1 = (int) yy - 1;
+
+    for (GridPoint direction : currentPath) {
+      int col2 = col1;
+      int row2 = row1;
+
+      if (direction == GridPoint.NORTH) {
+        row2--;
+      } else if (direction == GridPoint.SOUTH) {
+        row2++;
+      } else if (direction == GridPoint.EAST) {
+        col2++;
+      } else if (direction == GridPoint.WEST) {
+        col2--;
+      }
+
+      // draw the current line segment.
+      drawLineSegment(col1, row1, col2, row2);
+
+      // update the current row and col to the next row and col.
+      col1 = col2;
+      row1 = row2;
+    }
+  }
+
+  public void drawLineSegment(int col1, int row1, int col2, int row2) {
+    float x1 = initialXOffset + col1 * xIterateOffset;
+    float y1 = initialYOffset + row1 * yIterateOffset;
+
+    float x2 = initialXOffset + col2 * xIterateOffset;
+    float y2 = initialYOffset + row2 * yIterateOffset;
+
+    canvas.drawLine(x1, y1, x2, y2, pathPaint);
 
     mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
   }
