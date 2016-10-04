@@ -89,18 +89,19 @@ public class MapInfo {
     this.islandPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.islandPaint.setColor(Color.rgb(255,248,220));
     this.islandPaint.setStyle(Paint.Style.FILL);
+
+    initialize();
   }
 
   public void initialize() {
+    drawBase();
+    mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
+  }
+
+  public void drawBase() {
     clearCanvas();
     drawGrid();
     drawIslands();
-
-    for (GridPoint gp : gameTracker.getStartingPoints()) {
-      this.addCircle(gp.col,gp.row,Color.GREEN);
-    }
-
-    mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
   }
 
   public void drawGrid() {
@@ -144,7 +145,8 @@ public class MapInfo {
   }
 
   public void updatePath(GridPoint gp) {
-    clearCanvas();
+    drawBase();
+
     this.currentPath.add(gp);
     gameTracker.track(this.currentPath);
     for (GridPoint g : gameTracker.getStartingPoints()) {
@@ -169,9 +171,12 @@ public class MapInfo {
   }
 
   public void addMine(int col, int row) {
-    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, circleRadius, redPaint);
-    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, (float) .66 * circleRadius, whitePaint);
-    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, (float) .33 * circleRadius, redPaint);
+    // adjust the radius of the circle so it's slightly smaller than really defined.
+    float radius = (float) (this.circleRadius * .9);
+
+    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, radius, redPaint);
+    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, (float) .66 * radius, whitePaint);
+    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, (float) .33 * radius, redPaint);
 
     mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
   }

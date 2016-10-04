@@ -2,7 +2,6 @@ package org.mooncolony.moonmayor.captainsonarradarcompanion;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
@@ -37,22 +36,11 @@ public class MainActivity extends AppCompatActivity {
     mapInfo = new MapInfo(this, mapImageView, gameTracker);
   }
 
-  @OnClick({R.id.startButton})
-  void startButtonClick() {
-    initializeGame();
-  }
-
   @OnClick({R.id.resetButton})
   void resetButtonClick() {
     textView.setText("");
     mapInfo.restartGame();
-  }
-
-  private void initializeGame() {
     mapInfo.initialize();
-    for (GridPoint gp : gameTracker.getStartingPoints()) {
-      mapInfo.addCircle(gp, Color.GREEN);
-    }
   }
 
   private void updateMap(GridPoint gp) {
