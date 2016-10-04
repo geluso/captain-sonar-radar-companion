@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_MOVE || action == MotionEvent.ACTION_DOWN) {
       float x = event.getX();
       float y = event.getY();
-
+      //TODO: Check that the path lands at a valid circle
       mapInfo.drawPath(x, y);
     }
     return true;
@@ -96,8 +96,8 @@ public class MainActivity extends AppCompatActivity {
   private void appendText(String message) {
     String newString = textView.getText().toString();
     if (newString.length() != 0) {
-      newString+=", ";
+      message+=", ";
     }
-    textView.setText(newString + message);
+    textView.setText(message+newString);
   }
 }

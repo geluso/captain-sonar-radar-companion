@@ -61,7 +61,9 @@ public class BoardAdapter extends
       viewHolder.frame.setBackgroundResource(R.drawable.land);
       GridLayoutManager.LayoutParams params = (GridLayoutManager.LayoutParams) viewHolder.frame.getLayoutParams();
       params.setMargins(0,0,0,0);
-      viewHolder.cross.setVisibility(View.INVISIBLE);
+    }
+    if (position < 15) {
+      viewHolder.cross.setVisibility(View.VISIBLE);
     }
   }
 
