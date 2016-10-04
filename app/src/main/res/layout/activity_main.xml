@@ -15,7 +15,6 @@
         android:id="@+id/mapView"
         android:layout_width="match_parent"
         android:adjustViewBounds="true"
-        android:padding="4dp"
         android:layout_height="wrap_content"/>
     <TextView
         android:layout_width="match_parent"
