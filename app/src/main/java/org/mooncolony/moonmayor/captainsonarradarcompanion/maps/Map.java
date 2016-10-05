@@ -1,11 +1,18 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion.maps;
 
+import android.app.Activity;
+
 import org.mooncolony.moonmayor.captainsonarradarcompanion.GridPoint;
+import org.mooncolony.moonmayor.captainsonarradarcompanion.R;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by moonmayor on 10/3/16.
  */
 public class Map {
+  List<String> mapList;
   public int rows;
   public int cols;
 

@@ -54,10 +54,12 @@ public class MainActivity extends AppCompatActivity {
   public void spinnerItemSelected(Spinner spinner, int position) {
     Toast.makeText(MainActivity.this,"Spinner item "+position, Toast.LENGTH_SHORT).show();
     //TODO: Add in method to change over board
-//    resetGame();
+    resetGame(position);
   }
 
+  private void resetGame(int pos) {
 
+  }
 
   @OnClick({R.id.resetButton})
   void resetButtonClick() {
