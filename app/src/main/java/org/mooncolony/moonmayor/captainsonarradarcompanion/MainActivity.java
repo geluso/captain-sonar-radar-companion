@@ -94,12 +94,6 @@ public class MainActivity extends AppCompatActivity {
     mapInfo.updatePath(gp);
   }
 
-  @OnClick(R.id.newActivityButton)
-  void newActivityButtonClick() {
-    Intent i = new Intent(MainActivity.this,RecyclerGrid.class);
-    startActivity(i);
-  }
-
   @OnClick({R.id.northButton})
   void northButtonClick() {
     appendText("N");

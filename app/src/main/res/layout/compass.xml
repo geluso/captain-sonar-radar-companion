@@ -2,6 +2,7 @@
 <LinearLayout
     android:layout_width="160dp"
     android:layout_height="160dp"
+    android:layout_gravity="center"
     android:orientation="vertical"
     android:background="@drawable/compass_background"
     xmlns:android="http://schemas.android.com/apk/res/android">
@@ -9,6 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_gravity="center"
         android:layout_weight="1">
 
         <View
@@ -19,8 +21,10 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:src="@drawable/arrow_north"/>
+            android:src="@drawable/arrow_north"
+            android:id="@+id/northButton"/>
 
         <View
             android:layout_width="0dp"
@@ -32,13 +36,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_gravity="center"
         android:layout_weight="1">
 
         <ImageView
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:src="@drawable/arrow_west"/>
+            android:src="@drawable/arrow_west"
+            android:id="@+id/westButton"/>
 
         <View
             android:layout_width="0dp"
@@ -47,15 +54,18 @@
 
         <ImageView
             android:layout_width="0dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:src="@drawable/arrow_east"/>
+            android:src="@drawable/arrow_east"
+            android:id="@+id/eastButton"/>
 
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_gravity="center"
         android:layout_weight="1">
 
         <View
@@ -66,8 +76,10 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:src="@drawable/arrow_south"/>
+            android:src="@drawable/arrow_south"
+            android:id="@+id/southButton"/>
 
         <View
             android:layout_width="0dp"

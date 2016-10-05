@@ -118,9 +118,9 @@ public class MapInfo {
   public void drawBase() {
     clearCanvas();
 //    drawGrid();
+    drawCircles();
     drawIslands();
     drawLetters();
-    drawCircles();
   }
 
   public void drawGrid() {
