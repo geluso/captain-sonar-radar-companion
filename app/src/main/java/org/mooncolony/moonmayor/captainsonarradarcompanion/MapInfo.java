@@ -12,7 +12,6 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.Map;
-import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MapRealTimeAlpha;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +27,7 @@ public class MapInfo {
   float circleRadius;
   float initialXOffset, initialYOffset;
   float xIterateOffset, yIterateOffset;
+  float textColumnAdditionalOffset;
   Activity activity;
   ImageView mapImageView;
   Canvas canvas;
@@ -35,7 +35,7 @@ public class MapInfo {
   List<GridPoint> currentPath;
   RadarTracker gameTracker;
   Paint redPaint, greenPaint, whitePaint, blackPaint;
-  Paint waterPaint, islandPaint, pathPaint;
+  Paint waterPaint, islandPaint, pathPaint, textPaint;
 
 
   public MapInfo(Activity activity, ImageView mapImageView, RadarTracker gameTracker) {
@@ -68,6 +68,8 @@ public class MapInfo {
     this.xIterateOffset = this.circleRadius * 2;
     this.yIterateOffset = this.circleRadius * 2;
 
+    this.textColumnAdditionalOffset = circleRadius/3;
+
     this.redPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.redPaint.setColor(Color.RED);
     this.redPaint.setStyle(Paint.Style.FILL);
@@ -80,6 +82,12 @@ public class MapInfo {
     this.whitePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.whitePaint.setColor(Color.WHITE);
     this.whitePaint.setStyle(Paint.Style.FILL);
+
+    this.textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);;
+    this.textPaint.setColor(Color.rgb(240,240,20));
+    this.textPaint.setStyle(Paint.Style.FILL);
+    this.textPaint.setTextSize(circleRadius);
+    this.textPaint.setTextAlign(Paint.Align.CENTER);
 
     this.blackPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.blackPaint.setColor(Color.BLACK);
@@ -95,7 +103,7 @@ public class MapInfo {
     this.waterPaint.setStyle(Paint.Style.FILL);
 
     this.islandPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.islandPaint.setColor(Color.rgb(255,248,220));
+    this.islandPaint.setColor(Color.rgb(100,248,100));
     this.islandPaint.setStyle(Paint.Style.FILL);
 
     initialize();
@@ -110,6 +118,7 @@ public class MapInfo {
     clearCanvas();
     drawGrid();
     drawIslands();
+    drawLetters();
   }
 
   public void drawGrid() {
@@ -135,6 +144,23 @@ public class MapInfo {
     }
   }
 
+  public void drawLetters() {
+    for (int row = 0; row < gameTracker.map.rows; row++) {
+      float x = this.initialXOffset + row * this.xIterateOffset;
+      String colLetter = ""+(char)(row+65);
+      canvas.drawText(colLetter,x,circleRadius,textPaint);
+    }
+
+    for (int col = 0; col < gameTracker.map.cols; col++) {
+      //the additional text column offset is to account for centring the letter
+      float y = this.initialYOffset + col * this.yIterateOffset+this.textColumnAdditionalOffset;
+      String rowNum = ""+(col+1);
+      canvas.drawText(rowNum,circleRadius,y,textPaint);
+    }
+
+
+  }
+
   public void clearCanvas() {
     this.bitmap = Bitmap.createBitmap(this.width, this.width, Bitmap.Config.RGB_565);
     canvas = new Canvas(this.bitmap);
@@ -146,12 +172,12 @@ public class MapInfo {
     mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
   }
 
-  public void restartGame() {
+  public void restartGame(String template) {
     this.showingPath = false;
     this.pathStartRow = 0;
     this.pathStartCol = 0;
 
-    this.gameTracker = new RadarTracker(new Map(MapRealTimeAlpha.template));
+    this.gameTracker = new RadarTracker(new Map(template));
     clearCanvas();
     this.currentPath = new ArrayList<>();
   }
