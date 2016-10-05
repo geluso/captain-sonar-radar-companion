@@ -27,6 +27,7 @@ public class MapInfo {
   float circleRadius;
   float initialXOffset, initialYOffset;
   float xIterateOffset, yIterateOffset;
+  float textColumnAdditionalOffset;
   Activity activity;
   ImageView mapImageView;
   Canvas canvas;
@@ -34,7 +35,7 @@ public class MapInfo {
   List<GridPoint> currentPath;
   RadarTracker gameTracker;
   Paint redPaint, greenPaint, whitePaint, blackPaint;
-  Paint waterPaint, islandPaint, pathPaint;
+  Paint waterPaint, islandPaint, pathPaint, textPaint;
 
 
   public MapInfo(Activity activity, ImageView mapImageView, RadarTracker gameTracker) {
@@ -67,6 +68,8 @@ public class MapInfo {
     this.xIterateOffset = this.circleRadius * 2;
     this.yIterateOffset = this.circleRadius * 2;
 
+    this.textColumnAdditionalOffset = circleRadius/3;
+
     this.redPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.redPaint.setColor(Color.RED);
     this.redPaint.setStyle(Paint.Style.FILL);
@@ -80,6 +83,13 @@ public class MapInfo {
     this.whitePaint.setColor(Color.WHITE);
     this.whitePaint.setStyle(Paint.Style.FILL);
 
+    this.textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);;
+    this.textPaint.setColor(Color.rgb(13, 71, 161));
+    this.textPaint.setStyle(Paint.Style.FILL);
+    this.textPaint.setTextSize(circleRadius);
+    this.textPaint.setFakeBoldText(true);
+    this.textPaint.setTextAlign(Paint.Align.CENTER);
+
     this.blackPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.blackPaint.setColor(Color.BLACK);
     this.blackPaint.setStyle(Paint.Style.FILL);
@@ -90,11 +100,11 @@ public class MapInfo {
     this.pathPaint.setStyle(Paint.Style.FILL);
 
     this.waterPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.waterPaint.setColor(Color.BLUE);
+    this.waterPaint.setColor(Color.rgb(79,195,247));
     this.waterPaint.setStyle(Paint.Style.FILL);
 
     this.islandPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.islandPaint.setColor(Color.rgb(255,248,220));
+    this.islandPaint.setColor(Color.rgb(56,142,60));
     this.islandPaint.setStyle(Paint.Style.FILL);
 
     initialize();
@@ -107,8 +117,10 @@ public class MapInfo {
 
   public void drawBase() {
     clearCanvas();
-    drawGrid();
+//    drawGrid();
+    drawCircles();
     drawIslands();
+    drawLetters();
   }
 
   public void drawGrid() {
@@ -123,6 +135,18 @@ public class MapInfo {
     }
   }
 
+  public void drawCircles() {
+    for (int row = 0; row < gameTracker.map.rows; row++) {
+      for (int col = 0; col < gameTracker.map.cols; col++) {
+        float y = this.initialYOffset + col * this.yIterateOffset;
+        float x = this.initialXOffset + row * this.xIterateOffset;
+        this.canvas.drawCircle(x, y, circleRadius/8, whitePaint);
+      }
+    }
+
+
+  }
+
   public void drawIslands() {
     for (GridPoint island : gameTracker.islands) {
       int x = Math.round(this.circleRadius + island.col * this.xIterateOffset);
@@ -132,6 +156,23 @@ public class MapInfo {
       Rect rect = new Rect(x, y, x + squareSize, y + squareSize);
       this.canvas.drawRect(rect, islandPaint);
     }
+  }
+
+  public void drawLetters() {
+    for (int row = 0; row < gameTracker.map.rows; row++) {
+      float x = this.initialXOffset + row * this.xIterateOffset;
+      String colLetter = ""+(char)(row+65);
+      canvas.drawText(colLetter,x,circleRadius,textPaint);
+    }
+
+    for (int col = 0; col < gameTracker.map.cols; col++) {
+      //the additional text column offset is to account for centring the letter
+      float y = this.initialYOffset + col * this.yIterateOffset+this.textColumnAdditionalOffset;
+      String rowNum = ""+(col+1);
+      canvas.drawText(rowNum,circleRadius,y,textPaint);
+    }
+
+
   }
 
   public void clearCanvas() {

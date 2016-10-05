@@ -75,8 +75,6 @@ public class MainActivity extends AppCompatActivity {
     resetButtonClick();
   }
 
-
-
   @OnClick({R.id.resetButton})
   void resetButtonClick() {
     textView.setText("");
@@ -86,12 +84,6 @@ public class MainActivity extends AppCompatActivity {
 
   private void updateMap(GridPoint gp) {
     mapInfo.updatePath(gp);
-  }
-
-  @OnClick(R.id.newActivityButton)
-  void newActivityButtonClick() {
-    Intent i = new Intent(MainActivity.this,RecyclerGrid.class);
-    startActivity(i);
   }
 
   @OnClick({R.id.northButton})
