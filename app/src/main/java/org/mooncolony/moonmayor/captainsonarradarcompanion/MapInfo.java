@@ -34,7 +34,7 @@ public class MapInfo {
   Bitmap bitmap;
   List<GridPoint> currentPath;
   RadarTracker gameTracker;
-  Paint redPaint, circlePaint, whitePaint, blackPaint;
+  Paint redPaint, circlePaint, whitePaint, blackPaint, yellowPaint;
   Paint waterPaint, islandPaint, pathPaint, textPaint;
 
 
@@ -93,6 +93,10 @@ public class MapInfo {
     this.blackPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.blackPaint.setColor(Color.BLACK);
     this.blackPaint.setStyle(Paint.Style.FILL);
+
+    this.yellowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    this.yellowPaint.setColor(Color.YELLOW);
+    this.yellowPaint.setStyle(Paint.Style.FILL);
 
     this.pathPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.pathPaint.setColor(Color.BLACK);
@@ -319,7 +323,7 @@ public class MapInfo {
       }
 
       // draw the current line segment.
-      drawLineSegment(col1, row1, col2, row2);
+      drawLineSegment(col1, row1, col2, row2, pathPaint);
 
       // update the current row and col to the next row and col.
       col1 = col2;
@@ -327,16 +331,44 @@ public class MapInfo {
     }
   }
 
-  public void drawLineSegment(int col1, int row1, int col2, int row2) {
+  public void drawLineSegment(int col1, int row1, int col2, int row2, Paint paint) {
     float x1 = initialXOffset + col1 * xIterateOffset;
     float y1 = initialYOffset + row1 * yIterateOffset;
 
     float x2 = initialXOffset + col2 * xIterateOffset;
     float y2 = initialYOffset + row2 * yIterateOffset;
 
-    canvas.drawLine(x1, y1, x2, y2, pathPaint);
+    canvas.drawLine(x1, y1, x2, y2, paint);
 
     mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
+  }
+
+  public void drawTorpedoTarget(int row, int col) {
+    drawTargetingLines(row, col);
+    drawTorpedo(row, col);
+  }
+
+  public void drawTargetingLines(int row, int col) {
+    int maxCol = gameTracker.map.cols;
+    int maxRow = gameTracker.map.rows;
+    drawLineSegment(0, row, maxCol, row, yellowPaint);
+    drawLineSegment(col, 0, col, maxRow, yellowPaint);
+  }
+
+  public void drawTorpedo(int row, int col) {
+
+  }
+
+  public void displayTorpedo() {
+
+  }
+
+  public void placeTorpedo() {
+
+  }
+
+  public void cancelTorpedo() {
+
   }
 
 }

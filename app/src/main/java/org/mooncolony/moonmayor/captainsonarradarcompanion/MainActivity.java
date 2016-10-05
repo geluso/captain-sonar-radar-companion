@@ -123,17 +123,26 @@ public class MainActivity extends AppCompatActivity {
   @OnClick({R.id.torpedoButton})
   void torpedoButtonClick() {
     showTorpedoMenu();
+
+    // target the center of the board at first and allow user to move it around.
+    int row = mapInfo.gameTracker.map.rows / 2;
+    int col = mapInfo.gameTracker.map.cols / 2;
+    mapInfo.drawTorpedoTarget(row, col);
   }
 
   @OnClick({R.id.confirmTorpedo})
   void confirmTorpedo() {
     appendText("torpedo");
     showCompass();
+
+    mapInfo.placeTorpedo();
   }
 
   @OnClick({R.id.cancelTorpedo})
   void cancelTorpedo() {
     showCompass();
+
+    mapInfo.cancelTorpedo();
   }
 
   void showTorpedoMenu() {
