@@ -34,7 +34,7 @@ public class MapInfo {
   Bitmap bitmap;
   List<GridPoint> currentPath;
   RadarTracker gameTracker;
-  Paint redPaint, greenPaint, whitePaint, blackPaint;
+  Paint redPaint, circlePaint, whitePaint, blackPaint;
   Paint waterPaint, islandPaint, pathPaint, textPaint;
 
 
@@ -74,10 +74,10 @@ public class MapInfo {
     this.redPaint.setColor(Color.RED);
     this.redPaint.setStyle(Paint.Style.FILL);
 
-    this.greenPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.greenPaint.setStrokeWidth(6.0f);
-    this.greenPaint.setColor(Color.GREEN);
-    this.greenPaint.setStyle(Paint.Style.STROKE);
+    this.circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    this.circlePaint.setStrokeWidth(6.0f);
+    this.circlePaint.setColor(Color.rgb(13, 71, 161));
+    this.circlePaint.setStyle(Paint.Style.STROKE);
 
     this.whitePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.whitePaint.setColor(Color.WHITE);
@@ -118,6 +118,7 @@ public class MapInfo {
   public void drawBase() {
     clearCanvas();
 //    drawGrid();
+    drawSectionLines();
     drawCircles();
     drawIslands();
     drawLetters();
@@ -131,6 +132,18 @@ public class MapInfo {
 
     for (int col = 0; col < gameTracker.map.cols; col++) {
       float y = this.initialYOffset + col * this.yIterateOffset;
+      this.canvas.drawLine(0, y, this.width, y, blackPaint);
+    }
+  }
+
+  public void drawSectionLines() {
+    for (int row = 0; row < gameTracker.map.rows-1; row+=5) {
+      float x = this.initialXOffset + row * this.xIterateOffset -xIterateOffset/2;
+      this.canvas.drawLine(x, 0, x, this.width, blackPaint);
+    }
+
+    for (int col = 0; col < gameTracker.map.cols-1; col+=5) {
+      float y = this.initialYOffset + col * this.yIterateOffset -yIterateOffset/2;
       this.canvas.drawLine(0, y, this.width, y, blackPaint);
     }
   }
@@ -209,7 +222,7 @@ public class MapInfo {
 
   public void drawPossibleStartingLocations() {
     for (GridPoint g : gameTracker.getStartingPoints()) {
-      this.addCircle(g.col,g.row,Color.GREEN);
+      this.addCircle(g,Color.GREEN);
     }
   }
 
@@ -218,9 +231,9 @@ public class MapInfo {
   }
 
   public void addCircle(int col, int row, int greenOrRed) {
-    Paint paint = greenOrRed == Color.RED ? redPaint : greenPaint;
+    Paint paint = greenOrRed == Color.RED ? redPaint : circlePaint;
 
-    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, circleRadius, paint);
+    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, 3*circleRadius/4, paint);
 
     mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
   }
