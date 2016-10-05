@@ -84,9 +84,10 @@ public class MapInfo {
     this.whitePaint.setStyle(Paint.Style.FILL);
 
     this.textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);;
-    this.textPaint.setColor(Color.rgb(240,240,20));
+    this.textPaint.setColor(Color.rgb(13, 71, 161));
     this.textPaint.setStyle(Paint.Style.FILL);
     this.textPaint.setTextSize(circleRadius);
+    this.textPaint.setFakeBoldText(true);
     this.textPaint.setTextAlign(Paint.Align.CENTER);
 
     this.blackPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -99,11 +100,11 @@ public class MapInfo {
     this.pathPaint.setStyle(Paint.Style.FILL);
 
     this.waterPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.waterPaint.setColor(Color.BLUE);
+    this.waterPaint.setColor(Color.rgb(79,195,247));
     this.waterPaint.setStyle(Paint.Style.FILL);
 
     this.islandPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.islandPaint.setColor(Color.rgb(100,248,100));
+    this.islandPaint.setColor(Color.rgb(56,142,60));
     this.islandPaint.setStyle(Paint.Style.FILL);
 
     initialize();
