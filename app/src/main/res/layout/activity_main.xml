@@ -36,7 +36,6 @@
             android:id="@+id/textView"
             android:layout_height="wrap_content"
             android:maxLines="1"/>
-
     </HorizontalScrollView>
 
     <LinearLayout
@@ -51,15 +50,29 @@
             android:orientation="vertical"
             android:layout_weight="1">
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Mine"
-                android:id="@+id/mineButton"/>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:layout_height="0dp"
+                android:layout_width="match_parent">
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Mine"
+                    android:layout_weight="2"
+                    android:id="@+id/mineButton"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="Torpedo"
+                    android:layout_weight="3"
+                    android:id="@+id/torpedoButton"/>
+            </LinearLayout>
 
             <Button
+                android:layout_weight="1"
+                android:layout_height="0dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/resetButton"
                 android:textColor="#fff"
                 android:backgroundTint="#c22"
