@@ -62,13 +62,13 @@ public class MapInfo {
     Log.i("MATT-TEST", "Phone width is: " + this.width + "pix");
     Log.i("MATT-TEST", "Circle radius is: " + this.circleRadius + "pix");
 
-    this.initialXOffset = 2 * this.circleRadius;
-    this.initialYOffset = 2 * this.circleRadius;
+    this.initialXOffset = 3 * this.circleRadius;
+    this.initialYOffset = 3 * this.circleRadius;
 
     this.xIterateOffset = this.circleRadius * 2;
     this.yIterateOffset = this.circleRadius * 2;
 
-    this.textColumnAdditionalOffset = circleRadius/3;
+    this.textColumnAdditionalOffset = circleRadius/2;
 
     this.redPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.redPaint.setColor(Color.RED);
@@ -86,7 +86,7 @@ public class MapInfo {
     this.textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);;
     this.textPaint.setColor(Color.rgb(13, 71, 161));
     this.textPaint.setStyle(Paint.Style.FILL);
-    this.textPaint.setTextSize(circleRadius);
+    this.textPaint.setTextSize(4*circleRadius/3);
     this.textPaint.setFakeBoldText(true);
     this.textPaint.setTextAlign(Paint.Align.CENTER);
 
@@ -149,8 +149,8 @@ public class MapInfo {
 
   public void drawIslands() {
     for (GridPoint island : gameTracker.islands) {
-      int x = Math.round(this.circleRadius + island.col * this.xIterateOffset);
-      int y = Math.round(this.circleRadius + island.row * this.yIterateOffset);
+      int x = Math.round(circleRadius + xIterateOffset/2 + island.col * this.xIterateOffset);
+      int y = Math.round(circleRadius + yIterateOffset/2 + island.row * this.yIterateOffset);
       int squareSize = Math.round(2 * circleRadius);
 
       Rect rect = new Rect(x, y, x + squareSize, y + squareSize);
@@ -162,7 +162,7 @@ public class MapInfo {
     for (int row = 0; row < gameTracker.map.rows; row++) {
       float x = this.initialXOffset + row * this.xIterateOffset;
       String colLetter = ""+(char)(row+65);
-      canvas.drawText(colLetter,x,circleRadius,textPaint);
+      canvas.drawText(colLetter,x,initialXOffset-3*xIterateOffset/4,textPaint);
     }
 
     for (int col = 0; col < gameTracker.map.cols; col++) {
