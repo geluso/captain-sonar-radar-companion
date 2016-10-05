@@ -117,9 +117,10 @@ public class MapInfo {
 
   public void drawBase() {
     clearCanvas();
-    drawGrid();
+//    drawGrid();
     drawIslands();
     drawLetters();
+    drawCircles();
   }
 
   public void drawGrid() {
@@ -132,6 +133,18 @@ public class MapInfo {
       float y = this.initialYOffset + col * this.yIterateOffset;
       this.canvas.drawLine(0, y, this.width, y, blackPaint);
     }
+  }
+
+  public void drawCircles() {
+    for (int row = 0; row < gameTracker.map.rows; row++) {
+      for (int col = 0; col < gameTracker.map.cols; col++) {
+        float y = this.initialYOffset + col * this.yIterateOffset;
+        float x = this.initialXOffset + row * this.xIterateOffset;
+        this.canvas.drawCircle(x, y, circleRadius/8, whitePaint);
+      }
+    }
+
+
   }
 
   public void drawIslands() {
