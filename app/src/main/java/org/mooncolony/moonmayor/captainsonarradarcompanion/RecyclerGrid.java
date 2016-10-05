@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MapRealTimeAlpha;
+import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.AlphaRealTime;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ public class RecyclerGrid extends AppCompatActivity {
       waterOrLand.add(true);
     }
 
-    String[] rows = MapRealTimeAlpha.template.split("\n");
+    String[] rows = AlphaRealTime.template.split("\n");
     int count = 0;
     for (String s : rows) {
       for (int i = 0; i < s.length(); i++) {

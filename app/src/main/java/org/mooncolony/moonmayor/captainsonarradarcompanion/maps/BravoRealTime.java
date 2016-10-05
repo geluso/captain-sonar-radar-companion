@@ -3,27 +3,27 @@ package org.mooncolony.moonmayor.captainsonarradarcompanion.maps;
 /**
  * Created by moonmayor on 10/3/16.
  */
-public class MapRealTimeAlpha extends Map {
-  public static final String name = "Alpha Real-Time";
+public class BravoRealTime extends Map {
+  public static final String name = "Bravo Real Time";
   public static final String template =
      //ABCDEFGHIJKLMNO
       "...............\n" + // 1
-      "..X...X.....XX.\n" + // 2
-      "..X.....X...X..\n" + // 3
+      "..X.........XX.\n" + // 2
+      "..X.....X......\n" + // 3
       "........X......\n" + // 4
       "...............\n" + // 5
       "...............\n" + // 6
-      ".X.X..X.X......\n" + // 7
-      ".X.X..X........\n" + // 8
-      "...X...X...XXX.\n" + // 9
+      "...............\n" + // 7
+      "...X...........\n" + // 8
+      "...X.......XXX.\n" + // 9
       "...............\n" + // 10
       "...X...........\n" + // 11
       "..X....X...X...\n" + // 12
-      "X...........X..\n" + // 13
-      "..X...X.X....X.\n" + // 14
-      "...X...........";  // 15
+      "...............\n" + // 13
+      "........X......\n" + // 14
+      "...............";  // 15
 
-  public MapRealTimeAlpha() {
+  public BravoRealTime() {
     this.water = templateToArray(template);
   }
 }
