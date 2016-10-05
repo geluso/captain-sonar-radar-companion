@@ -10,9 +10,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.AlphaRealTime;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.Map;
-import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MapRealTimeAlpha;
-import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MapTiny;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     spinner.setAdapter(mapChoices);
 
     // initialize the map
-    this.currentMapTemplate = MapRealTimeAlpha.template;
+    this.currentMapTemplate = AlphaRealTime.template;
     mapInfo = new MapInfo(this, mapView, new RadarTracker(new Map(this.currentMapTemplate)));
   }
 
@@ -59,14 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
   @OnItemSelected(R.id.mapSpinner)
   public void spinnerItemSelected(Spinner spinner, int position) {
-    String mapName = Map.AVAILABLE_MAPS[position];
-    String template = null;
-
-    if (mapName.equals(MapRealTimeAlpha.name)) {
-      template = MapRealTimeAlpha.template;
-    } else if (mapName.equals(MapTiny.name)) {
-      template = MapTiny.template;
-    }
+    String template = Map.MAP_TEMPLATES[position];
 
     if (template == null) {
       Toast.makeText(MainActivity.this, "Unknown map.", Toast.LENGTH_SHORT).show();
@@ -76,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
     this.currentMapTemplate = template;
     Map newMap = new Map(template);
 
-    String size = newMap.name + " rows:" + newMap.rows + " cols:" + newMap.cols;
-    Toast.makeText(MainActivity.this, size, Toast.LENGTH_SHORT).show();
+    String msg = "Loaded " + Map.AVAILABLE_MAPS[position];
+    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
 
     mapInfo = new MapInfo(this, mapView, new RadarTracker(newMap));
     resetButtonClick();
