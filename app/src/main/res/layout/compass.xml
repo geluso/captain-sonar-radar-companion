@@ -18,12 +18,13 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"/>
 
-        <ImageView
+        <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:src="@drawable/arrow_north"
+            android:text="North"
+            android:textAlignment="center"
             android:id="@+id/northButton"/>
 
         <View
@@ -39,12 +40,13 @@
         android:layout_gravity="center"
         android:layout_weight="1">
 
-        <ImageView
+        <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:src="@drawable/arrow_west"
+            android:text="West"
+            android:textAlignment="center"
             android:id="@+id/westButton"/>
 
         <View
@@ -52,12 +54,13 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"/>
 
-        <ImageView
+        <TextView
             android:layout_width="0dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:src="@drawable/arrow_east"
+            android:text="East"
+            android:textAlignment="center"
             android:id="@+id/eastButton"/>
 
     </LinearLayout>
@@ -73,12 +76,13 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"/>
 
-        <ImageView
+        <TextView
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:src="@drawable/arrow_south"
+            android:text="South"
+            android:textAlignment="center"
             android:id="@+id/southButton"/>
 
         <View
