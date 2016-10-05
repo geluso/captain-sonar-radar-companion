@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
   @BindView(R.id.cancelTorpedo) Button cancelTorpedo;
 
   private String currentMapTemplate;
+  private boolean targetingTorpedo = false;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +59,15 @@ public class MainActivity extends AppCompatActivity {
     if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_MOVE || action == MotionEvent.ACTION_DOWN) {
       float x = event.getX();
       float y = event.getY();
-      //TODO: Check that the path lands at a valid circle
-      mapInfo.drawPath(x, y);
+
+      if (this.targetingTorpedo) {
+        int row = mapInfo.yToRow(y);
+        int col = mapInfo.xToCol(x);
+        mapInfo.drawTorpedoTarget(row, col);
+      } else {
+        //TODO: Check that the path lands at a valid circle
+        mapInfo.drawPath(x, y);
+      }
     }
     return true;
   }
@@ -128,6 +136,8 @@ public class MainActivity extends AppCompatActivity {
     int row = mapInfo.gameTracker.map.rows / 2;
     int col = mapInfo.gameTracker.map.cols / 2;
     mapInfo.drawTorpedoTarget(row, col);
+
+    this.targetingTorpedo = true;
   }
 
   @OnClick({R.id.confirmTorpedo})
@@ -136,6 +146,7 @@ public class MainActivity extends AppCompatActivity {
     showCompass();
 
     mapInfo.placeTorpedo();
+    this.targetingTorpedo = false;
   }
 
   @OnClick({R.id.cancelTorpedo})
@@ -143,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
     showCompass();
 
     mapInfo.cancelTorpedo();
+    this.targetingTorpedo = false;
   }
 
   void showTorpedoMenu() {

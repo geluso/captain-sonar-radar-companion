@@ -96,6 +96,7 @@ public class MapInfo {
 
     this.yellowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
     this.yellowPaint.setColor(Color.YELLOW);
+    this.yellowPaint.setStrokeWidth(4.0f);
     this.yellowPaint.setStyle(Paint.Style.FILL);
 
     this.pathPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -262,6 +263,24 @@ public class MapInfo {
     mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
   }
 
+  public int xToCol(float x) {
+    float xx = x - this.initialXOffset;
+    xx = xx / this.xIterateOffset;
+    xx = Math.round(xx);
+
+    int col = (int) xx;
+    return col;
+  }
+
+  public int yToRow(float y) {
+    float yy = y - this.initialYOffset;
+    yy = yy / this.yIterateOffset;
+    yy = Math.round(yy);
+
+    int row = (int) yy;
+    return row;
+  }
+
   public void drawPath(float x, float y) {
     this.showingPath = true;
 
@@ -270,17 +289,8 @@ public class MapInfo {
       return;
     }
 
-    float xx = x - this.initialXOffset;
-    float yy = y - this.initialYOffset;
-
-    xx = xx / this.xIterateOffset;
-    yy = yy / this.yIterateOffset;
-
-    xx = Math.round(xx);
-    yy = Math.round(yy);
-
-    int col1 = (int) xx;
-    int row1 = (int) yy;
+    int col1 = this.xToCol(x);
+    int row1 = this.yToRow(y);
 
     // if the path is already drawn from this path and column then return
     // from this function before anything computationally expensive happens.
@@ -344,7 +354,11 @@ public class MapInfo {
   }
 
   public void drawTorpedoTarget(int row, int col) {
+    drawBase();
     drawTargetingLines(row, col);
+    drawPossibleStartingLocations();
+    drawPath();
+
     drawTorpedo(row, col);
   }
 
@@ -360,6 +374,7 @@ public class MapInfo {
   }
 
   public void displayTorpedo() {
+
 
   }
 
