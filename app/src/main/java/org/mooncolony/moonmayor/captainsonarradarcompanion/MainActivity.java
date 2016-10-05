@@ -3,7 +3,9 @@ package org.mooncolony.moonmayor.captainsonarradarcompanion;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -25,6 +27,13 @@ public class MainActivity extends AppCompatActivity {
   @BindView(R.id.mapSpinner) Spinner spinner;
   @BindView(R.id.mapView) ImageView mapView;
   @BindView(R.id.textView) TextView textView;
+
+  @BindView(R.id.torpedoButton) View torpedoButton;
+
+  @BindView(R.id.compass) View compass;
+  @BindView(R.id.torpedoMenu) View torpedoMenu;
+  @BindView(R.id.confirmTorpedo) Button confirmTorpedo;
+  @BindView(R.id.cancelTorpedo) Button cancelTorpedo;
 
   private String currentMapTemplate;
 
@@ -79,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
     textView.setText("");
     mapInfo.restartGame(this.currentMapTemplate);
     mapInfo.initialize();
+    showCompass();
   }
 
   private void updateMap(GridPoint gp) {
@@ -109,6 +119,31 @@ public class MainActivity extends AppCompatActivity {
   void mineButtonClick() {
     appendText("mine");
     mapInfo.addMine();
+  }
+  @OnClick({R.id.torpedoButton})
+  void torpedoButtonClick() {
+    showTorpedoMenu();
+  }
+
+  @OnClick({R.id.confirmTorpedo})
+  void confirmTorpedo() {
+    appendText("torpedo");
+    showCompass();
+  }
+
+  @OnClick({R.id.cancelTorpedo})
+  void cancelTorpedo() {
+    showCompass();
+  }
+
+  void showTorpedoMenu() {
+    compass.setVisibility(View.GONE);
+    torpedoMenu.setVisibility(View.VISIBLE);
+  }
+
+  void showCompass() {
+    compass.setVisibility(View.VISIBLE);
+    torpedoMenu.setVisibility(View.GONE);
   }
 
   private void appendText(String message) {
