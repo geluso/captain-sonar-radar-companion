@@ -161,7 +161,8 @@ public class MapInfo {
     this.currentPath.add(gp);
     gameTracker.track(this.currentPath);
 
-    drawPossibleStartingLocations();
+//    drawPossibleStartingLocations();
+    drawLocationPatches();
 
     drawPath();
   }
@@ -171,6 +172,30 @@ public class MapInfo {
       this.addCircle(g,Color.GREEN);
     }
   }
+
+  public void drawLocationPatches() {
+    for (GridPoint g : gameTracker.getStartingPoints()) {
+      this.addPatch(g);
+    }
+  }
+
+  public void addPatch(GridPoint point) {
+    addPatch(point.col, point.row);
+  }
+
+  public void addPatch(int col, int row) {
+
+    int x = Math.round(circleRadius + xIterateOffset/2 + col * this.xIterateOffset);
+    int y = Math.round(circleRadius + yIterateOffset/2 + row * this.yIterateOffset);
+    int squareSize = Math.round(2 * circleRadius);
+
+    Rect rect = new Rect(x, y, x + squareSize, y + squareSize);
+    this.canvas.drawRect(rect, Paints.AREA);
+
+    mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
+  }
+
+
 
   public void addCircle(GridPoint point, int greenOrRed) {
     addCircle(point.col, point.row, greenOrRed);
@@ -261,7 +286,8 @@ public class MapInfo {
 
     // clear the board, draw the map, draw the possibilities and draw the path from the click position.
     drawBase();
-    drawPossibleStartingLocations();
+//    drawPossibleStartingLocations();
+    drawLocationPatches();
 
     int col1 = this.pathStartCol;
     int row1 = this.pathStartRow;
@@ -306,7 +332,8 @@ public class MapInfo {
 
   public void drawTorpedoTarget(int row, int col) {
     drawBase();
-    drawPossibleStartingLocations();
+//    drawPossibleStartingLocations();
+    drawLocationPatches();
     drawPath();
 
     drawTargetingLines(row, col);

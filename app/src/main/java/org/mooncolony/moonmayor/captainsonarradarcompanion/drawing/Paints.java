@@ -8,7 +8,7 @@ import android.graphics.Paint;
  */
 public class Paints {
   public static final Paint RED, WHITE, BLACK, YELLOW;
-  public static final Paint CIRCLE, WATER, ISLAND, PATH, TEXT;
+  public static final Paint CIRCLE, WATER, ISLAND, PATH, TEXT, AREA;
 
   static {
     RED = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -51,5 +51,9 @@ public class Paints {
     ISLAND = new Paint(Paint.ANTI_ALIAS_FLAG);
     ISLAND.setColor(Color.rgb(56, 142, 60));
     ISLAND.setStyle(Paint.Style.FILL);
+
+    AREA = new Paint(Paint.ANTI_ALIAS_FLAG);
+    AREA.setColor(Color.argb(100, 255, 255, 255));
+    AREA.setStyle(Paint.Style.FILL);
   }
 }
