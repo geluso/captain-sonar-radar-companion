@@ -76,23 +76,10 @@ public class MapInfo {
 
   public void drawBase() {
     clearCanvas();
-//    drawGrid();
     drawSectionLines();
     drawCircles();
     drawIslands();
     drawLetters();
-  }
-
-  public void drawGrid() {
-    for (int row = 0; row < gameTracker.map.rows; row++) {
-      float x = this.initialXOffset + row * this.xIterateOffset;
-      this.canvas.drawLine(x, 0, x, this.width, Paints.BLACK);
-    }
-
-    for (int col = 0; col < gameTracker.map.cols; col++) {
-      float y = this.initialYOffset + col * this.yIterateOffset;
-      this.canvas.drawLine(0, y, this.width, y, Paints.BLACK);
-    }
   }
 
   public void drawSectionLines() {
