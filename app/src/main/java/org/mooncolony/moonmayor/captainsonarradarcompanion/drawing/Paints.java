@@ -53,7 +53,8 @@ public class Paints {
     ISLAND.setStyle(Paint.Style.FILL);
 
     AREA = new Paint(Paint.ANTI_ALIAS_FLAG);
-    AREA.setColor(Color.argb(100, 255, 255, 255));
+    AREA.setColor(Color.argb(120, 13, 71, 80));
     AREA.setStyle(Paint.Style.FILL);
+    AREA.setStrokeWidth(0);
   }
 }

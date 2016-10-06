@@ -100,7 +100,8 @@ public class MainActivity extends AppCompatActivity {
   private void updateMap(GridPoint gp) {
     gameState.updatePath(gp);
 
-    drawer.drawPossibleStartingLocations();
+//    drawer.drawPossibleStartingLocations();
+    drawer.drawInvalidArea();
     drawer.drawAll();
   }
 

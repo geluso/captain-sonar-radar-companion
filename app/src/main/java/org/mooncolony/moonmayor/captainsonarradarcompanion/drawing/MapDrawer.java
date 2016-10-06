@@ -73,7 +73,8 @@ public class MapDrawer {
 
   public void drawAll() {
     drawBase();
-    drawPossibleStartingLocations();
+//    drawPossibleStartingLocations();
+    drawInvalidArea();
     drawPath();
   }
 
@@ -182,7 +183,8 @@ public class MapDrawer {
 
     // clear the board, draw the map, draw the possibilities and draw the path from the click position.
     drawBase();
-    drawPossibleStartingLocations();
+//    drawPossibleStartingLocations();
+    drawInvalidArea();
 
     int col1 = gameState.pathStartCol;
     int row1 = gameState.pathStartRow;
@@ -227,7 +229,8 @@ public class MapDrawer {
 
   public void drawTorpedoTarget(int row, int col) {
     drawBase();
-    drawPossibleStartingLocations();
+//    drawPossibleStartingLocations();
+    drawInvalidArea();
     drawPath();
 
     drawTargetingLines(row, col);
@@ -307,17 +310,36 @@ public class MapDrawer {
     return y;
   }
 
+  public void drawInvalidArea() {
+    for (GridPoint g : gameState.radar.getInvalidatedPoints()) {
+      this.invalidatePoint(g);
+    }
+  }
+
+  private void invalidatePoint(GridPoint point) {
+    int col = point.col, row = point.row;
+    int x = Math.round(circleRadius + xIterateOffset/2 + col * this.xIterateOffset);
+    int y = Math.round(circleRadius + yIterateOffset/2 + row * this.yIterateOffset);
+    int squareSize = Math.round(2 * circleRadius);
+
+    Rect rect = new Rect(x, y, x + squareSize, y + squareSize);
+    this.canvas.drawRect(rect, Paints.AREA);
+
+    this.map.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
+
+  }
+
   public void drawPossibleStartingLocations() {
     for (GridPoint g : gameState.radar.getStartingPoints()) {
       this.addCircle(g, Color.GREEN);
     }
   }
 
-  public void addCircle(GridPoint point, int greenOrRed) {
+  private void addCircle(GridPoint point, int greenOrRed) {
     addCircle(point.col, point.row, greenOrRed);
   }
 
-  public void addCircle(int col, int row, int greenOrRed) {
+  private void addCircle(int col, int row, int greenOrRed) {
     Paint paint = greenOrRed == Color.RED ? Paints.RED : Paints.CIRCLE;
 
     canvas.drawCircle(initialXOffset + col * xIterateOffset, initialYOffset + row * yIterateOffset, 3 * circleRadius / 4, paint);

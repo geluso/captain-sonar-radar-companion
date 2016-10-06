@@ -30,7 +30,7 @@ public class RadarTracker {
           startingPoints.add(startingLocation);
         } else {
           islands.add(startingLocation);
-          invalidatedPoints.add(startingLocation);
+//          invalidatedPoints.add(startingLocation);
         }
       }
     }
