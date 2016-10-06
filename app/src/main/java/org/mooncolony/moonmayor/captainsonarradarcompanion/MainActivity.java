@@ -11,7 +11,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.AlphaRealTime;
+import org.mooncolony.moonmayor.captainsonarradarcompanion.drawing.MapDrawer;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.Map;
 
 import butterknife.BindView;
@@ -22,7 +22,8 @@ import butterknife.OnTouch;
 
 public class MainActivity extends AppCompatActivity {
 
-  MapInfo mapInfo;
+  GameState gameState;
+  MapDrawer drawer;
 
   @BindView(R.id.mapSpinner) Spinner spinner;
   @BindView(R.id.mapView) ImageView mapView;
@@ -35,9 +36,6 @@ public class MainActivity extends AppCompatActivity {
   @BindView(R.id.confirmTorpedo) Button confirmTorpedo;
   @BindView(R.id.cancelTorpedo) Button cancelTorpedo;
 
-  private String currentMapTemplate;
-  private boolean targetingTorpedo = false;
-
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -49,8 +47,8 @@ public class MainActivity extends AppCompatActivity {
     spinner.setAdapter(mapChoices);
 
     // initialize the map
-    this.currentMapTemplate = AlphaRealTime.template;
-    mapInfo = new MapInfo(this, mapView, new RadarTracker(new Map(this.currentMapTemplate)));
+    gameState = new GameState();
+    this.drawer = new MapDrawer(this, mapView, gameState);
   }
 
   @OnTouch({R.id.mapView})
@@ -60,13 +58,14 @@ public class MainActivity extends AppCompatActivity {
       float x = event.getX();
       float y = event.getY();
 
-      if (this.targetingTorpedo) {
-        int row = mapInfo.yToRow(y);
-        int col = mapInfo.xToCol(x);
-        mapInfo.drawTorpedoTarget(row, col);
+      if (gameState.placingTorpedo) {
+        int row = drawer.yToRow(y);
+        int col = drawer.xToCol(x);
+        drawer.drawTorpedoTarget(row, col);
       } else {
         //TODO: Check that the path lands at a valid circle
-        mapInfo.drawPath(x, y);
+        gameState.showingPath = true;
+        drawer.drawPath(gameState.currentPath, x, y);
       }
     }
     return true;
@@ -81,26 +80,28 @@ public class MainActivity extends AppCompatActivity {
       return;
     }
 
-    this.currentMapTemplate = template;
-    Map newMap = new Map(template);
-
     String msg = "Loaded " + Map.AVAILABLE_MAPS[position];
     Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
 
-    mapInfo = new MapInfo(this, mapView, new RadarTracker(newMap));
+    gameState.newGame(template);
     resetButtonClick();
   }
 
   @OnClick({R.id.resetButton})
   void resetButtonClick() {
     textView.setText("");
-    mapInfo.restartGame(this.currentMapTemplate);
-    mapInfo.initialize();
+    gameState.newGame();
+
     showCompass();
+
+    drawer.drawAll();
   }
 
   private void updateMap(GridPoint gp) {
-    mapInfo.updatePath(gp);
+    gameState.updatePath(gp);
+
+    drawer.drawPossibleStartingLocations();
+    drawer.drawAll();
   }
 
   @OnClick({R.id.northButton})
@@ -126,18 +127,19 @@ public class MainActivity extends AppCompatActivity {
   @OnClick({R.id.mineButton})
   void mineButtonClick() {
     appendText("mine");
-    mapInfo.addMine();
+    gameState.addMine();
+    drawer.drawAll();
   }
   @OnClick({R.id.torpedoButton})
   void torpedoButtonClick() {
     showTorpedoMenu();
 
     // target the center of the board at first and allow user to move it around.
-    int row = mapInfo.gameTracker.map.rows / 2;
-    int col = mapInfo.gameTracker.map.cols / 2;
-    mapInfo.drawTorpedoTarget(row, col);
+    int row = gameState.radar.map.rows / 2;
+    int col = gameState.radar.map.cols / 2;
+    drawer.drawTorpedoTarget(row, col);
 
-    this.targetingTorpedo = true;
+    gameState.placingTorpedo = true;
   }
 
   @OnClick({R.id.confirmTorpedo})
@@ -145,16 +147,14 @@ public class MainActivity extends AppCompatActivity {
     appendText("torpedo");
     showCompass();
 
-    mapInfo.placeTorpedo();
-    this.targetingTorpedo = false;
+    gameState.placingTorpedo = false;
   }
 
   @OnClick({R.id.cancelTorpedo})
   void cancelTorpedo() {
     showCompass();
 
-    mapInfo.cancelTorpedo();
-    this.targetingTorpedo = false;
+    gameState.placingTorpedo = false;
   }
 
   void showTorpedoMenu() {
