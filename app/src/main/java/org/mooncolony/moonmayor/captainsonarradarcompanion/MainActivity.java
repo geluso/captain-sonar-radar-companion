@@ -101,7 +101,8 @@ public class MainActivity extends AppCompatActivity {
     gameState.updatePath(gp);
 
 //    drawer.drawPossibleStartingLocations();
-    drawer.drawInvalidArea();
+    drawer.drawInvalidStartArea();
+//    drawer.drawInvalidCurrentArea();
     drawer.drawAll();
   }
 

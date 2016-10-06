@@ -74,7 +74,8 @@ public class MapDrawer {
   public void drawAll() {
     drawBase();
 //    drawPossibleStartingLocations();
-    drawInvalidArea();
+    drawInvalidStartArea();
+//    drawInvalidCurrentArea();
     drawPath();
   }
 
@@ -184,8 +185,8 @@ public class MapDrawer {
     // clear the board, draw the map, draw the possibilities and draw the path from the click position.
     drawBase();
 //    drawPossibleStartingLocations();
-    drawInvalidArea();
-
+    drawInvalidStartArea();
+//    drawInvalidCurrentArea();
     int col1 = gameState.pathStartCol;
     int row1 = gameState.pathStartRow;
 
@@ -230,7 +231,8 @@ public class MapDrawer {
   public void drawTorpedoTarget(int row, int col) {
     drawBase();
 //    drawPossibleStartingLocations();
-    drawInvalidArea();
+    drawInvalidStartArea();
+//    drawInvalidCurrentArea();
     drawPath();
 
     drawTargetingLines(row, col);
@@ -310,8 +312,14 @@ public class MapDrawer {
     return y;
   }
 
-  public void drawInvalidArea() {
-    for (GridPoint g : gameState.radar.getInvalidatedPoints()) {
+  public void drawInvalidCurrentArea() {
+    for (GridPoint g : gameState.radar.getInvalidCurrentPoints()) {
+      this.invalidatePoint(g);
+    }
+  }
+
+  public void drawInvalidStartArea() {
+    for (GridPoint g : gameState.radar.getInvalidStartPoints()) {
       this.invalidatePoint(g);
     }
   }
@@ -330,7 +338,7 @@ public class MapDrawer {
   }
 
   public void drawPossibleStartingLocations() {
-    for (GridPoint g : gameState.radar.getStartingPoints()) {
+    for (GridPoint g : gameState.radar.getValidStartPoints()) {
       this.addCircle(g, Color.GREEN);
     }
   }

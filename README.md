@@ -1,9 +1,7 @@
 # captain-sonar-radar-companion
 
 ## TODO
-- place a drop down menu at the top of the screen to select prepared maps,
-  and have a custom map option.
-- add alphabet and numbers along row column. verify with an official game image
-  to figure out which side letters and numbers are supposed to go on.
-- find authorative source of legit maps.
-
+- custom map option
+- option to switch path view off
+- switch between possible current position & possible start positions
+- torpedo mode doesn't always switch back to path mode properly

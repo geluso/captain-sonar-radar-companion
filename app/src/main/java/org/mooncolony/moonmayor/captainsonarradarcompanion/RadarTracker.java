@@ -12,14 +12,17 @@ import java.util.Set;
 public class RadarTracker {
   public Map map;
   public Set<GridPoint> islands;
-  private Set<GridPoint> startingPoints;
-  private Set<GridPoint> invalidatedPoints;
+  private Set<GridPoint> validStartPoints;
+  private Set<GridPoint> invalidStartPoints;
+
+  private Set<GridPoint> invalidCurrentPoints;
 
   public RadarTracker(Map map) {
     this.map = map;
     islands = new HashSet<>();
-    startingPoints = new HashSet<>();
-    invalidatedPoints = new HashSet<>();
+    validStartPoints = new HashSet<>();
+    invalidStartPoints = new HashSet<>();
+    invalidCurrentPoints = new HashSet<>();
 
     // initialize the new Radar Tracker with all starting positions that are
     // not on islands.
@@ -27,26 +30,58 @@ public class RadarTracker {
       for (int col = 0; col < map.cols; col++) {
         GridPoint startingLocation = new GridPoint(row, col);
         if (map.getCoord(startingLocation)) {
-          startingPoints.add(startingLocation);
+          validStartPoints.add(startingLocation);
         } else {
           islands.add(startingLocation);
-//          invalidatedPoints.add(startingLocation);
+//          invalidStartPoints.add(startingLocation);
         }
       }
     }
   }
 
+  public Set<GridPoint> getInvalidCurrentPoints() {
+    return invalidCurrentPoints;
+  }
+
   public void track(List<GridPoint> path) {
     Set<GridPoint> filteredStarts = new HashSet<>();
 
-    for (GridPoint start : startingPoints) {
+    for (GridPoint start : validStartPoints) {
       if (isValidPath(start, path)) {
         filteredStarts.add(start);
       } else {
-        invalidatedPoints.add(start);
+        invalidStartPoints.add(start);
       }
     }
-    startingPoints = filteredStarts;
+    validStartPoints = filteredStarts;
+    updateCurrentInvalidStartPoints(path);
+  }
+
+  private void updateCurrentInvalidStartPoints(List<GridPoint> path) {
+    Set<GridPoint> newSet = new HashSet<>();
+
+    for (GridPoint gp : this.invalidStartPoints) {
+      GridPoint newGp = performPath(gp,path);
+      if (newGp!=null) {
+        newSet.add(newGp);
+      }
+    }
+
+    invalidCurrentPoints = newSet;
+  }
+
+  private GridPoint performPath(GridPoint gp, List<GridPoint> path) {
+    if (!map.getCoord(gp)) {
+      return null;
+    }
+    for (GridPoint movement : path) {
+      gp = gp.add(movement);
+    }
+    if (map.getCoord(gp)) {
+      return gp;
+    } else {
+      return null;
+    }
   }
 
   private boolean isValidPath(GridPoint start, List<GridPoint> path) {
@@ -68,15 +103,15 @@ public class RadarTracker {
     return true;
   }
 
-  public void setStartingPoints(Set<GridPoint> startingPoints) {
-    this.startingPoints = startingPoints;
+  public void setValidStartPoints(Set<GridPoint> validStartPoints) {
+    this.validStartPoints = validStartPoints;
   }
 
-  public Set<GridPoint> getStartingPoints() {
-    return startingPoints;
+  public Set<GridPoint> getValidStartPoints() {
+    return validStartPoints;
   }
 
-  public Set<GridPoint> getInvalidatedPoints() {
-    return invalidatedPoints;
+  public Set<GridPoint> getInvalidStartPoints() {
+    return invalidStartPoints;
   }
 }
