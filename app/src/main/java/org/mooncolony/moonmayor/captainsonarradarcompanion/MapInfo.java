@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.DisplayMetrics;
@@ -86,7 +87,7 @@ public class MapInfo {
     this.textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);;
     this.textPaint.setColor(Color.rgb(13, 71, 161));
     this.textPaint.setStyle(Paint.Style.FILL);
-    this.textPaint.setTextSize(4*circleRadius/3);
+    this.textPaint.setTextSize(4 * circleRadius / 3);
     this.textPaint.setFakeBoldText(true);
     this.textPaint.setTextAlign(Paint.Align.CENTER);
 
@@ -161,8 +162,6 @@ public class MapInfo {
         this.canvas.drawCircle(x, y, circleRadius/8, whitePaint);
       }
     }
-
-
   }
 
   public void drawIslands() {
@@ -238,7 +237,7 @@ public class MapInfo {
   public void addCircle(int col, int row, int greenOrRed) {
     Paint paint = greenOrRed == Color.RED ? redPaint : circlePaint;
 
-    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, 3*circleRadius/4, paint);
+    canvas.drawCircle(initialXOffset + col * xIterateOffset, initialYOffset + row * yIterateOffset, 3 * circleRadius / 4, paint);
 
     mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
   }
@@ -279,6 +278,16 @@ public class MapInfo {
 
     int row = (int) yy;
     return row;
+  }
+
+  public float colToX(int col) {
+    float x = col * this.xIterateOffset + this.initialXOffset;
+    return x;
+  }
+
+  public float rowToY(int row) {
+    float y = row * this.yIterateOffset + this.initialYOffset;
+    return y;
   }
 
   public void drawPath(float x, float y) {
@@ -355,10 +364,10 @@ public class MapInfo {
 
   public void drawTorpedoTarget(int row, int col) {
     drawBase();
-    drawTargetingLines(row, col);
     drawPossibleStartingLocations();
     drawPath();
 
+    drawTargetingLines(row, col);
     drawTorpedo(row, col);
   }
 
@@ -370,12 +379,26 @@ public class MapInfo {
   }
 
   public void drawTorpedo(int row, int col) {
+    Path path = new Path();
+    path.setFillType(Path.FillType.EVEN_ODD);
 
-  }
+    float x = colToX(col);
+    float y = rowToY(row);
 
-  public void displayTorpedo() {
+    float halfCircleRadius = this.circleRadius / 2;
 
+    float leftX = x - halfCircleRadius;
+    float rightX = x + halfCircleRadius;
+    float topY = y - halfCircleRadius;
+    float botY = y + halfCircleRadius;
 
+    path.moveTo(rightX, topY);
+    path.lineTo(leftX, topY);
+    path.lineTo(leftX, botY);
+    path.lineTo(rightX, botY);
+    path.close();
+
+    canvas.drawPath(path, redPaint);
   }
 
   public void placeTorpedo() {
