@@ -9,9 +9,9 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.widget.ImageView;
 
+import org.mooncolony.moonmayor.captainsonarradarcompanion.drawing.Paints;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.Map;
 
 import java.util.ArrayList;
@@ -35,8 +35,6 @@ public class MapInfo {
   Bitmap bitmap;
   List<GridPoint> currentPath;
   RadarTracker gameTracker;
-  Paint redPaint, circlePaint, whitePaint, blackPaint, yellowPaint;
-  Paint waterPaint, islandPaint, pathPaint, textPaint;
 
 
   public MapInfo(Activity activity, ImageView mapImageView, RadarTracker gameTracker) {
@@ -60,9 +58,6 @@ public class MapInfo {
     // add one to account for a half circle padding on each edge
     this.circleRadius = (float) ((1.0 * this.width) / (gameTracker.map.cols + 1) / 2);
 
-    Log.i("MATT-TEST", "Phone width is: " + this.width + "pix");
-    Log.i("MATT-TEST", "Circle radius is: " + this.circleRadius + "pix");
-
     this.initialXOffset = 3 * this.circleRadius;
     this.initialYOffset = 3 * this.circleRadius;
 
@@ -70,48 +65,6 @@ public class MapInfo {
     this.yIterateOffset = this.circleRadius * 2;
 
     this.textColumnAdditionalOffset = circleRadius/2;
-
-    this.redPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.redPaint.setColor(Color.RED);
-    this.redPaint.setStyle(Paint.Style.FILL);
-
-    this.circlePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.circlePaint.setStrokeWidth(6.0f);
-    this.circlePaint.setColor(Color.rgb(13, 71, 161));
-    this.circlePaint.setStyle(Paint.Style.STROKE);
-
-    this.whitePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.whitePaint.setColor(Color.WHITE);
-    this.whitePaint.setStyle(Paint.Style.FILL);
-
-    this.textPaint = new Paint(Paint.ANTI_ALIAS_FLAG);;
-    this.textPaint.setColor(Color.rgb(13, 71, 161));
-    this.textPaint.setStyle(Paint.Style.FILL);
-    this.textPaint.setTextSize(4 * circleRadius / 3);
-    this.textPaint.setFakeBoldText(true);
-    this.textPaint.setTextAlign(Paint.Align.CENTER);
-
-    this.blackPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.blackPaint.setColor(Color.BLACK);
-    this.blackPaint.setStyle(Paint.Style.FILL);
-
-    this.yellowPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.yellowPaint.setColor(Color.YELLOW);
-    this.yellowPaint.setStrokeWidth(4.0f);
-    this.yellowPaint.setStyle(Paint.Style.FILL);
-
-    this.pathPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.pathPaint.setColor(Color.BLACK);
-    this.pathPaint.setStrokeWidth(8.0f);
-    this.pathPaint.setStyle(Paint.Style.FILL);
-
-    this.waterPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.waterPaint.setColor(Color.rgb(79,195,247));
-    this.waterPaint.setStyle(Paint.Style.FILL);
-
-    this.islandPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-    this.islandPaint.setColor(Color.rgb(56,142,60));
-    this.islandPaint.setStyle(Paint.Style.FILL);
 
     initialize();
   }
@@ -133,24 +86,24 @@ public class MapInfo {
   public void drawGrid() {
     for (int row = 0; row < gameTracker.map.rows; row++) {
       float x = this.initialXOffset + row * this.xIterateOffset;
-      this.canvas.drawLine(x, 0, x, this.width, blackPaint);
+      this.canvas.drawLine(x, 0, x, this.width, Paints.BLACK);
     }
 
     for (int col = 0; col < gameTracker.map.cols; col++) {
       float y = this.initialYOffset + col * this.yIterateOffset;
-      this.canvas.drawLine(0, y, this.width, y, blackPaint);
+      this.canvas.drawLine(0, y, this.width, y, Paints.BLACK);
     }
   }
 
   public void drawSectionLines() {
     for (int row = 0; row < gameTracker.map.rows-1; row+=5) {
       float x = this.initialXOffset + row * this.xIterateOffset -xIterateOffset/2;
-      this.canvas.drawLine(x, 0, x, this.width, blackPaint);
+      this.canvas.drawLine(x, 0, x, this.width, Paints.BLACK);
     }
 
     for (int col = 0; col < gameTracker.map.cols-1; col+=5) {
       float y = this.initialYOffset + col * this.yIterateOffset -yIterateOffset/2;
-      this.canvas.drawLine(0, y, this.width, y, blackPaint);
+      this.canvas.drawLine(0, y, this.width, y, Paints.BLACK);
     }
   }
 
@@ -159,7 +112,7 @@ public class MapInfo {
       for (int col = 0; col < gameTracker.map.cols; col++) {
         float y = this.initialYOffset + col * this.yIterateOffset;
         float x = this.initialXOffset + row * this.xIterateOffset;
-        this.canvas.drawCircle(x, y, circleRadius/8, whitePaint);
+        this.canvas.drawCircle(x, y, circleRadius/8, Paints.WHITE);
       }
     }
   }
@@ -171,7 +124,7 @@ public class MapInfo {
       int squareSize = Math.round(2 * circleRadius);
 
       Rect rect = new Rect(x, y, x + squareSize, y + squareSize);
-      this.canvas.drawRect(rect, islandPaint);
+      this.canvas.drawRect(rect, Paints.ISLAND);
     }
   }
 
@@ -179,14 +132,16 @@ public class MapInfo {
     for (int row = 0; row < gameTracker.map.rows; row++) {
       float x = this.initialXOffset + row * this.xIterateOffset;
       String colLetter = ""+(char)(row+65);
-      canvas.drawText(colLetter,x,initialXOffset-3*xIterateOffset/4,textPaint);
+
+      Paints.TEXT.setTextSize(4 * circleRadius / 3);
+      canvas.drawText(colLetter,x,initialXOffset-3*xIterateOffset/4,Paints.TEXT);
     }
 
     for (int col = 0; col < gameTracker.map.cols; col++) {
       //the additional text column offset is to account for centring the letter
       float y = this.initialYOffset + col * this.yIterateOffset+this.textColumnAdditionalOffset;
       String rowNum = ""+(col+1);
-      canvas.drawText(rowNum,circleRadius,y,textPaint);
+      canvas.drawText(rowNum,circleRadius,y,Paints.TEXT);
     }
 
 
@@ -197,7 +152,7 @@ public class MapInfo {
     canvas = new Canvas(this.bitmap);
 
     Rect rect = new Rect(0, 0, this.width, this.width);
-    canvas.drawRect(rect, waterPaint);
+    canvas.drawRect(rect, Paints.WATER);
 
     //Attach the canvas to the ImageView
     mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
@@ -235,7 +190,7 @@ public class MapInfo {
   }
 
   public void addCircle(int col, int row, int greenOrRed) {
-    Paint paint = greenOrRed == Color.RED ? redPaint : circlePaint;
+    Paint paint = greenOrRed == Color.RED ? Paints.RED : Paints.CIRCLE;
 
     canvas.drawCircle(initialXOffset + col * xIterateOffset, initialYOffset + row * yIterateOffset, 3 * circleRadius / 4, paint);
 
@@ -255,9 +210,9 @@ public class MapInfo {
     // adjust the radius of the circle so it's slightly smaller than really defined.
     float radius = (float) (this.circleRadius * .9);
 
-    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, radius, redPaint);
-    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, (float) .66 * radius, whitePaint);
-    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, (float) .33 * radius, redPaint);
+    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, radius, Paints.RED);
+    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, (float) .66 * radius, Paints.WHITE);
+    canvas.drawCircle(initialXOffset+col*xIterateOffset, initialYOffset+row*yIterateOffset, (float) .33 * radius, Paints.RED);
 
     mapImageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
   }
@@ -342,7 +297,7 @@ public class MapInfo {
       }
 
       // draw the current line segment.
-      drawLineSegment(col1, row1, col2, row2, pathPaint);
+      drawLineSegment(col1, row1, col2, row2, Paints.PATH);
 
       // update the current row and col to the next row and col.
       col1 = col2;
@@ -374,8 +329,8 @@ public class MapInfo {
   public void drawTargetingLines(int row, int col) {
     int maxCol = gameTracker.map.cols;
     int maxRow = gameTracker.map.rows;
-    drawLineSegment(0, row, maxCol, row, yellowPaint);
-    drawLineSegment(col, 0, col, maxRow, yellowPaint);
+    drawLineSegment(0, row, maxCol, row, Paints.YELLOW);
+    drawLineSegment(col, 0, col, maxRow, Paints.YELLOW);
   }
 
   public void drawTorpedo(int row, int col) {
@@ -398,7 +353,7 @@ public class MapInfo {
     path.lineTo(rightX, botY);
     path.close();
 
-    canvas.drawPath(path, redPaint);
+    canvas.drawPath(path, Paints.RED);
   }
 
   public void placeTorpedo() {
