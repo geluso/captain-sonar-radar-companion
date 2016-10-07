@@ -7,13 +7,17 @@ import android.graphics.Paint;
  * Created by moonmayor on 10/6/16.
  */
 public class Paints {
-  public static final Paint RED, WHITE, BLACK, YELLOW;
+  public static final Paint RED, WHITE, BLACK, YELLOW, GREEN;
   public static final Paint CIRCLE, WATER, ISLAND, PATH, TEXT, AREA;
 
   static {
     RED = new Paint(Paint.ANTI_ALIAS_FLAG);
     RED.setColor(Color.RED);
     RED.setStyle(Paint.Style.FILL);
+
+    GREEN = new Paint(Paint.ANTI_ALIAS_FLAG);
+    GREEN.setColor(Color.GREEN);
+    GREEN.setStyle(Paint.Style.FILL);
 
     CIRCLE = new Paint(Paint.ANTI_ALIAS_FLAG);
     CIRCLE.setStrokeWidth(6.0f);

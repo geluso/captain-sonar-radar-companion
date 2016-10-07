@@ -190,6 +190,7 @@ public class MapDrawer {
     int col1 = gameState.pathStartCol;
     int row1 = gameState.pathStartRow;
 
+
     for (GridPoint direction : gameState.currentPath) {
       int col2 = col1;
       int row2 = row1;
@@ -214,6 +215,14 @@ public class MapDrawer {
       col1 = col2;
       row1 = row2;
     }
+    drawStartingCircle(gameState.pathStartCol,gameState.pathStartRow,Paints.GREEN);
+    drawStartingCircle(col1,row1,Paints.RED);
+  }
+
+  public void drawStartingCircle(int col, int row, Paint paint) {
+    float x = initialXOffset + col * xIterateOffset;
+    float y = initialYOffset + row * yIterateOffset;
+    canvas.drawCircle(x,y,circleRadius/2, paint);
   }
 
   public void drawLineSegment(int col1, int row1, int col2, int row2, Paint paint) {
