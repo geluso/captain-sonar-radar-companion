@@ -26,8 +26,6 @@ public class MapDrawer {
   private Bitmap bitmap;
 
   private GameState gameState;
-  private int rows;
-  private int cols;
 
   private int width;
   private int height;
@@ -43,10 +41,10 @@ public class MapDrawer {
     this.activity = activity;
     this.map = map;
     this.gameState = gameState;
+    setDimensions();
+  }
 
-    this.rows = gameState.radar.map.rows;
-    this.cols = gameState.radar.map.cols;
-
+  public void setDimensions() {
     DisplayMetrics display = activity.getResources().getDisplayMetrics();
     this.width = display.widthPixels;
     this.height = display.heightPixels;
@@ -60,7 +58,7 @@ public class MapDrawer {
     this.canvas = canvas;
 
     // add one to account for a half circle padding on each edge
-    this.circleRadius = (float) ((1.0 * this.width) / (this.cols + 1) / 2);
+    this.circleRadius = (float) ((1.0 * this.width) / (getCols() + 1) / 2);
 
     this.initialXOffset = 3 * this.circleRadius;
     this.initialYOffset = 3 * this.circleRadius;
@@ -69,6 +67,16 @@ public class MapDrawer {
     this.yIterateOffset = this.circleRadius * 2;
 
     this.textColumnAdditionalOffset = circleRadius/2;
+
+  }
+
+  // create getters so rows and cols are always up to date with latest gameState.
+  private int getRows() {
+    return gameState.radar.map.rows;
+  }
+
+  private int getCols() {
+    return gameState.radar.map.cols;
   }
 
   public void drawAll() {
@@ -88,20 +96,42 @@ public class MapDrawer {
   }
 
   public void drawSectionLines() {
-    for (int row = 0; row < this.rows-1; row+=5) {
+    if (getRows() == 10) {
+      drawSectionLines10x10();
+    } else {
+      drawSectionLines15x15();
+    }
+  }
+
+  public void drawSectionLines10x10() {
+    for (int row = 0; row < getRows()-1; row+=5) {
       float x = this.initialXOffset + row * this.xIterateOffset -xIterateOffset/2;
       this.canvas.drawLine(x, 0, x, this.width, Paints.BLACK);
     }
 
-    for (int col = 0; col < this.cols-1; col+=5) {
+    for (int col = 0; col < getCols()-1; col+=5) {
       float y = this.initialYOffset + col * this.yIterateOffset -yIterateOffset/2;
       this.canvas.drawLine(0, y, this.width, y, Paints.BLACK);
     }
+
+  }
+
+  public void drawSectionLines15x15() {
+    for (int row = 0; row < getRows()-1; row+=5) {
+      float x = this.initialXOffset + row * this.xIterateOffset -xIterateOffset/2;
+      this.canvas.drawLine(x, 0, x, this.width, Paints.BLACK);
+    }
+
+    for (int col = 0; col < getCols()-1; col+=5) {
+      float y = this.initialYOffset + col * this.yIterateOffset -yIterateOffset/2;
+      this.canvas.drawLine(0, y, this.width, y, Paints.BLACK);
+    }
+
   }
 
   public void drawCircles() {
-    for (int row = 0; row < this.rows; row++) {
-      for (int col = 0; col < this.cols; col++) {
+    for (int row = 0; row < getRows(); row++) {
+      for (int col = 0; col < getCols(); col++) {
         float y = this.initialYOffset + col * this.yIterateOffset;
         float x = this.initialXOffset + row * this.xIterateOffset;
         this.canvas.drawCircle(x, y, circleRadius/8, Paints.WHITE);
@@ -121,7 +151,7 @@ public class MapDrawer {
   }
 
   public void drawLetters() {
-    for (int row = 0; row < this.rows; row++) {
+    for (int row = 0; row < getRows(); row++) {
       float x = this.initialXOffset + row * this.xIterateOffset;
       String colLetter = ""+(char)(row+65);
 
@@ -129,7 +159,7 @@ public class MapDrawer {
       canvas.drawText(colLetter,x,initialXOffset-3*xIterateOffset/4,Paints.TEXT);
     }
 
-    for (int col = 0; col < this.cols; col++) {
+    for (int col = 0; col < getCols(); col++) {
       //the additional text column offset is to account for centring the letter
       float y = this.initialYOffset + col * this.yIterateOffset+this.textColumnAdditionalOffset;
       String rowNum = ""+(col+1);
@@ -249,8 +279,8 @@ public class MapDrawer {
   }
 
   public void drawTargetingLines(int row, int col) {
-    int maxCol = this.cols;
-    int maxRow = this.rows;
+    int maxCol = getCols();
+    int maxRow = getRows();
     drawLineSegment(0, row, maxCol, row, Paints.YELLOW);
     drawLineSegment(col, 0, col, maxRow, Paints.YELLOW);
   }

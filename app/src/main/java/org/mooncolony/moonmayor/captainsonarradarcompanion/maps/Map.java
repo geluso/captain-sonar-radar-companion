@@ -1,10 +1,6 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion.maps;
 
 import org.mooncolony.moonmayor.captainsonarradarcompanion.GridPoint;
-import org.mooncolony.moonmayor.captainsonarradarcompanion.R;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by moonmayor on 10/3/16.
