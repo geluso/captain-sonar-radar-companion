@@ -9,7 +9,6 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.widget.ImageView;
 
 import org.mooncolony.moonmayor.captainsonarradarcompanion.GameState;
@@ -310,7 +309,6 @@ public class MapDrawer {
   private void drawTorpedoTracking() {
     for (GridPoint start : gameState.torpedoTracker.pointToPaths.keySet()) {
       List<GridPointPath> possiblePaths = gameState.torpedoTracker.pointToPaths.get(start);
-      Log.d("POSSIBLE TORPEDO PATHS", "" + possiblePaths.size());
       for (GridPointPath possiblePath : possiblePaths) {
         drawTorpedoPossiblePath(possiblePath);
       }
@@ -329,7 +327,6 @@ public class MapDrawer {
         drawLineSegment(col1, row1, col2, row2, Paints.YELLOW);
       } else {
         // not sure why coordinates would ever be diagonal from each other.
-        Log.d("DIAGONAL", "(" + row1 + "," + col1 + ") (" + row2 + "," + col2 +")");
       }
     }
   }

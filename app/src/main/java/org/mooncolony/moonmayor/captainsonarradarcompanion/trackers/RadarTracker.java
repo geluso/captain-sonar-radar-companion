@@ -34,6 +34,7 @@ public class RadarTracker {
           validStartPoints.add(startingLocation);
         } else {
           islands.add(startingLocation);
+          invalidCurrentPoints.add(startingLocation);
 //          invalidStartPoints.add(startingLocation);
         }
       }
