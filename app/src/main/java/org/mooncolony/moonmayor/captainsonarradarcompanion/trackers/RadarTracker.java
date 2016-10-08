@@ -1,6 +1,7 @@
-package org.mooncolony.moonmayor.captainsonarradarcompanion;
+package org.mooncolony.moonmayor.captainsonarradarcompanion.trackers;
 
-import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.Map;
+import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPoint;
+import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MarineMap;
 
 import java.util.HashSet;
 import java.util.List;
@@ -10,14 +11,14 @@ import java.util.Set;
  * Created by moonmayor on 10/3/16.
  */
 public class RadarTracker {
-  public Map map;
+  public MarineMap map;
   public Set<GridPoint> islands;
   private Set<GridPoint> validStartPoints;
   private Set<GridPoint> invalidStartPoints;
 
   private Set<GridPoint> invalidCurrentPoints;
 
-  public RadarTracker(Map map) {
+  public RadarTracker(MarineMap map) {
     this.map = map;
     islands = new HashSet<>();
     validStartPoints = new HashSet<>();

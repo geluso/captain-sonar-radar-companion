@@ -1,7 +1,10 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion;
 
+import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPoint;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.AlphaRealTime;
-import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.Map;
+import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MarineMap;
+import org.mooncolony.moonmayor.captainsonarradarcompanion.trackers.RadarTracker;
+import org.mooncolony.moonmayor.captainsonarradarcompanion.trackers.TorpedoTracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +14,9 @@ import java.util.List;
  */
 public class GameState {
   public RadarTracker radar;
+
   private String currentMapTemplate;
+  private MarineMap map;
 
   // The list of North, South, East, West, mine, torpedo moves.
   public List<GridPoint> currentPath;
@@ -19,6 +24,7 @@ public class GameState {
   public int pathStartCol, pathStartRow;
 
   // List of coordinates where torpedoes have been fired.
+  public TorpedoTracker torpedoTracker;
   public List<GridPoint> torpedoes;
 
   public boolean placingTorpedo = false;
@@ -26,10 +32,7 @@ public class GameState {
   public int placingTorpedoCol = -1;
 
   public GameState() {
-    this.currentMapTemplate = AlphaRealTime.template;
-    this.radar = new RadarTracker(new Map(this.currentMapTemplate));
-    this.currentPath = new ArrayList<>();
-    this.torpedoes = new ArrayList<>();
+    newGame(AlphaRealTime.template);
   }
 
   public void newGame() {
@@ -38,6 +41,7 @@ public class GameState {
 
   public void newGame(String template) {
     this.currentMapTemplate = template;
+    this.map = new MarineMap(this.currentMapTemplate);
 
     this.currentPath = new ArrayList<>();
     this.torpedoes = new ArrayList<>();
@@ -46,11 +50,12 @@ public class GameState {
     this.pathStartRow = 0;
     this.pathStartCol = 0;
 
+    this.torpedoTracker = new TorpedoTracker(this.map);
     this.placingTorpedo = false;
     this.placingTorpedoRow = -1;
     this.placingTorpedoCol = -1;
 
-    this.radar = new RadarTracker(new Map(template));
+    this.radar = new RadarTracker(this.map);
   }
 
   public void setPathStart(int row, int col) {
@@ -71,5 +76,7 @@ public class GameState {
   public void addTorpedo() {
     GridPoint torpedoTarget = new GridPoint(placingTorpedoRow, placingTorpedoCol);
     torpedoes.add(torpedoTarget);
+
+    torpedoTracker.track(torpedoTarget);
   }
 }

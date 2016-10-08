@@ -1,4 +1,4 @@
-package org.mooncolony.moonmayor.captainsonarradarcompanion;
+package org.mooncolony.moonmayor.captainsonarradarcompanion.geometry;
 
 /**
  * Created by moonmayor on 10/3/16.

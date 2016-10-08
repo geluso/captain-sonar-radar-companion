@@ -11,8 +11,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPoint;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.drawing.MapDrawer;
-import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.Map;
+import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MarineMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
 
-    String[] options = Map.AVAILABLE_MAPS;
+    String[] options = MarineMap.AVAILABLE_MAPS;
     ArrayAdapter<String> mapChoices = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, options);
     spinner.setAdapter(mapChoices);
 
@@ -76,14 +77,14 @@ public class MainActivity extends AppCompatActivity {
 
   @OnItemSelected(R.id.mapSpinner)
   public void spinnerItemSelected(Spinner spinner, int position) {
-    String template = Map.MAP_TEMPLATES[position];
+    String template = MarineMap.MAP_TEMPLATES[position];
 
     if (template == null) {
       Toast.makeText(MainActivity.this, "Unknown map.", Toast.LENGTH_SHORT).show();
       return;
     }
 
-    String msg = "Loaded " + Map.AVAILABLE_MAPS[position];
+    String msg = "Loaded " + MarineMap.AVAILABLE_MAPS[position];
     Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
 
     gameState.newGame(template);

@@ -3,7 +3,7 @@ package org.mooncolony.moonmayor.captainsonarradarcompanion.maps;
 /**
  * Created by moonmayor on 10/3/16.
  */
-public class AlphaTurnByTurn extends Map {
+public class AlphaTurnByTurn extends MarineMap {
   public static final String name = "Alpha Turn by Turn";
   public static final String template =
      //ABCDEFGHIJKLMNO

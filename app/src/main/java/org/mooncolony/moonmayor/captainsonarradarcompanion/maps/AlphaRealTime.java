@@ -3,7 +3,7 @@ package org.mooncolony.moonmayor.captainsonarradarcompanion.maps;
 /**
  * Created by moonmayor on 10/3/16.
  */
-public class AlphaRealTime extends Map {
+public class AlphaRealTime extends MarineMap {
   public static final String name = "Alpha Real Time";
   public static final String template =
      //ABCDEFGHIJKLMNO

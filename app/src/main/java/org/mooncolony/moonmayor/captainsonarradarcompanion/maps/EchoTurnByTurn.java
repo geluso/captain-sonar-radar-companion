@@ -3,7 +3,7 @@ package org.mooncolony.moonmayor.captainsonarradarcompanion.maps;
 /**
  * Created by moonmayor on 10/3/16.
  */
-public class EchoTurnByTurn extends Map {
+public class EchoTurnByTurn extends MarineMap {
   public static final String name = "Echo Turn by Turn";
   public static final String template =
       // the M's in this map represent mines which any player can explode.

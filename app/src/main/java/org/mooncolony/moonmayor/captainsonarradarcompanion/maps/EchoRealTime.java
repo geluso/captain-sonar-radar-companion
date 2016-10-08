@@ -3,7 +3,7 @@ package org.mooncolony.moonmayor.captainsonarradarcompanion.maps;
 /**
  * Created by moonmayor on 10/3/16.
  */
-public class EchoRealTime extends Map {
+public class EchoRealTime extends MarineMap {
   public static final String name = "Echo Real Time";
   public static final String template =
       // the M's in this map represent mines which any player can explode.

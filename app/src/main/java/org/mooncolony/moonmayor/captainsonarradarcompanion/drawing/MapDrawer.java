@@ -9,10 +9,14 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.widget.ImageView;
 
 import org.mooncolony.moonmayor.captainsonarradarcompanion.GameState;
-import org.mooncolony.moonmayor.captainsonarradarcompanion.GridPoint;
+import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPoint;
+import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPointPath;
+
+import java.util.List;
 
 /**
  * Created by moonmayor on 10/6/16.
@@ -123,6 +127,7 @@ public class MapDrawer {
       drawTorpedo(row, col);
     }
 
+    drawTorpedoTracking();
     drawTorpedoes();
     drawPath();
 
@@ -300,6 +305,33 @@ public class MapDrawer {
     path.close();
 
     canvas.drawPath(path, Paints.RED);
+  }
+
+  private void drawTorpedoTracking() {
+    for (GridPoint start : gameState.torpedoTracker.pointToPaths.keySet()) {
+      List<GridPointPath> possiblePaths = gameState.torpedoTracker.pointToPaths.get(start);
+      Log.d("POSSIBLE TORPEDO PATHS", "" + possiblePaths.size());
+      for (GridPointPath possiblePath : possiblePaths) {
+        drawTorpedoPossiblePath(possiblePath);
+      }
+    }
+  }
+
+  private void drawTorpedoPossiblePath(GridPointPath path) {
+    for (int i = 0; i < path.size() - 1; i++) {
+      int row1 = path.get(i).row;
+      int col1 = path.get(i).col;
+      int row2 = path.get(i + 1).row;
+      int col2 = path.get(i + 1).col;
+
+      // prevent drawing diagonal lines.
+      if (row1 == row2 || col1 == col2) {
+        drawLineSegment(col1, row1, col2, row2, Paints.YELLOW);
+      } else {
+        // not sure why coordinates would ever be diagonal from each other.
+        Log.d("DIAGONAL", "(" + row1 + "," + col1 + ") (" + row2 + "," + col2 +")");
+      }
+    }
   }
 
   private void drawTorpedoes() {

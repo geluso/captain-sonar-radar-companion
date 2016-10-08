@@ -1,11 +1,11 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion.maps;
 
-import org.mooncolony.moonmayor.captainsonarradarcompanion.GridPoint;
+import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPoint;
 
 /**
  * Created by moonmayor on 10/3/16.
  */
-public class Map {
+public class MarineMap {
   public static final String[] AVAILABLE_MAPS = {
       AlphaRealTime.name, AlphaTurnByTurn.name,
       BravoRealTime.name, BravoTurnByTurn.name,
@@ -29,9 +29,9 @@ public class Map {
   public boolean[][] water;
 
   //required empty constructor
-  public Map() {}
+  public MarineMap() {}
 
-  public Map(String s) {
+  public MarineMap(String s) {
     this.water = templateToArray(s);
     this.rows = water.length;
     this.cols = water[0].length;
