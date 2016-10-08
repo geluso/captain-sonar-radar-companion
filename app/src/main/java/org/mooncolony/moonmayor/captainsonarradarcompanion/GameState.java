@@ -31,6 +31,7 @@ public class GameState {
   }
 
   public void newGame(String template) {
+    this.currentMapTemplate = template;
     this.currentPath = new ArrayList<>();
     this.showingPath = false;
     this.pathStartRow = 0;
