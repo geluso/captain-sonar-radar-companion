@@ -58,14 +58,17 @@ public class MainActivity extends AppCompatActivity {
       float x = event.getX();
       float y = event.getY();
 
+      int row = drawer.yToRow(y);
+      int col = drawer.xToCol(x);
+
       if (gameState.placingTorpedo) {
-        int row = drawer.yToRow(y);
-        int col = drawer.xToCol(x);
-        drawer.drawTorpedoTarget(row, col);
+        gameState.placingTorpedoRow = row;
+        gameState.placingTorpedoCol = col;
+        drawer.draw();
       } else {
         //TODO: Check that the path lands at a valid circle
-        gameState.showingPath = true;
-        drawer.drawPath(gameState.currentPath, x, y);
+        gameState.setPathStart(row, col);
+        drawer.draw();
       }
     }
     return true;
@@ -95,16 +98,12 @@ public class MainActivity extends AppCompatActivity {
 
     showCompass();
 
-    drawer.drawAll();
+    drawer.draw();
   }
 
   private void updateMap(GridPoint gp) {
     gameState.updatePath(gp);
-
-//    drawer.drawPossibleStartingLocations();
-    drawer.drawInvalidStartArea();
-//    drawer.drawInvalidCurrentArea();
-    drawer.drawAll();
+    drawer.draw();
   }
 
   @OnClick({R.id.northButton})
@@ -131,18 +130,18 @@ public class MainActivity extends AppCompatActivity {
   void mineButtonClick() {
     appendText("mine");
     gameState.addMine();
-    drawer.drawAll();
+    drawer.draw();
   }
   @OnClick({R.id.torpedoButton})
   void torpedoButtonClick() {
     showTorpedoMenu();
 
     // target the center of the board at first and allow user to move it around.
-    int row = gameState.radar.map.rows / 2;
-    int col = gameState.radar.map.cols / 2;
-    drawer.drawTorpedoTarget(row, col);
-
     gameState.placingTorpedo = true;
+    gameState.placingTorpedoRow = gameState.radar.map.rows / 2;
+    gameState.placingTorpedoCol = gameState.radar.map.cols / 2;
+
+    drawer.draw();
   }
 
   @OnClick({R.id.confirmTorpedo})
@@ -150,7 +149,9 @@ public class MainActivity extends AppCompatActivity {
     appendText("torpedo");
     showCompass();
 
+    gameState.addTorpedo();
     gameState.placingTorpedo = false;
+    drawer.draw();
   }
 
   @OnClick({R.id.cancelTorpedo})
@@ -158,6 +159,7 @@ public class MainActivity extends AppCompatActivity {
     showCompass();
 
     gameState.placingTorpedo = false;
+    drawer.draw();
   }
 
   void showTorpedoMenu() {

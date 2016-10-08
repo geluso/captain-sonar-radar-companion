@@ -14,8 +14,6 @@ import android.widget.ImageView;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.GameState;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.GridPoint;
 
-import java.util.List;
-
 /**
  * Created by moonmayor on 10/6/16.
  */
@@ -79,250 +77,6 @@ public class MapDrawer {
     return gameState.radar.map.cols;
   }
 
-  public void drawAll() {
-    drawBase();
-//    drawPossibleStartingLocations();
-    drawInvalidStartArea();
-//    drawInvalidCurrentArea();
-    drawPath();
-  }
-
-  public void drawBase() {
-    clearCanvas();
-    drawSectionLines();
-    drawCircles();
-    drawIslands();
-    drawLetters();
-  }
-
-  public void drawSectionLines() {
-    if (getRows() == 10) {
-      drawSectionLines10x10();
-    } else {
-      drawSectionLines15x15();
-    }
-  }
-
-  public void drawSectionLines10x10() {
-    for (int row = 0; row < getRows()-1; row+=5) {
-      float x = this.initialXOffset + row * this.xIterateOffset -xIterateOffset/2;
-      this.canvas.drawLine(x, 0, x, this.width, Paints.BLACK);
-    }
-
-    for (int col = 0; col < getCols()-1; col+=5) {
-      float y = this.initialYOffset + col * this.yIterateOffset -yIterateOffset/2;
-      this.canvas.drawLine(0, y, this.width, y, Paints.BLACK);
-    }
-
-  }
-
-  public void drawSectionLines15x15() {
-    for (int row = 0; row < getRows()-1; row+=5) {
-      float x = this.initialXOffset + row * this.xIterateOffset -xIterateOffset/2;
-      this.canvas.drawLine(x, 0, x, this.width, Paints.BLACK);
-    }
-
-    for (int col = 0; col < getCols()-1; col+=5) {
-      float y = this.initialYOffset + col * this.yIterateOffset -yIterateOffset/2;
-      this.canvas.drawLine(0, y, this.width, y, Paints.BLACK);
-    }
-
-  }
-
-  public void drawCircles() {
-    for (int row = 0; row < getRows(); row++) {
-      for (int col = 0; col < getCols(); col++) {
-        float y = this.initialYOffset + col * this.yIterateOffset;
-        float x = this.initialXOffset + row * this.xIterateOffset;
-        this.canvas.drawCircle(x, y, circleRadius/8, Paints.WHITE);
-      }
-    }
-  }
-
-  public void drawIslands() {
-    for (GridPoint island : gameState.radar.islands) {
-      int x = Math.round(circleRadius + xIterateOffset/2 + island.col * this.xIterateOffset);
-      int y = Math.round(circleRadius + yIterateOffset/2 + island.row * this.yIterateOffset);
-      int squareSize = Math.round(2 * circleRadius);
-
-      Rect rect = new Rect(x, y, x + squareSize, y + squareSize);
-      this.canvas.drawRect(rect, Paints.ISLAND);
-    }
-  }
-
-  public void drawLetters() {
-    for (int row = 0; row < getRows(); row++) {
-      float x = this.initialXOffset + row * this.xIterateOffset;
-      String colLetter = ""+(char)(row+65);
-
-      Paints.TEXT.setTextSize(4 * circleRadius / 3);
-      canvas.drawText(colLetter,x,initialXOffset-3*xIterateOffset/4,Paints.TEXT);
-    }
-
-    for (int col = 0; col < getCols(); col++) {
-      //the additional text column offset is to account for centring the letter
-      float y = this.initialYOffset + col * this.yIterateOffset+this.textColumnAdditionalOffset;
-      String rowNum = ""+(col+1);
-      canvas.drawText(rowNum,circleRadius,y,Paints.TEXT);
-    }
-
-
-  }
-
-  public void clearCanvas() {
-    this.bitmap = Bitmap.createBitmap(this.width, this.width, Bitmap.Config.RGB_565);
-    canvas = new Canvas(this.bitmap);
-
-    Rect rect = new Rect(0, 0, this.width, this.width);
-    canvas.drawRect(rect, Paints.WATER);
-
-    //Attach the canvas to the ImageView
-    map.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
-  }
-
-  public void drawPath(List<GridPoint> path, float x, float y) {
-    gameState.showingPath = true;
-
-    // don't try and draw a path if there's no path to draw.
-    if (path.size() == 0) {
-      return;
-    }
-
-    gameState.currentPath = path;
-    int col1 = this.xToCol(x);
-    int row1 = this.yToRow(y);
-
-    // if the path is already drawn from this path and column then return
-    // from this function before anything computationally expensive happens.
-    if (col1 == gameState.pathStartCol && row1 == gameState.pathStartRow) {
-      return;
-    }
-
-    gameState.pathStartCol = col1;
-    gameState.pathStartRow = row1;
-    drawPath();
-  }
-
-  public void drawPath() {
-    if (!gameState.showingPath) {
-      return;
-    }
-
-    if (gameState.currentPath.size() == 0) {
-      return;
-    }
-
-    // clear the board, draw the map, draw the possibilities and draw the path from the click position.
-    drawBase();
-//    drawPossibleStartingLocations();
-    drawInvalidStartArea();
-//    drawInvalidCurrentArea();
-    int col1 = gameState.pathStartCol;
-    int row1 = gameState.pathStartRow;
-
-
-    for (GridPoint direction : gameState.currentPath) {
-      int col2 = col1;
-      int row2 = row1;
-
-      if (direction == GridPoint.MINE) {
-        drawMine(col1, row1);
-        continue;
-      }else if (direction == GridPoint.NORTH) {
-        row2--;
-      } else if (direction == GridPoint.SOUTH) {
-        row2++;
-      } else if (direction == GridPoint.EAST) {
-        col2++;
-      } else if (direction == GridPoint.WEST) {
-        col2--;
-      }
-
-      // draw the current line segment.
-      drawLineSegment(col1, row1, col2, row2, Paints.PATH);
-
-      // update the current row and col to the next row and col.
-      col1 = col2;
-      row1 = row2;
-    }
-    drawStartingCircle(gameState.pathStartCol,gameState.pathStartRow,Paints.GREEN);
-    drawStartingCircle(col1,row1,Paints.RED);
-  }
-
-  public void drawStartingCircle(int col, int row, Paint paint) {
-    float x = initialXOffset + col * xIterateOffset;
-    float y = initialYOffset + row * yIterateOffset;
-    canvas.drawCircle(x,y,circleRadius/2, paint);
-  }
-
-  public void drawLineSegment(int col1, int row1, int col2, int row2, Paint paint) {
-    float x1 = initialXOffset + col1 * xIterateOffset;
-    float y1 = initialYOffset + row1 * yIterateOffset;
-
-    float x2 = initialXOffset + col2 * xIterateOffset;
-    float y2 = initialYOffset + row2 * yIterateOffset;
-
-    canvas.drawLine(x1, y1, x2, y2, paint);
-
-    map.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
-  }
-
-  public void drawTorpedoTarget(int row, int col) {
-    drawBase();
-//    drawPossibleStartingLocations();
-    drawInvalidStartArea();
-//    drawInvalidCurrentArea();
-    drawPath();
-
-    drawTargetingLines(row, col);
-    drawTorpedo(row, col);
-  }
-
-  public void drawTargetingLines(int row, int col) {
-    int maxCol = getCols();
-    int maxRow = getRows();
-    drawLineSegment(0, row, maxCol, row, Paints.YELLOW);
-    drawLineSegment(col, 0, col, maxRow, Paints.YELLOW);
-  }
-
-  public void drawTorpedo(int row, int col) {
-    Path path = new Path();
-    path.setFillType(Path.FillType.EVEN_ODD);
-
-    float x = colToX(col);
-    float y = rowToY(row);
-
-    float halfCircleRadius = this.circleRadius / 2;
-
-    float leftX = x - halfCircleRadius;
-    float rightX = x + halfCircleRadius;
-    float topY = y - halfCircleRadius;
-    float botY = y + halfCircleRadius;
-
-    path.moveTo(rightX, topY);
-    path.lineTo(leftX, topY);
-    path.lineTo(leftX, botY);
-    path.lineTo(rightX, botY);
-    path.close();
-
-    canvas.drawPath(path, Paints.RED);
-  }
-
-  public void drawMine(GridPoint point) {
-    drawMine(point.col, point.row);
-  }
-
-  public void drawMine(int col, int row) {
-    // adjust the radius of the circle so it's slightly smaller than really defined.
-    float radius = (float) (this.circleRadius * .9);
-
-    canvas.drawCircle(initialXOffset + col * xIterateOffset, initialYOffset + row * yIterateOffset, radius, Paints.RED);
-    canvas.drawCircle(initialXOffset + col * xIterateOffset, initialYOffset + row * yIterateOffset, (float) .66 * radius, Paints.WHITE);
-    canvas.drawCircle(initialXOffset + col * xIterateOffset, initialYOffset + row * yIterateOffset, (float) .33 * radius, Paints.RED);
-
-    map.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
-  }
-
   public int xToCol(float x) {
     float xx = x - this.initialXOffset;
     xx = xx / this.xIterateOffset;
@@ -351,13 +105,229 @@ public class MapDrawer {
     return y;
   }
 
-  public void drawInvalidCurrentArea() {
+  public void draw() {
+    clearCanvas();
+    drawSectionLines();
+    drawCircles();
+    drawIslands();
+    drawLetters();
+
+    // drawPossibleStartingLocations();
+    drawInvalidStartArea();
+    // drawInvalidCurrentArea();
+
+    if (gameState.placingTorpedo) {
+      int row = gameState.placingTorpedoRow;
+      int col = gameState.placingTorpedoCol;
+      drawTargetingLines(row, col);
+      drawTorpedo(row, col);
+    }
+
+    drawTorpedoes();
+    drawPath();
+
+    map.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
+  }
+
+  private void drawSectionLines() {
+    if (getRows() == 10) {
+      drawSectionLines10x10();
+    } else {
+      drawSectionLines15x15();
+    }
+  }
+
+  private void drawSectionLines10x10() {
+    for (int row = 0; row < getRows()-1; row+=5) {
+      float x = this.initialXOffset + row * this.xIterateOffset -xIterateOffset/2;
+      this.canvas.drawLine(x, 0, x, this.width, Paints.BLACK);
+    }
+
+    for (int col = 0; col < getCols()-1; col+=5) {
+      float y = this.initialYOffset + col * this.yIterateOffset -yIterateOffset/2;
+      this.canvas.drawLine(0, y, this.width, y, Paints.BLACK);
+    }
+
+  }
+
+  private void drawSectionLines15x15() {
+    for (int row = 0; row < getRows()-1; row+=5) {
+      float x = this.initialXOffset + row * this.xIterateOffset -xIterateOffset/2;
+      this.canvas.drawLine(x, 0, x, this.width, Paints.BLACK);
+    }
+
+    for (int col = 0; col < getCols()-1; col+=5) {
+      float y = this.initialYOffset + col * this.yIterateOffset -yIterateOffset/2;
+      this.canvas.drawLine(0, y, this.width, y, Paints.BLACK);
+    }
+
+  }
+
+  private void drawCircles() {
+    for (int row = 0; row < getRows(); row++) {
+      for (int col = 0; col < getCols(); col++) {
+        float y = this.initialYOffset + col * this.yIterateOffset;
+        float x = this.initialXOffset + row * this.xIterateOffset;
+        this.canvas.drawCircle(x, y, circleRadius/8, Paints.WHITE);
+      }
+    }
+  }
+
+  private void drawIslands() {
+    for (GridPoint island : gameState.radar.islands) {
+      int x = Math.round(circleRadius + xIterateOffset/2 + island.col * this.xIterateOffset);
+      int y = Math.round(circleRadius + yIterateOffset/2 + island.row * this.yIterateOffset);
+      int squareSize = Math.round(2 * circleRadius);
+
+      Rect rect = new Rect(x, y, x + squareSize, y + squareSize);
+      this.canvas.drawRect(rect, Paints.ISLAND);
+    }
+  }
+
+  private void drawLetters() {
+    for (int row = 0; row < getRows(); row++) {
+      float x = this.initialXOffset + row * this.xIterateOffset;
+      String colLetter = ""+(char)(row+65);
+
+      Paints.TEXT.setTextSize(4 * circleRadius / 3);
+      canvas.drawText(colLetter,x,initialXOffset-3*xIterateOffset/4,Paints.TEXT);
+    }
+
+    for (int col = 0; col < getCols(); col++) {
+      //the additional text column offset is to account for centring the letter
+      float y = this.initialYOffset + col * this.yIterateOffset+this.textColumnAdditionalOffset;
+      String rowNum = ""+(col+1);
+      canvas.drawText(rowNum,circleRadius,y,Paints.TEXT);
+    }
+
+
+  }
+
+  private void clearCanvas() {
+    this.bitmap = Bitmap.createBitmap(this.width, this.width, Bitmap.Config.RGB_565);
+    canvas = new Canvas(this.bitmap);
+
+    Rect rect = new Rect(0, 0, this.width, this.width);
+    canvas.drawRect(rect, Paints.WATER);
+  }
+
+  private void drawPath() {
+    if (!gameState.showingPath) {
+      return;
+    }
+
+    if (gameState.currentPath.size() == 0) {
+      return;
+    }
+
+    int row1 = gameState.pathStartRow;
+    int col1 = gameState.pathStartCol;
+
+    for (GridPoint direction : gameState.currentPath) {
+      int col2 = col1;
+      int row2 = row1;
+
+      if (direction == GridPoint.MINE) {
+        drawMine(col1, row1);
+        continue;
+      }else if (direction == GridPoint.NORTH) {
+        row2--;
+      } else if (direction == GridPoint.SOUTH) {
+        row2++;
+      } else if (direction == GridPoint.EAST) {
+        col2++;
+      } else if (direction == GridPoint.WEST) {
+        col2--;
+      }
+
+      // draw the current line segment.
+      drawLineSegment(col1, row1, col2, row2, Paints.PATH);
+
+      // update the current row and col to the next row and col.
+      col1 = col2;
+      row1 = row2;
+    }
+    drawStartingCircle(gameState.pathStartCol,gameState.pathStartRow,Paints.GREEN);
+    drawStartingCircle(col1, row1, Paints.RED);
+  }
+
+  private void drawStartingCircle(int col, int row, Paint paint) {
+    float x = initialXOffset + col * xIterateOffset;
+    float y = initialYOffset + row * yIterateOffset;
+    canvas.drawCircle(x, y, circleRadius / 2, paint);
+  }
+
+  private void drawLineSegment(int col1, int row1, int col2, int row2, Paint paint) {
+    float x1 = initialXOffset + col1 * xIterateOffset;
+    float y1 = initialYOffset + row1 * yIterateOffset;
+
+    float x2 = initialXOffset + col2 * xIterateOffset;
+    float y2 = initialYOffset + row2 * yIterateOffset;
+
+    canvas.drawLine(x1, y1, x2, y2, paint);
+  }
+
+  private void drawTorpedoTarget(int row, int col) {
+    //drawer.drawTorpedoTarget(row, col);
+    drawTorpedo(row, col);
+  }
+
+  private void drawTargetingLines(int row, int col) {
+    int maxCol = getCols();
+    int maxRow = getRows();
+    drawLineSegment(0, row, maxCol, row, Paints.YELLOW);
+    drawLineSegment(col, 0, col, maxRow, Paints.YELLOW);
+  }
+
+  private void drawTorpedo(int row, int col) {
+    Path path = new Path();
+    path.setFillType(Path.FillType.EVEN_ODD);
+
+    float x = colToX(col);
+    float y = rowToY(row);
+
+    float halfCircleRadius = this.circleRadius / 2;
+
+    float leftX = x - halfCircleRadius;
+    float rightX = x + halfCircleRadius;
+    float topY = y - halfCircleRadius;
+    float botY = y + halfCircleRadius;
+
+    path.moveTo(rightX, topY);
+    path.lineTo(leftX, topY);
+    path.lineTo(leftX, botY);
+    path.lineTo(rightX, botY);
+    path.close();
+
+    canvas.drawPath(path, Paints.RED);
+  }
+
+  private void drawTorpedoes() {
+    for (GridPoint point : gameState.torpedoes) {
+      drawTorpedo(point.row, point.col);
+    }
+  }
+
+  private void drawMine(GridPoint point) {
+    drawMine(point.col, point.row);
+  }
+
+  private void drawMine(int col, int row) {
+    // adjust the radius of the circle so it's slightly smaller than really defined.
+    float radius = (float) (this.circleRadius * .9);
+
+    canvas.drawCircle(initialXOffset + col * xIterateOffset, initialYOffset + row * yIterateOffset, radius, Paints.RED);
+    canvas.drawCircle(initialXOffset + col * xIterateOffset, initialYOffset + row * yIterateOffset, (float) .66 * radius, Paints.WHITE);
+    canvas.drawCircle(initialXOffset + col * xIterateOffset, initialYOffset + row * yIterateOffset, (float) .33 * radius, Paints.RED);
+  }
+
+  private void drawInvalidCurrentArea() {
     for (GridPoint g : gameState.radar.getInvalidCurrentPoints()) {
       this.invalidatePoint(g);
     }
   }
 
-  public void drawInvalidStartArea() {
+  private void drawInvalidStartArea() {
     for (GridPoint g : gameState.radar.getInvalidStartPoints()) {
       this.invalidatePoint(g);
     }
@@ -371,12 +341,9 @@ public class MapDrawer {
 
     Rect rect = new Rect(x, y, x + squareSize, y + squareSize);
     this.canvas.drawRect(rect, Paints.AREA);
-
-    this.map.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
-
   }
 
-  public void drawPossibleStartingLocations() {
+  private void drawPossibleStartingLocations() {
     for (GridPoint g : gameState.radar.getValidStartPoints()) {
       this.addCircle(g, Color.GREEN);
     }
@@ -388,10 +355,6 @@ public class MapDrawer {
 
   private void addCircle(int col, int row, int greenOrRed) {
     Paint paint = greenOrRed == Color.RED ? Paints.RED : Paints.CIRCLE;
-
     canvas.drawCircle(initialXOffset + col * xIterateOffset, initialYOffset + row * yIterateOffset, 3 * circleRadius / 4, paint);
-
-    this.map.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
   }
-
 }
