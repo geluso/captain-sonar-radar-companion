@@ -7,8 +7,9 @@ import android.graphics.Paint;
  * Created by moonmayor on 10/6/16.
  */
 public class Paints {
-  public static final Paint RED, WHITE, BLACK, YELLOW, GREEN;
+  public static final Paint RED, WHITE, BLACK, YELLOW, GREEN, GREY;
   public static final Paint CIRCLE, WATER, ISLAND, PATH, TEXT, AREA;
+  public static final Paint ENGINEER_TEXT, ENGINEER_CONNECTOR, CROSS_PAINT;
 
   static {
     RED = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -33,6 +34,24 @@ public class Paints {
     TEXT.setStyle(Paint.Style.FILL);
     TEXT.setFakeBoldText(true);
     TEXT.setTextAlign(Paint.Align.CENTER);
+
+    ENGINEER_TEXT = new Paint(Paint.ANTI_ALIAS_FLAG);
+    ENGINEER_TEXT.setColor(Color.argb(80, 13, 71, 161));
+    ENGINEER_TEXT.setStyle(Paint.Style.FILL);
+    ENGINEER_TEXT.setFakeBoldText(true);
+    ENGINEER_TEXT.setTextAlign(Paint.Align.CENTER);
+
+    ENGINEER_CONNECTOR = new Paint(Paint.ANTI_ALIAS_FLAG);
+    ENGINEER_CONNECTOR.setColor(Color.BLACK);
+    ENGINEER_CONNECTOR.setStrokeWidth(24.0f);
+
+    CROSS_PAINT = new Paint(Paint.ANTI_ALIAS_FLAG);
+    CROSS_PAINT.setColor(Color.BLACK);
+    CROSS_PAINT.setStrokeWidth(8.0f);
+
+    GREY = new Paint(Paint.ANTI_ALIAS_FLAG);
+    GREY.setColor(Color.rgb(180,180,180));
+    GREY.setStyle(Paint.Style.FILL);
 
     BLACK = new Paint(Paint.ANTI_ALIAS_FLAG);
     BLACK.setColor(Color.BLACK);
