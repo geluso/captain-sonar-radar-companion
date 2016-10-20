@@ -29,13 +29,12 @@ public class RadarTracker {
     // not on islands.
     for (int row = 0; row < map.rows; row++) {
       for (int col = 0; col < map.cols; col++) {
-        GridPoint startingLocation = new GridPoint(row, col);
-        if (map.getCoord(startingLocation)) {
-          validStartPoints.add(startingLocation);
+        GridPoint location = new GridPoint(row, col);
+        if (map.getCoord(location)) {
+          validStartPoints.add(location);
         } else {
-          islands.add(startingLocation);
-          invalidCurrentPoints.add(startingLocation);
-//          invalidStartPoints.add(startingLocation);
+          islands.add(location);
+          invalidCurrentPoints.add(location);
         }
       }
     }
