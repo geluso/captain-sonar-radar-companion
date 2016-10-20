@@ -9,7 +9,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.util.DisplayMetrics;
 import android.widget.ImageView;
 
-import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.Coordinate;
+import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.CircleHelper;
 
 import java.util.ArrayList;
 
@@ -22,7 +22,7 @@ public class EngineerDrawing {
   private int width, height;
 
   //position on screen, row, column
-  Coordinate[][][] cards;
+  CircleHelper[][][] cards;
   private int cardPadding, cardWidth, cardHeight, cardVerticalOffset;
 
   private int circleRadius;
@@ -51,20 +51,44 @@ public class EngineerDrawing {
     this.cardHeight = (height - 5*cardPadding)/4;
     this.cardWidth =  width - cardPadding;
     this.cardVerticalOffset = cardHeight + cardPadding;
-    this.cards = new Coordinate[4][2][3];
+    this.cards = new CircleHelper[4][2][3];
 
     for (int i = 0; i < 4; i++) {
 
-      cards[i][0][0] = new Coordinate(3*cardPadding,3*cardPadding+i*cardVerticalOffset);
-      cards[i][1][0] = new Coordinate(3*cardPadding,(i+1)*cardVerticalOffset - 2*cardPadding);
+      cards[i][0][0] = new CircleHelper(3*cardPadding,3*cardPadding+i*cardVerticalOffset);
+      cards[i][1][0] = new CircleHelper(3*cardPadding,(i+1)*cardVerticalOffset - 2*cardPadding);
 
-      cards[i][0][1] = new Coordinate(width/2,3*cardPadding + i*cardVerticalOffset);
-      cards[i][1][1] = new Coordinate(width/2,(i+1)*cardVerticalOffset - 2*cardPadding);
+      cards[i][0][1] = new CircleHelper(width/2,3*cardPadding + i*cardVerticalOffset);
+      cards[i][1][1] = new CircleHelper(width/2,(i+1)*cardVerticalOffset - 2*cardPadding);
 
-      cards[i][0][2] = new Coordinate(width-3*cardPadding,3*cardPadding+i*cardVerticalOffset);
-      cards[i][1][2] = new Coordinate(width-3*cardPadding,(i+1)*cardVerticalOffset - 2*cardPadding);
+      cards[i][0][2] = new CircleHelper(width-3*cardPadding,3*cardPadding+i*cardVerticalOffset);
+      cards[i][1][2] = new CircleHelper(width-3*cardPadding,(i+1)*cardVerticalOffset - 2*cardPadding);
 
     }
+
+    cards[0][0][0].paint = Paints.YELLOW;
+    cards[0][0][2].paint = Paints.YELLOW;
+    cards[1][0][1].paint = Paints.YELLOW;
+    cards[2][1][2].paint = Paints.YELLOW;
+    cards[3][0][1].paint = Paints.YELLOW;
+
+    cards[0][0][1].paint = Paints.RED;
+    cards[1][1][1].paint = Paints.RED;
+    cards[2][0][2].paint = Paints.RED;
+    cards[3][0][0].paint = Paints.RED;
+    cards[3][1][1].paint = Paints.RED;
+
+    cards[0][1][1].paint = Paints.GREEN;
+    cards[1][1][0].paint = Paints.GREEN;
+    cards[1][0][2].paint = Paints.GREEN;
+    cards[2][1][1].paint = Paints.GREEN;
+    cards[3][0][2].paint = Paints.GREEN;
+
+    cards[0][1][0].paint = Paints.GREEN;
+    cards[1][0][0].paint = Paints.GREEN;
+    cards[2][0][0].paint = Paints.GREEN;
+    cards[2][1][0].paint = Paints.GREEN;
+    cards[3][1][0].paint = Paints.GREEN;
 
 
     this.circleRadius = width/20;
@@ -110,55 +134,41 @@ public class EngineerDrawing {
   }
 
   private void drawCircles() {
-    ArrayList<Coordinate> yellows = new ArrayList<>(),
-                          reds = new ArrayList<>(),
-                          greens = new ArrayList<>(),
-                          whites = new ArrayList<>();
-    yellows.add(cards[0][0][0]);
-    yellows.add(cards[0][0][2]);
-    yellows.add(cards[1][0][1]);
-    yellows.add(cards[2][1][2]);
-    yellows.add(cards[3][0][1]);
+    ArrayList<CircleHelper> circles = new ArrayList<>();
 
-    reds.add(cards[0][0][1]);
-    reds.add(cards[1][1][1]);
-    reds.add(cards[2][0][2]);
-    reds.add(cards[3][0][0]);
-    reds.add(cards[3][1][1]);
+    circles.add(cards[0][0][0]);
+    circles.add(cards[0][0][2]);
+    circles.add(cards[1][0][1]);
+    circles.add(cards[2][1][2]);
+    circles.add(cards[3][0][1]);
 
-    greens.add(cards[0][1][1]);
-    greens.add(cards[1][1][0]);
-    greens.add(cards[1][0][2]);
-    greens.add(cards[2][1][1]);
-    greens.add(cards[3][0][2]);
+    circles.add(cards[0][0][1]);
+    circles.add(cards[1][1][1]);
+    circles.add(cards[2][0][2]);
+    circles.add(cards[3][0][0]);
+    circles.add(cards[3][1][1]);
 
-    whites.add(cards[0][1][0]);
-    whites.add(cards[1][0][0]);
-    whites.add(cards[2][0][0]);
-    whites.add(cards[2][1][0]);
-    whites.add(cards[3][1][0]);
+    circles.add(cards[0][1][1]);
+    circles.add(cards[1][1][0]);
+    circles.add(cards[1][0][2]);
+    circles.add(cards[2][1][1]);
+    circles.add(cards[3][0][2]);
 
-    for (Coordinate c : yellows) {
-      drawCircle(c.x, c.y, Paints.YELLOW);
-    }
+    circles.add(cards[0][1][0]);
+    circles.add(cards[1][0][0]);
+    circles.add(cards[2][0][0]);
+    circles.add(cards[2][1][0]);
+    circles.add(cards[3][1][0]);
 
-    for (Coordinate c : reds) {
-      drawCircle(c.x, c.y, Paints.RED);
-    }
-
-    for (Coordinate c : greens) {
-      drawCircle(c.x, c.y, Paints.GREEN);
-    }
-
-    for (Coordinate c : whites) {
-      drawCircle(c.x, c.y, Paints.WHITE);
+    for (CircleHelper c : circles) {
+      drawCircle(c);
     }
 
   }
 
-  private void drawCircle(float x, float y, Paint p) {
-    this.canvas.drawCircle(x,y,circleRadius*1.1f,Paints.BLACK);
-    this.canvas.drawCircle(x, y, circleRadius, p);
+  private void drawCircle(CircleHelper c) {
+    this.canvas.drawCircle(c.x,c.y,circleRadius*1.1f,Paints.BLACK);
+    this.canvas.drawCircle(c.x, c.y, circleRadius, c.paint);
   }
 
   private void drawConnectors() {
@@ -174,7 +184,7 @@ public class EngineerDrawing {
     drawConnector(cards[3][0][1], cards[3][1][1]);
 
     //draw special connector
-    Coordinate start = cards[1][0][1], end = cards[3][1][1];
+    CircleHelper start = cards[1][0][1], end = cards[3][1][1];
     float midPoint = (start.x+cards[0][0][0].x)/2;
     this.canvas.drawLine(start.x, start.y, midPoint, start.y, Paints.ENGINEER_CONNECTOR);
     this.canvas.drawLine(midPoint, start.y, midPoint, end.y, Paints.ENGINEER_CONNECTOR);
@@ -182,7 +192,7 @@ public class EngineerDrawing {
 
   }
 
-  private void drawConnector(Coordinate start, Coordinate end) {
+  private void drawConnector(CircleHelper start, CircleHelper end) {
     this.canvas.drawLine(start.x, start.y, end.x, end.y, Paints.ENGINEER_CONNECTOR);
   }
 
@@ -212,22 +222,24 @@ public class EngineerDrawing {
       row = 1;
     }
 
-    Coordinate co = cards[card][row][col];
+    CircleHelper co = cards[card][row][col];
 
     if (co == cards[0][1][2] || co == cards[1][1][2] || co == cards[2][0][1] || co == cards[3][1][2]) {
       return;
     }
 
     if (!co.marked) {
-      co.marked = true;
       float x = co.x;
       float y = co.y;
 
       this.canvas.drawLine(x-c, y-c, x+c, y+c, Paints.CROSS_PAINT);
       this.canvas.drawLine(x+c, y-c, x-c, y+c, Paints.CROSS_PAINT);
+    } else {
+      drawCircle(co);
 
-      imageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
     }
+    co.marked = !co.marked;
+    imageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
 
 
   }
