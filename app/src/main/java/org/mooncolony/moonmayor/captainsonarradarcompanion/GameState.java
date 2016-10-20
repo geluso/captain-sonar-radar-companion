@@ -63,7 +63,7 @@ public class GameState {
 
   public void updatePath(GridPoint gp) {
     this.currentPath.add(gp);
-    radar.track(this.currentPath);
+    radar.track(gp);
   }
 
   public void addMine() {
