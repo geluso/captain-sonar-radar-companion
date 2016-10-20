@@ -17,7 +17,7 @@ public class MarineMap {
       AlphaRealTime.template, AlphaTurnByTurn.template,
       BravoRealTime.template, BravoTurnByTurn.template,
       CharlieRealTime.template, CharlieTurnByTurn.template,
-      EchoRealTime.template, CharlieTurnByTurn.template,
+      EchoRealTime.template, EchoTurnByTurn.template,
       MapTiny.template
   };
 

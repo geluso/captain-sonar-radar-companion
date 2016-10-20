@@ -8,7 +8,7 @@ public class BravoTurnByTurn extends MarineMap {
   public static final String template =
      //ABCDEFGHIJKLMNO
       "...X......\n" + // 1
-      "......XX..\n" + // 2
+      ".......X..\n" + // 2
       "..........\n" + // 3
       "..X....X..\n" + // 4
       "..........\n" + // 5
