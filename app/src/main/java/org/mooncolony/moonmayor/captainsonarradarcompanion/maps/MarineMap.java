@@ -10,14 +10,14 @@ public class MarineMap {
       AlphaRealTime.name, AlphaTurnByTurn.name,
       BravoRealTime.name, BravoTurnByTurn.name,
       CharlieRealTime.name, CharlieTurnByTurn.name,
-      EchoRealTime.name, CharlieTurnByTurn.name,
+      EchoRealTime.name, EchoTurnByTurn.name,
       MapTiny.name};
 
   public static final String[] MAP_TEMPLATES = {
       AlphaRealTime.template, AlphaTurnByTurn.template,
       BravoRealTime.template, BravoTurnByTurn.template,
       CharlieRealTime.template, CharlieTurnByTurn.template,
-      EchoRealTime.template, CharlieTurnByTurn.template,
+      EchoRealTime.template, EchoTurnByTurn.template,
       MapTiny.template
   };
 

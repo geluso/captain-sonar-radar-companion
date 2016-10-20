@@ -216,10 +216,6 @@ public class MapDrawer {
   }
 
   private void drawPath() {
-    if (!gameState.showingPath) {
-      return;
-    }
-
     if (gameState.currentPath.size() == 0) {
       return;
     }

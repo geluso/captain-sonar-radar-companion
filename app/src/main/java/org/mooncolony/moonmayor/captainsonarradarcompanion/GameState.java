@@ -20,7 +20,6 @@ public class GameState {
 
   // The list of North, South, East, West, mine, torpedo moves.
   public List<GridPoint> currentPath;
-  public boolean showingPath = false;
   public int pathStartCol, pathStartRow;
 
   // List of coordinates where torpedoes have been fired.
@@ -46,9 +45,8 @@ public class GameState {
     this.currentPath = new ArrayList<>();
     this.torpedoes = new ArrayList<>();
 
-    this.showingPath = false;
-    this.pathStartRow = 0;
-    this.pathStartCol = 0;
+    this.pathStartRow = this.map.rows / 2;
+    this.pathStartCol = this.map.cols / 2;
 
     this.torpedoTracker = new TorpedoTracker(this.map);
     this.placingTorpedo = false;
@@ -59,7 +57,6 @@ public class GameState {
   }
 
   public void setPathStart(int row, int col) {
-    this.showingPath = true;
     this.pathStartRow = row;
     this.pathStartCol = col;
   }
