@@ -79,6 +79,7 @@ public class EngineerDrawing {
   private void draw() {
     drawBackground();
     drawCards();
+    drawConnectors();
     drawCircles();
     drawText();
 
@@ -158,6 +159,31 @@ public class EngineerDrawing {
   private void drawCircle(float x, float y, Paint p) {
     this.canvas.drawCircle(x,y,circleRadius*1.1f,Paints.BLACK);
     this.canvas.drawCircle(x, y, circleRadius, p);
+  }
+
+  private void drawConnectors() {
+
+    //draw regular connectors
+    drawConnector(cards[0][0][1], cards[0][1][1]);
+    drawConnector(cards[0][0][1], cards[0][0][2]);
+    drawConnector(cards[0][0][2], cards[1][0][2]);
+    drawConnector(cards[1][1][1], cards[2][1][1]);
+    drawConnector(cards[2][1][1], cards[2][1][2]);
+    drawConnector(cards[2][1][2], cards[2][0][2]);
+    drawConnector(cards[3][0][2], cards[3][0][1]);
+    drawConnector(cards[3][0][1], cards[3][1][1]);
+
+    //draw special connector
+    Coordinate start = cards[1][0][1], end = cards[3][1][1];
+    float midPoint = (start.x+cards[0][0][0].x)/2;
+    this.canvas.drawLine(start.x, start.y, midPoint, start.y, Paints.ENGINEER_CONNECTOR);
+    this.canvas.drawLine(midPoint, start.y, midPoint, end.y, Paints.ENGINEER_CONNECTOR);
+    this.canvas.drawLine(end.x, end.y, midPoint, end.y, Paints.ENGINEER_CONNECTOR);
+
+  }
+
+  private void drawConnector(Coordinate start, Coordinate end) {
+    this.canvas.drawLine(start.x, start.y, end.x, end.y, Paints.ENGINEER_CONNECTOR);
   }
 
 }

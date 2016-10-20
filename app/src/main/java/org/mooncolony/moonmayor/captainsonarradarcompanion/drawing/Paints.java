@@ -9,7 +9,7 @@ import android.graphics.Paint;
 public class Paints {
   public static final Paint RED, WHITE, BLACK, YELLOW, GREEN, GREY;
   public static final Paint CIRCLE, WATER, ISLAND, PATH, TEXT, AREA;
-  public static final Paint ENGINEER_TEXT;
+  public static final Paint ENGINEER_TEXT, ENGINEER_CONNECTOR;
 
   static {
     RED = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -40,6 +40,10 @@ public class Paints {
     ENGINEER_TEXT.setStyle(Paint.Style.FILL);
     ENGINEER_TEXT.setFakeBoldText(true);
     ENGINEER_TEXT.setTextAlign(Paint.Align.CENTER);
+
+    ENGINEER_CONNECTOR = new Paint(Paint.ANTI_ALIAS_FLAG);
+    ENGINEER_CONNECTOR.setColor(Color.BLACK);
+    ENGINEER_CONNECTOR.setStrokeWidth(24.0f);
 
     GREY = new Paint(Paint.ANTI_ALIAS_FLAG);
     GREY.setColor(Color.rgb(180,180,180));
