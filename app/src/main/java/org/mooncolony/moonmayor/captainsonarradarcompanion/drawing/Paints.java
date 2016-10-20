@@ -7,7 +7,7 @@ import android.graphics.Paint;
  * Created by moonmayor on 10/6/16.
  */
 public class Paints {
-  public static final Paint RED, WHITE, BLACK, YELLOW, GREEN;
+  public static final Paint RED, WHITE, BLACK, YELLOW, GREEN, GREY;
   public static final Paint CIRCLE, WATER, ISLAND, PATH, TEXT, AREA;
 
   static {
@@ -33,6 +33,10 @@ public class Paints {
     TEXT.setStyle(Paint.Style.FILL);
     TEXT.setFakeBoldText(true);
     TEXT.setTextAlign(Paint.Align.CENTER);
+
+    GREY = new Paint(Paint.ANTI_ALIAS_FLAG);
+    GREY.setColor(Color.rgb(180,180,180));
+    GREY.setStyle(Paint.Style.FILL);
 
     BLACK = new Paint(Paint.ANTI_ALIAS_FLAG);
     BLACK.setColor(Color.BLACK);
