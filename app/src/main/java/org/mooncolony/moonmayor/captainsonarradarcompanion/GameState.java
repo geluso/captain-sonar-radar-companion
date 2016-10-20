@@ -77,4 +77,8 @@ public class GameState {
     torpedoTracker.track(torpedoTarget);
     radar.crossReferenceTorpedo(torpedoTarget);
   }
+
+  public void addSilence() {
+    radar.inferSilence();
+  }
 }

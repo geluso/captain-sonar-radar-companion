@@ -58,4 +58,32 @@ public class RadarTracker {
 
     this.possibleCurrentPositions = stillPossiblePositions;
   }
+
+  public void inferSilence() {
+    Set<GridPoint> stillPossiblePositions = new HashSet<>();
+
+    GridPoint[] directions = {GridPoint.NORTH, GridPoint.SOUTH, GridPoint.WEST, GridPoint.EAST};
+
+    for (GridPoint position : this.possibleCurrentPositions) {
+      for (GridPoint direction : directions) {
+
+        // take the first movement.
+        GridPoint newPos = position.add(direction);
+
+        int movements = 1;
+        while (movements <= 4 && map.getCoord(newPos)) {
+          stillPossiblePositions.add(newPos);
+
+          // continue in the same direction
+          newPos = newPos.add(direction);
+
+          // count up how many movements the sub has gone.
+          movements++;
+        }
+      }
+    }
+
+    this.possibleCurrentPositions = stillPossiblePositions;
+
+  }
 }
