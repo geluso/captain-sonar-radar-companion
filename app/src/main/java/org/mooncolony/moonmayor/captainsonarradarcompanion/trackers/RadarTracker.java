@@ -4,14 +4,13 @@ import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPoint;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MarineMap;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class RadarTracker {
   public MarineMap map;
   public Set<GridPoint> water;
   public Set<GridPoint> islands;
-  private Set<GridPoint> possibleCurrentPositions;
+  public Set<GridPoint> possibleCurrentPositions;
 
   public RadarTracker(MarineMap map) {
     this.map = map;
@@ -46,31 +45,17 @@ public class RadarTracker {
     possibleCurrentPositions = stillPossiblePositions;
   }
 
-  public Set<GridPoint> getPossibleCurrentPositions(List<GridPoint> path) {
-    Set<GridPoint> possiblePositions = new HashSet<>();
+  public void crossReferenceTorpedo(GridPoint location) {
+    Set<GridPoint> stillPossiblePositions = new HashSet<>();
 
-    // start a path from every piece of water
-    for (GridPoint location : this.water) {
-      GridPoint currentSpot = location;
-
-      // follow the path
-      for (int i = 0; i < path.size(); i++) {
-        GridPoint direction = path.get(i);
-        currentSpot = currentSpot.add(direction);
-
-        // if the position is an island stop exploring this path from this start position.
-        if (!map.getCoord(currentSpot)) {
-          break;
-        }
-
-        // if this is the last point in the path then add
-        // the current position as a possible current position.
-        if (i == path.size() - 1) {
-          possiblePositions.add(currentSpot);
-        }
+    for (GridPoint position : this.possibleCurrentPositions) {
+      int dx = Math.abs(location.col - position.col);
+      int dy = Math.abs(location.row - position.row);
+      if (dx + dy <= 4) {
+        stillPossiblePositions.add(position);
       }
     }
 
-    return possiblePositions;
+    this.possibleCurrentPositions = stillPossiblePositions;
   }
 }

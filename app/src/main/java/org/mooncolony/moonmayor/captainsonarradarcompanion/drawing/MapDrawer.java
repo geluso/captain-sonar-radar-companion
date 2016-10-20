@@ -354,37 +354,9 @@ public class MapDrawer {
     canvas.drawCircle(initialXOffset + col * xIterateOffset, initialYOffset + row * yIterateOffset, (float) .33 * radius, Paints.RED);
   }
 
-  private void drawInvalidCurrentArea() {
-    for (GridPoint g : gameState.radar.getInvalidCurrentPoints()) {
-      this.invalidatePoint(g);
-    }
-  }
-
-  private void drawInvalidStartArea() {
-    for (GridPoint g : gameState.radar.getInvalidStartPoints()) {
-      this.invalidatePoint(g);
-    }
-  }
-
   private void drawCurrentPossiblePosition() {
-    for (GridPoint g : gameState.radar.getPossibleCurrentPositions(gameState.currentPath)) {
+    for (GridPoint g : gameState.radar.possibleCurrentPositions) {
       addCircle(g, Color.GREEN);
-    }
-  }
-
-  private void invalidatePoint(GridPoint point) {
-    int col = point.col, row = point.row;
-    int x = Math.round(circleRadius + xIterateOffset/2 + col * this.xIterateOffset);
-    int y = Math.round(circleRadius + yIterateOffset/2 + row * this.yIterateOffset);
-    int squareSize = Math.round(2 * circleRadius);
-
-    Rect rect = new Rect(x, y, x + squareSize, y + squareSize);
-    this.canvas.drawRect(rect, Paints.AREA);
-  }
-
-  private void drawPossibleStartingLocations() {
-    for (GridPoint g : gameState.radar.getValidStartPoints()) {
-      this.addCircle(g, Color.GREEN);
     }
   }
 
