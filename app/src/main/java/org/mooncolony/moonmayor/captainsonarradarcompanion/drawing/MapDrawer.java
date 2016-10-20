@@ -204,7 +204,6 @@ public class MapDrawer {
       canvas.drawText(rowNum,circleRadius,y,Paints.TEXT);
     }
 
-
   }
 
   private void clearCanvas() {

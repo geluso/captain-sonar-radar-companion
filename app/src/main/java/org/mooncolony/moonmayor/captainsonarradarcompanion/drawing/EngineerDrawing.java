@@ -79,8 +79,8 @@ public class EngineerDrawing {
   private void draw() {
     drawBackground();
     drawCards();
-    drawText();
     drawCircles();
+    drawText();
 
     imageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
   }
@@ -91,8 +91,13 @@ public class EngineerDrawing {
   }
 
   private void drawText() {
-
+    Paints.ENGINEER_TEXT.setTextSize(cardHeight*2/3);
+    canvas.drawText("N",width/2,cardVerticalOffset - cardHeight/4,Paints.ENGINEER_TEXT);
+    canvas.drawText("E",width/2,2*cardVerticalOffset - cardHeight/4,Paints.ENGINEER_TEXT);
+    canvas.drawText("W",width/2,3*cardVerticalOffset - cardHeight/4,Paints.ENGINEER_TEXT);
+    canvas.drawText("S",width/2,4*cardVerticalOffset - cardHeight/4,Paints.ENGINEER_TEXT);
   }
+
 
   private void drawCards() {
     for (int i = 0; i < 4; i++) {
