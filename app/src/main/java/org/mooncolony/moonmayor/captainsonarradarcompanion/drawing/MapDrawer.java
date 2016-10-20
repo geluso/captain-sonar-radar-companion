@@ -116,8 +116,9 @@ public class MapDrawer {
     drawLetters();
 
     // drawPossibleStartingLocations();
-    drawInvalidStartArea();
+    // drawInvalidStartArea();
     // drawInvalidCurrentArea();
+    drawCurrentPossiblePosition();
 
     if (gameState.placingTorpedo) {
       int row = gameState.placingTorpedoRow;
@@ -167,12 +168,20 @@ public class MapDrawer {
 
   }
 
+  private void drawCircle(int row, int col) {
+    float y = this.initialYOffset + col * this.yIterateOffset;
+    float x = this.initialXOffset + row * this.xIterateOffset;
+    this.drawCircle(x, y);
+  }
+
+  private void drawCircle(float x, float y) {
+    this.canvas.drawCircle(x, y, circleRadius/8, Paints.WHITE);
+  }
+
   private void drawCircles() {
     for (int row = 0; row < getRows(); row++) {
       for (int col = 0; col < getCols(); col++) {
-        float y = this.initialYOffset + col * this.yIterateOffset;
-        float x = this.initialXOffset + row * this.xIterateOffset;
-        this.canvas.drawCircle(x, y, circleRadius/8, Paints.WHITE);
+        drawCircle(row, col);
       }
     }
   }
@@ -355,6 +364,12 @@ public class MapDrawer {
   private void drawInvalidStartArea() {
     for (GridPoint g : gameState.radar.getInvalidStartPoints()) {
       this.invalidatePoint(g);
+    }
+  }
+
+  private void drawCurrentPossiblePosition() {
+    for (GridPoint g : gameState.radar.getPossibleCurrentPositions(gameState.currentPath)) {
+      addCircle(g, Color.GREEN);
     }
   }
 
