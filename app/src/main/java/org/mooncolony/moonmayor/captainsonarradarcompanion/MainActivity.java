@@ -1,5 +1,6 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MotionEvent;
@@ -50,6 +51,17 @@ public class MainActivity extends AppCompatActivity {
     // initialize the map
     gameState = new GameState();
     this.drawer = new MapDrawer(this, mapView, gameState);
+
+    //TEMP CODE
+    Button engineer = (Button) findViewById(R.id.engineerActivityButton);
+    engineer.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        startActivity(new Intent(MainActivity.this,EngineerActivity.class));
+      }
+    });
+
+
   }
 
   @OnTouch({R.id.mapView})

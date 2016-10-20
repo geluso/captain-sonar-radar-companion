@@ -71,6 +71,13 @@
                     android:text="Torpedo"
                     android:layout_weight="3"
                     android:id="@+id/torpedoButton"/>
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="NEW"
+                    android:layout_weight="1"
+                    android:id="@+id/engineerActivityButton"/>
             </LinearLayout>
 
             <Button
