@@ -5,6 +5,7 @@ package org.mooncolony.moonmayor.captainsonarradarcompanion.geometry;
  */
 public class Coordinate {
   public float x, y;
+  public boolean marked;
 
   public Coordinate(float x, float y) {
     this.x = x;

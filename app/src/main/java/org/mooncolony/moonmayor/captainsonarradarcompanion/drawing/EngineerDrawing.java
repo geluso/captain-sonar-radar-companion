@@ -212,14 +212,24 @@ public class EngineerDrawing {
       row = 1;
     }
 
+    Coordinate co = cards[card][row][col];
 
-    float x = cards[card][row][col].x;
-    float y = cards[card][row][col].y;
+    if (co == cards[0][1][2] || co == cards[1][1][2] || co == cards[2][0][1] || co == cards[3][1][2]) {
+      return;
+    }
 
-    this.canvas.drawLine(x-c, y-c, x+c, y+c, Paints.CROSS_PAINT);
-    this.canvas.drawLine(x+c, y-c, x-c, y+c, Paints.CROSS_PAINT);
+    if (!co.marked) {
+      co.marked = true;
+      float x = co.x;
+      float y = co.y;
 
-    imageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
+      this.canvas.drawLine(x-c, y-c, x+c, y+c, Paints.CROSS_PAINT);
+      this.canvas.drawLine(x+c, y-c, x-c, y+c, Paints.CROSS_PAINT);
+
+      imageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
+    }
+
+
   }
 
 }
