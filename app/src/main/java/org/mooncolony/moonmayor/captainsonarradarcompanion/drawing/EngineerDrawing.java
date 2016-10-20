@@ -186,4 +186,40 @@ public class EngineerDrawing {
     this.canvas.drawLine(start.x, start.y, end.x, end.y, Paints.ENGINEER_CONNECTOR);
   }
 
+  public void addCross(float xTouch, float yTouch) {
+    float c = circleRadius/2;
+    int card = 0, row = 0, col = 0;
+
+    //set column based on touch
+    if (xTouch > width*2/3) {
+      col = 2;
+    } else if (xTouch > width/3) {
+      col = 1;
+    }
+
+    //set card based on touch
+    if (yTouch > height*3/4) {
+      card = 3;
+    } else if (yTouch > height/2) {
+      card = 2;
+    } else if (yTouch > height/4) {
+      card = 1;
+    }
+
+    //set row based on touch & card number
+    yTouch-=(card*cardVerticalOffset);
+    if (yTouch > cardPadding+cardHeight/2) {
+      row = 1;
+    }
+
+
+    float x = cards[card][row][col].x;
+    float y = cards[card][row][col].y;
+
+    this.canvas.drawLine(x-c, y-c, x+c, y+c, Paints.CROSS_PAINT);
+    this.canvas.drawLine(x+c, y-c, x-c, y+c, Paints.CROSS_PAINT);
+
+    imageView.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
+  }
+
 }
