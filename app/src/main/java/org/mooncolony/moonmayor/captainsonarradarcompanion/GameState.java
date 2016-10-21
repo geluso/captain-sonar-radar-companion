@@ -21,6 +21,7 @@ public class GameState {
   // The list of North, South, East, West, mine, torpedo moves.
   public List<GridPoint> currentPath;
   public int pathStartCol, pathStartRow;
+  public int pathEndRow, pathEndCol;
 
   // List of coordinates where torpedoes have been fired.
   public TorpedoTracker torpedoTracker;
@@ -59,6 +60,11 @@ public class GameState {
   public void setPathStart(int row, int col) {
     this.pathStartRow = row;
     this.pathStartCol = col;
+  }
+
+  public void setPathEnd(int row, int col) {
+    this.pathEndRow = row;
+    this.pathEndCol = col;
   }
 
   public void updatePath(GridPoint gp) {
