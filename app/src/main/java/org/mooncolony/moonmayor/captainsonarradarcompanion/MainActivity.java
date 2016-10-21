@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.DisplayMetrics;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
   GameState gameState;
   MapDrawer drawer;
 
-  @BindView(R.id.mapSpinner) Spinner spinner;
+//  @BindView(R.id.mapSpinner) Spinner spinner;
   @BindView(R.id.mapView) ImageView mapView;
   @BindView(R.id.textView) TextView textView;
 
@@ -54,9 +55,9 @@ public class MainActivity extends AppCompatActivity {
     int height = displayMetrics.heightPixels;
     mapView.getLayoutParams().width = height/2;
 
-    String[] options = MarineMap.AVAILABLE_MAPS;
-    ArrayAdapter<String> mapChoices = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, options);
-    spinner.setAdapter(mapChoices);
+//    String[] options = MarineMap.AVAILABLE_MAPS;
+//    ArrayAdapter<String> mapChoices = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, options);
+//    spinner.setAdapter(mapChoices);
 
     // initialize the map
     gameState = new GameState();
@@ -96,23 +97,6 @@ public class MainActivity extends AppCompatActivity {
       }
     }
     return true;
-  }
-
-  @OnItemSelected(R.id.mapSpinner)
-  public void spinnerItemSelected(Spinner spinner, int position) {
-    String template = MarineMap.MAP_TEMPLATES[position];
-
-    if (template == null) {
-      Toast.makeText(MainActivity.this, "Unknown map.", Toast.LENGTH_SHORT).show();
-      return;
-    }
-
-    String msg = "Loaded " + MarineMap.AVAILABLE_MAPS[position];
-    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-
-    gameState.newGame(template);
-    drawer.setDimensions();
-    resetButtonClick();
   }
 
   @OnClick({R.id.resetButton})
@@ -215,6 +199,76 @@ public class MainActivity extends AppCompatActivity {
   public boolean onCreateOptionsMenu(Menu menu) {
     getMenuInflater().inflate(R.menu.main_menu, menu);
 
+    gameState.newGame(MarineMap.MAP_TEMPLATES[0]);
+    drawer.setDimensions();
+    resetButtonClick();
+
     return super.onCreateOptionsMenu(menu);
   }
+
+  @Override
+  public boolean onOptionsItemSelected(MenuItem item) {
+    int position = -1;
+    switch (item.getItemId()) {
+      case R.id.alpha_real_time: position = 0;
+        break;
+      case R.id.alpha_turn_by_turn: position = 1;
+        break;
+      case R.id.bravo_real_time: position = 2;
+        break;
+      case R.id.bravo_turn_by_turn: position = 3;
+        break;
+      case R.id.charlie_real_time: position = 4;
+        break;
+      case R.id.charlie_turn_by_turn: position = 5;
+        break;
+      case R.id.delta_real_time: position = 6;
+        break;
+      case R.id.delta_turn_by_turn: position = 7;
+        break;
+      case R.id.echo_real_time: position = 8;
+        break;
+      case R.id.echo_turn_by_turn: position = 9;
+        break;
+      default:
+        return false;
+    }
+
+    String template = null;
+    if (position >= 0) {
+      template = MarineMap.MAP_TEMPLATES[position];
+    }
+
+    if (template == null) {
+      Toast.makeText(MainActivity.this, "Unknown map.", Toast.LENGTH_SHORT).show();
+      return false;
+    }
+
+    String msg = "Loaded " + MarineMap.AVAILABLE_MAPS[position];
+    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+
+    gameState.newGame(template);
+    drawer.setDimensions();
+    resetButtonClick();
+
+
+    return super.onOptionsItemSelected(item);
+  }
+
+//  @OnItemSelected(R.id.mapSpinner)
+//  public void spinnerItemSelected(Spinner spinner, int position) {
+//    String template = MarineMap.MAP_TEMPLATES[position];
+//
+//    if (template == null) {
+//      Toast.makeText(MainActivity.this, "Unknown map.", Toast.LENGTH_SHORT).show();
+//      return;
+//    }
+//
+//    String msg = "Loaded " + MarineMap.AVAILABLE_MAPS[position];
+//    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+//
+//    gameState.newGame(template);
+//    drawer.setDimensions();
+//    resetButtonClick();
+//  }
 }

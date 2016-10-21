@@ -3,6 +3,12 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/reset"
+        android:icon="@drawable/ic_reset"
+        app:showAsAction="always"
+        android:title="Reset"/>
+
+    <item
         android:id="@+id/alpha_real_time"
         app:showAsAction="never"
         android:title="Alpha Real Time"/>
