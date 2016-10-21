@@ -3,8 +3,11 @@ package org.mooncolony.moonmayor.captainsonarradarcompanion;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.util.DisplayMetrics;
+import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -206,5 +209,12 @@ public class MainActivity extends AppCompatActivity {
       message+=", ";
     }
     textView.setText(message+newString);
+  }
+
+  @Override
+  public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.main_menu, menu);
+
+    return super.onCreateOptionsMenu(menu);
   }
 }
