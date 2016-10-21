@@ -228,24 +228,27 @@ public class MapDrawer {
       return;
     }
 
-    int row1 = gameState.pathStartRow;
-    int col1 = gameState.pathStartCol;
+    int row1 = gameState.pathEndRow;
+    int col1 = gameState.pathEndCol;
 
-    for (GridPoint direction : gameState.currentPath) {
+    drawStartingCircle(col1,row1,Paints.RED);
+
+    for (int i = gameState.currentPath.size()-1; i >=0; i--) {
+      GridPoint direction = gameState.currentPath.get(i);
       int col2 = col1;
       int row2 = row1;
 
       if (direction == GridPoint.MINE) {
         drawMine(col1, row1);
         continue;
-      }else if (direction == GridPoint.NORTH) {
-        row2--;
-      } else if (direction == GridPoint.SOUTH) {
+      } else if (direction == GridPoint.NORTH) {
         row2++;
+      } else if (direction == GridPoint.SOUTH) {
+        row2--;
       } else if (direction == GridPoint.EAST) {
-        col2++;
-      } else if (direction == GridPoint.WEST) {
         col2--;
+      } else if (direction == GridPoint.WEST) {
+        col2++;
       }
 
       // draw the current line segment.
@@ -255,8 +258,7 @@ public class MapDrawer {
       col1 = col2;
       row1 = row2;
     }
-    drawStartingCircle(gameState.pathStartCol,gameState.pathStartRow,Paints.GREEN);
-    drawStartingCircle(col1, row1, Paints.RED);
+    drawStartingCircle(col1, row1, Paints.GREEN);
   }
 
   private void drawStartingCircle(int col, int row, Paint paint) {
