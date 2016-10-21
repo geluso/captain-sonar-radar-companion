@@ -15,6 +15,7 @@ import org.mooncolony.moonmayor.captainsonarradarcompanion.GameState;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPoint;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPointPath;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -239,7 +240,7 @@ public class MapDrawer {
       int row2 = row1;
 
       if (direction == GridPoint.MINE) {
-        drawMine(col1, row1);
+        drawMines(new GridPoint(row1, col1),i>0?gameState.currentPath.get(i-1):null);
         continue;
       } else if (direction == GridPoint.NORTH) {
         row2++;
@@ -343,17 +344,19 @@ public class MapDrawer {
     }
   }
 
-  private void drawMine(GridPoint point) {
-    drawMine(point.col, point.row);
-  }
-
-  private void drawMine(int col, int row) {
-    // adjust the radius of the circle so it's slightly smaller than really defined.
+  private void drawMines(GridPoint point, GridPoint direction) {
     float radius = (float) (this.circleRadius * .9);
+    List<GridPoint> points = new ArrayList<>();
+    if (direction != GridPoint.NORTH) {points.add(new GridPoint(point.row+1,point.col));}
+    if (direction != GridPoint.SOUTH) {points.add(new GridPoint(point.row-1,point.col));}
+    if (direction != GridPoint.EAST) {points.add(new GridPoint(point.row,point.col-1));}
+    if (direction != GridPoint.WEST) {points.add(new GridPoint(point.row,point.col+1));}
 
-    canvas.drawCircle(initialXOffset + col * xIterateOffset, initialYOffset + row * yIterateOffset, radius, Paints.RED);
-    canvas.drawCircle(initialXOffset + col * xIterateOffset, initialYOffset + row * yIterateOffset, (float) .66 * radius, Paints.WHITE);
-    canvas.drawCircle(initialXOffset + col * xIterateOffset, initialYOffset + row * yIterateOffset, (float) .33 * radius, Paints.RED);
+    for (GridPoint gp : points) {
+      canvas.drawCircle(initialXOffset + gp.col * xIterateOffset, initialYOffset + gp.row * yIterateOffset, radius, Paints.RED);
+      canvas.drawCircle(initialXOffset + gp.col * xIterateOffset, initialYOffset + gp.row * yIterateOffset, (float) .66 * radius, Paints.WHITE);
+      canvas.drawCircle(initialXOffset + gp.col * xIterateOffset, initialYOffset + gp.row * yIterateOffset, (float) .33 * radius, Paints.RED);
+    }
   }
 
   private void drawCurrentPossiblePosition() {
