@@ -63,14 +63,20 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:text="Mine"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:id="@+id/mineButton"/>
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:text="Torpedo"
-                    android:layout_weight="3"
+                    android:text="Torp"
+                    android:layout_weight="1"
                     android:id="@+id/torpedoButton"/>
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:text="SHH"
+                    android:layout_weight="1"
+                    android:id="@+id/silence"/>
 
                 <Button
                     android:layout_width="0dp"

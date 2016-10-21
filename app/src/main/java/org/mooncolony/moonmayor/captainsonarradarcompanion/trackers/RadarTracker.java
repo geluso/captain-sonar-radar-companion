@@ -4,14 +4,13 @@ import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPoint;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MarineMap;
 
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 public class RadarTracker {
   public MarineMap map;
   public Set<GridPoint> water;
   public Set<GridPoint> islands;
-  private Set<GridPoint> possibleCurrentPositions;
+  public Set<GridPoint> possibleCurrentPositions;
 
   public RadarTracker(MarineMap map) {
     this.map = map;
@@ -46,31 +45,45 @@ public class RadarTracker {
     possibleCurrentPositions = stillPossiblePositions;
   }
 
-  public Set<GridPoint> getPossibleCurrentPositions(List<GridPoint> path) {
-    Set<GridPoint> possiblePositions = new HashSet<>();
+  public void crossReferenceTorpedo(GridPoint location) {
+    Set<GridPoint> stillPossiblePositions = new HashSet<>();
 
-    // start a path from every piece of water
-    for (GridPoint location : this.water) {
-      GridPoint currentSpot = location;
+    for (GridPoint position : this.possibleCurrentPositions) {
+      int dx = Math.abs(location.col - position.col);
+      int dy = Math.abs(location.row - position.row);
+      if (dx + dy <= 4) {
+        stillPossiblePositions.add(position);
+      }
+    }
 
-      // follow the path
-      for (int i = 0; i < path.size(); i++) {
-        GridPoint direction = path.get(i);
-        currentSpot = currentSpot.add(direction);
+    this.possibleCurrentPositions = stillPossiblePositions;
+  }
 
-        // if the position is an island stop exploring this path from this start position.
-        if (!map.getCoord(currentSpot)) {
-          break;
-        }
+  public void inferSilence() {
+    Set<GridPoint> stillPossiblePositions = new HashSet<>();
 
-        // if this is the last point in the path then add
-        // the current position as a possible current position.
-        if (i == path.size() - 1) {
-          possiblePositions.add(currentSpot);
+    GridPoint[] directions = {GridPoint.NORTH, GridPoint.SOUTH, GridPoint.WEST, GridPoint.EAST};
+
+    for (GridPoint position : this.possibleCurrentPositions) {
+      for (GridPoint direction : directions) {
+
+        // take the first movement.
+        GridPoint newPos = position.add(direction);
+
+        int movements = 1;
+        while (movements <= 4 && map.getCoord(newPos)) {
+          stillPossiblePositions.add(newPos);
+
+          // continue in the same direction
+          newPos = newPos.add(direction);
+
+          // count up how many movements the sub has gone.
+          movements++;
         }
       }
     }
 
-    return possiblePositions;
+    this.possibleCurrentPositions = stillPossiblePositions;
+
   }
 }

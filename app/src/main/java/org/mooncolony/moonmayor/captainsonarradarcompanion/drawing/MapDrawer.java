@@ -357,19 +357,9 @@ public class MapDrawer {
   }
 
   private void drawCurrentPossiblePosition() {
-    for (GridPoint g : gameState.radar.getPossibleCurrentPositions(gameState.currentPath)) {
+    for (GridPoint g : gameState.radar.possibleCurrentPositions) {
       addCircle(g, Color.GREEN);
     }
-  }
-
-  private void invalidatePoint(GridPoint point) {
-    int col = point.col, row = point.row;
-    int x = Math.round(circleRadius + xIterateOffset/2 + col * this.xIterateOffset);
-    int y = Math.round(circleRadius + yIterateOffset/2 + row * this.yIterateOffset);
-    int squareSize = Math.round(2 * circleRadius);
-
-    Rect rect = new Rect(x, y, x + squareSize, y + squareSize);
-    this.canvas.drawRect(rect, Paints.AREA);
   }
 
   private void addCircle(GridPoint point, int greenOrRed) {

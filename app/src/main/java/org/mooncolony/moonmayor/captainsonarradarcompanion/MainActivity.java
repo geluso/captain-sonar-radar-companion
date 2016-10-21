@@ -146,6 +146,13 @@ public class MainActivity extends AppCompatActivity {
     gameState.addMine();
     drawer.draw();
   }
+
+  @OnClick({R.id.silence})
+  void silence() {
+    gameState.addSilence();
+    drawer.draw();
+  }
+
   @OnClick({R.id.torpedoButton})
   void torpedoButtonClick() {
     showTorpedoMenu();

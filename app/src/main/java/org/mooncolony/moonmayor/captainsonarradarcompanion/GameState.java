@@ -81,5 +81,10 @@ public class GameState {
     torpedoes.add(torpedoTarget);
 
     torpedoTracker.track(torpedoTarget);
+    radar.crossReferenceTorpedo(torpedoTarget);
+  }
+
+  public void addSilence() {
+    radar.inferSilence();
   }
 }
