@@ -84,11 +84,11 @@ public class EngineerDrawing {
     cards[2][1][1].paint = Paints.GREEN;
     cards[3][0][2].paint = Paints.GREEN;
 
-    cards[0][1][0].paint = Paints.GREEN;
-    cards[1][0][0].paint = Paints.GREEN;
-    cards[2][0][0].paint = Paints.GREEN;
-    cards[2][1][0].paint = Paints.GREEN;
-    cards[3][1][0].paint = Paints.GREEN;
+    cards[0][1][0].paint = Paints.WHITE;
+    cards[1][0][0].paint = Paints.WHITE;
+    cards[2][0][0].paint = Paints.WHITE;
+    cards[2][1][0].paint = Paints.WHITE;
+    cards[3][1][0].paint = Paints.WHITE;
 
 
     this.circleRadius = width/20;
