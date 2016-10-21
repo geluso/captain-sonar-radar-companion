@@ -11,13 +11,6 @@
     android:orientation="vertical"
     tools:context="org.mooncolony.moonmayor.captainsonarradarcompanion.MainActivity">
 
-    <!--<Spinner-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:entries="@array/mapList"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:prompt="@string/mapList_prompt"-->
-        <!--android:id="@+id/mapSpinner"/>-->
-
     <org.mooncolony.moonmayor.captainsonarradarcompanion.custom_views.SquareImageView
         android:layout_width="100dp"
         android:layout_height="wrap_content"
@@ -90,15 +83,6 @@
                     android:layout_weight="1"
                     android:id="@+id/engineerActivityButton"/>
             </LinearLayout>
-
-            <Button
-                android:layout_weight="1"
-                android:layout_height="0dp"
-                android:layout_width="match_parent"
-                android:id="@+id/resetButton"
-                android:textColor="#fff"
-                android:backgroundTint="#c22"
-                android:text="Reset"/>
         </LinearLayout>
 
         <include

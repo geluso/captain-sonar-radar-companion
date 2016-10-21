@@ -99,16 +99,6 @@ public class MainActivity extends AppCompatActivity {
     return true;
   }
 
-  @OnClick({R.id.resetButton})
-  void resetButtonClick() {
-    textView.setText("");
-    gameState.newGame();
-
-    showCompass();
-
-    drawer.draw();
-  }
-
   private void updateMap(GridPoint gp) {
     gameState.updatePath(gp);
     drawer.draw();
@@ -201,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
 
     gameState.newGame(MarineMap.MAP_TEMPLATES[0]);
     drawer.setDimensions();
-    resetButtonClick();
+    resetGame();
 
     return super.onCreateOptionsMenu(menu);
   }
@@ -210,6 +200,11 @@ public class MainActivity extends AppCompatActivity {
   public boolean onOptionsItemSelected(MenuItem item) {
     int position = -1;
     switch (item.getItemId()) {
+
+      case R.id.reset_button:
+        resetGame();
+        break;
+
       case R.id.alpha_real_time: position = 0;
         break;
       case R.id.alpha_turn_by_turn: position = 1;
@@ -230,10 +225,20 @@ public class MainActivity extends AppCompatActivity {
         break;
       case R.id.echo_turn_by_turn: position = 9;
         break;
+
       default:
         return false;
     }
 
+    if (position >= 0) {
+      changeMap(position);
+    }
+
+
+    return super.onOptionsItemSelected(item);
+  }
+
+  private void changeMap(int position) {
     String template = null;
     if (position >= 0) {
       template = MarineMap.MAP_TEMPLATES[position];
@@ -241,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
 
     if (template == null) {
       Toast.makeText(MainActivity.this, "Unknown map.", Toast.LENGTH_SHORT).show();
-      return false;
+      return;
     }
 
     String msg = "Loaded " + MarineMap.AVAILABLE_MAPS[position];
@@ -249,26 +254,14 @@ public class MainActivity extends AppCompatActivity {
 
     gameState.newGame(template);
     drawer.setDimensions();
-    resetButtonClick();
-
-
-    return super.onOptionsItemSelected(item);
+    resetGame();
   }
 
-//  @OnItemSelected(R.id.mapSpinner)
-//  public void spinnerItemSelected(Spinner spinner, int position) {
-//    String template = MarineMap.MAP_TEMPLATES[position];
-//
-//    if (template == null) {
-//      Toast.makeText(MainActivity.this, "Unknown map.", Toast.LENGTH_SHORT).show();
-//      return;
-//    }
-//
-//    String msg = "Loaded " + MarineMap.AVAILABLE_MAPS[position];
-//    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-//
-//    gameState.newGame(template);
-//    drawer.setDimensions();
-//    resetButtonClick();
-//  }
+  private void resetGame() {
+    textView.setText("");
+    gameState.newGame();
+    showCompass();
+    drawer.draw();
+  }
+
 }
