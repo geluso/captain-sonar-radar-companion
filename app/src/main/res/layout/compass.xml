@@ -23,7 +23,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:text="North"
+            android:text="N"
             android:textAlignment="center"
             android:id="@+id/northButton"/>
 
@@ -45,7 +45,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:text="West"
+            android:text="W"
             android:textAlignment="center"
             android:id="@+id/westButton"/>
 
@@ -59,7 +59,7 @@
             android:layout_gravity="center"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:text="East"
+            android:text="E"
             android:textAlignment="center"
             android:id="@+id/eastButton"/>
 
@@ -81,7 +81,7 @@
             android:layout_weight="1"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:text="South"
+            android:text="S"
             android:textAlignment="center"
             android:id="@+id/southButton"/>
 

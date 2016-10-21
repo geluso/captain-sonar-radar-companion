@@ -63,18 +63,9 @@ public class MainActivity extends AppCompatActivity {
     gameState = new GameState();
     this.drawer = new MapDrawer(this, mapView, gameState);
 
-    //TEMP CODE
-    Button engineer = (Button) findViewById(R.id.engineerActivityButton);
-    engineer.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        startActivity(new Intent(MainActivity.this,EngineerActivity.class));
-      }
-    });
-
-
   }
 
+  //TODO: update to new layout
   @OnTouch({R.id.mapView})
   boolean mapTouch(MotionEvent event) {
     int action = event.getAction();
@@ -103,7 +94,7 @@ public class MainActivity extends AppCompatActivity {
     gameState.updatePath(gp);
     drawer.draw();
   }
-
+//**** start compass button clicks
   @OnClick({R.id.northButton})
   void northButtonClick() {
     appendText("N");
@@ -124,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
     appendText("W");
     updateMap(GridPoint.WEST);
   }
+//**** end compass button clicks
+
   @OnClick({R.id.mineButton})
   void mineButtonClick() {
     appendText("mine");
@@ -131,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
     drawer.draw();
   }
 
-  @OnClick({R.id.silence})
+  @OnClick({R.id.silenceButton})
   void silence() {
     gameState.addSilence();
     drawer.draw();
@@ -203,6 +196,10 @@ public class MainActivity extends AppCompatActivity {
 
       case R.id.reset_button:
         resetGame();
+        break;
+
+      case R.id.engineer_button:
+        startActivity(new Intent(MainActivity.this,EngineerActivity.class));
         break;
 
       case R.id.alpha_real_time: position = 0;

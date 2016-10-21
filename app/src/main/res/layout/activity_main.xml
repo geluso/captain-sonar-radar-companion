@@ -42,66 +42,119 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="horizontal"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
         android:layout_weight="1">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_height="0dp">
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:text="Silence"
+                android:background="#ff0"
+                android:id="@+id/silenceButton"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:text="Scenario"
+                android:background="#ff0"
+                android:id="@+id/scenarioButton"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="match_parent"
+                android:layout_margin="4dp"
+                android:text="Surface"
+                android:background="#fff"
+                android:id="@+id/surfaceButton"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_weight="2"
+            android:layout_height="0dp"
+            android:layout_width="match_parent">
 
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_weight="1"
-                android:layout_height="0dp"
-                android:layout_width="match_parent">
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
                 <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="4dp"
+                    android:background="#f00"
                     android:text="Mine"
                     android:layout_weight="1"
                     android:id="@+id/mineButton"/>
                 <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="4dp"
+                    android:background="#f00"
                     android:text="Torp"
                     android:layout_weight="1"
                     android:id="@+id/torpedoButton"/>
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:text="SHH"
-                    android:layout_weight="1"
-                    android:id="@+id/silence"/>
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:text="NEW"
-                    android:layout_weight="1"
-                    android:id="@+id/engineerActivityButton"/>
             </LinearLayout>
+
+
+            <include
+                android:id="@+id/compass"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:layout_margin="4dp"
+                layout="@layout/compass" />
+
+            <include
+                android:id="@+id/torpedoMenu"
+                android:visibility="gone"
+                layout="@layout/torpedo_confirmation" />
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="4dp"
+                    android:background="#0f0"
+                    android:text="Sonar"
+                    android:layout_weight="1"
+                    android:id="@+id/sonarButton"/>
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_margin="4dp"
+                    android:background="#0f0"
+                    android:text="Radar"
+                    android:layout_weight="1"
+                    android:id="@+id/radarButton"/>
+
+            </LinearLayout>
+
+
         </LinearLayout>
 
-        <include
-            android:id="@+id/compass"
-            android:layout_width="0dp"
-            android:layout_margin="16dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            layout="@layout/compass" />
-
-        <include
-            android:id="@+id/torpedoMenu"
-            android:visibility="gone"
-            android:layout_width="0dp"
-            android:layout_margin="16dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            layout="@layout/torpedo_confirmation" />
-
     </LinearLayout>
+
 
 </LinearLayout>

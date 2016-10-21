@@ -3,6 +3,12 @@
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/engineer_button"
+        android:icon="@drawable/ic_engineer"
+        app:showAsAction="always"
+        android:title="Engineer"/>
+
+    <item
         android:id="@+id/reset_button"
         android:icon="@drawable/ic_reset"
         app:showAsAction="always"
