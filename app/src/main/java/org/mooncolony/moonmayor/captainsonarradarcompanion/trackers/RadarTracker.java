@@ -84,6 +84,41 @@ public class RadarTracker {
     }
 
     this.possibleCurrentPositions = stillPossiblePositions;
+  }
 
+  public void drone(int quadrant, boolean isEnemyThere) {
+    Set<GridPoint> stillPossiblePositions = new HashSet<>();
+
+    for (GridPoint pos : possibleCurrentPositions) {
+      if (map.isInQuadrant(pos, quadrant) == isEnemyThere) {
+        stillPossiblePositions.add(pos);
+      }
+    }
+
+    this.possibleCurrentPositions = stillPossiblePositions;
+  }
+
+  // The user provides two pieces of information of the three parameters defined here.
+  // The unused third piece of information should be passed in as a zero.
+  // Therefore, if a user says they're at "row 2, quadrant 1" then this function should
+  // be called as: sonar(2, 0, 1);
+  public void sonar(int row, int col, int quadrant) {
+    Set<GridPoint> stillPossiblePositions = new HashSet<>();
+
+    for (GridPoint pos : possibleCurrentPositions) {
+      if (row == pos.row || col == pos.col || map.pointToQuadrant(pos) == quadrant) {
+        // a possible position that matches both pieces of info sonar exactly can't
+        // be a position, because player is forced to give one false piece of information.
+        boolean tooTrue = pos.row == row && pos.col == col ||
+            pos.row == row && map.pointToQuadrant(pos) == quadrant ||
+            pos.col == col && map.pointToQuadrant(pos) == quadrant;
+
+        if (!tooTrue) {
+          stillPossiblePositions.add(pos);
+        }
+      }
+    }
+
+    this.possibleCurrentPositions = stillPossiblePositions;
   }
 }

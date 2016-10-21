@@ -64,4 +64,71 @@ public class MarineMap {
 
     return water;
   }
+
+  private int pointToQuadrant10x10(GridPoint point) {
+    if (point.row <= 5 && point.col <= 5) {
+      return 1;
+    }
+
+    if (point.row <= 5 && point.col <= 10) {
+      return 2;
+    }
+
+    if (point.col <= 5) {
+      return 3;
+    }
+
+    return 4;
+  }
+
+  private int pointToQuadrant15x15(GridPoint point) {
+    // top three quadrants
+    if (point.row <= 5 && point.col <= 5) {
+      return 1;
+    }
+
+    if (point.row <= 5 && point.col <= 10) {
+      return 2;
+    }
+
+    if (point.row <= 5 && point.col <= 15) {
+      return 3;
+    }
+
+    // middle three quadrants
+    if (point.row <= 10 && point.col <= 5) {
+      return 4;
+    }
+
+    if (point.row <= 10 && point.col <= 10) {
+      return 5;
+    }
+
+    if (point.row <= 10 && point.col <= 15) {
+      return 6;
+    }
+
+    // bottom three quadrants
+    if (point.row <= 15 && point.col <= 5) {
+      return 7;
+    }
+
+    if (point.row <= 15 && point.col <= 10) {
+      return 8;
+    }
+
+    return 9;
+  }
+
+  public int pointToQuadrant(GridPoint point) {
+    if (this.rows == 10) {
+      return pointToQuadrant10x10(point);
+    } else {
+      return pointToQuadrant15x15(point);
+    }
+  }
+
+  public boolean isInQuadrant(GridPoint point, int quadrant) {
+    return pointToQuadrant(point) == quadrant;
+  }
 }
