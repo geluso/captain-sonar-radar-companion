@@ -7,6 +7,7 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -82,10 +83,18 @@ public class MainActivity extends AppCompatActivity {
         drawer.draw();
       } else {
         //TODO: Check that the path lands at a valid circle
-//        gameState.setPathStart(row, col);
+        // gameState.setPathStart(row, col);
         gameState.setPathEnd(row, col);
         drawer.draw();
       }
+    }
+    return true;
+  }
+
+  boolean mapRelease(MotionEvent event) {
+    int action = event.getAction();
+    if (action == MotionEvent.ACTION_UP) {
+
     }
     return true;
   }

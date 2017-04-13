@@ -9,6 +9,7 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.widget.ImageView;
 
 import org.mooncolony.moonmayor.captainsonarradarcompanion.GameState;
@@ -43,19 +44,24 @@ public class MapDrawer {
     this.activity = activity;
     this.map = map;
     this.gameState = gameState;
+
     setDimensions();
   }
 
   public void setDimensions() {
     DisplayMetrics display = activity.getResources().getDisplayMetrics();
-    this.width = display.widthPixels;
-    this.height = display.heightPixels;
+    // having trouble getting ImageView and BitMap to have the same dimensions.
+    // setting this manually for now.
+    //this.width = display.widthPixels;
+    //this.height = display.heightPixels;
+    this.width = 888;
+    this.height = 888;
 
     // constrain the ImageView to the exact dimensions of the bitmap.
     map.setMinimumHeight(this.width);
     map.setMaxHeight(this.width);
 
-    this.bitmap = Bitmap.createBitmap(width, width, Bitmap.Config.RGB_565);
+    this.bitmap = Bitmap.createBitmap(this.width, this.width, Bitmap.Config.RGB_565);
     Canvas canvas = new Canvas(this.bitmap);
     this.canvas = canvas;
 
@@ -69,7 +75,6 @@ public class MapDrawer {
     this.yIterateOffset = this.circleRadius * 2;
 
     this.textColumnAdditionalOffset = circleRadius/2;
-
   }
 
   // create getters so rows and cols are always up to date with latest gameState.
@@ -82,20 +87,20 @@ public class MapDrawer {
   }
 
   public int xToCol(float x) {
-    float xx = x - this.initialXOffset;
-    xx = xx / this.xIterateOffset;
-    xx = Math.round(xx);
-
-    int col = (int) xx;
-    return col;
+    // well, these should really be the same with all square maps.
+    return yToRow(x);
   }
 
   public int yToRow(float y) {
-    float yy = y - this.initialYOffset;
-    yy = yy / this.yIterateOffset;
-    yy = Math.round(yy);
+    float gridSize = (float) (1.0 * this.width) / (this.getCols() + 2);
+    float yy = y - gridSize;
+    float rowDecimal = yy / gridSize;
+    int row = (int) Math.floor(rowDecimal);
 
-    int row = (int) yy;
+    // keep coordinate off column and row labels.
+    row = Math.max(0, row);
+    row = Math.min(this.getCols(), row);
+
     return row;
   }
 
