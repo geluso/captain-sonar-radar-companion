@@ -45,20 +45,6 @@ public class RadarTracker {
     possibleCurrentPositions = stillPossiblePositions;
   }
 
-  public void crossReferenceTorpedo(GridPoint location) {
-    Set<GridPoint> stillPossiblePositions = new HashSet<>();
-
-    for (GridPoint position : this.possibleCurrentPositions) {
-      int dx = Math.abs(location.col - position.col);
-      int dy = Math.abs(location.row - position.row);
-      if (dx + dy <= 4) {
-        stillPossiblePositions.add(position);
-      }
-    }
-
-    this.possibleCurrentPositions = stillPossiblePositions;
-  }
-
   public void inferSilence() {
     Set<GridPoint> stillPossiblePositions = new HashSet<>();
 

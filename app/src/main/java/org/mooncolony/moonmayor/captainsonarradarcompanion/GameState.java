@@ -82,8 +82,7 @@ public class GameState {
     GridPoint torpedoTarget = new GridPoint(placingTorpedoRow, placingTorpedoCol);
     torpedoes.add(torpedoTarget);
 
-    torpedoTracker.track(torpedoTarget);
-    radar.crossReferenceTorpedo(torpedoTarget);
+    radar.possibleCurrentPositions = torpedoTracker.track(torpedoTarget);
   }
 
   public void addSilence() {

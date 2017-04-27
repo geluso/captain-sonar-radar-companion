@@ -4,10 +4,7 @@ import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPoint;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPointPath;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MarineMap;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by moonmayor on 10/7/16.
@@ -22,13 +19,22 @@ public class TorpedoTracker {
     pointToPaths = new HashMap<>();
   }
 
-  public void track(GridPoint point) {
+  public Set<GridPoint> track(GridPoint point) {
     List<GridPointPath> paths = new ArrayList<>();
     GridPointPath currentPath = new GridPointPath(point);
     explore(paths, currentPath, point, 4);
 
     // save the paths that were just tracked.
     pointToPaths.put(point, paths);
+
+    Set<GridPoint> points = new HashSet<>();
+    for (GridPointPath path : paths) {
+      for (GridPoint pp : path.path) {
+        points.add(pp);
+      }
+    }
+
+    return points;
   }
 
   public void explore(List<GridPointPath> paths, GridPointPath currentPath, GridPoint start, int moves) {
