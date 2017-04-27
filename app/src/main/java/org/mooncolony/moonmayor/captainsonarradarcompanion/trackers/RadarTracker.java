@@ -1,5 +1,6 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion.trackers;
 
+import android.util.Log;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPoint;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MarineMap;
 
@@ -43,6 +44,20 @@ public class RadarTracker {
     }
 
     possibleCurrentPositions = stillPossiblePositions;
+  }
+
+  public void crossReferenceTorpedo(Set<GridPoint> possibleFiringLocations) {
+    Set<GridPoint> stillPossiblePositions = new HashSet<>();
+
+    for (GridPoint p1 : this.possibleCurrentPositions) {
+      for (GridPoint p2 : possibleFiringLocations) {
+        if (p1.row == p2.row && p1.col == p2.col) {
+          stillPossiblePositions.add(p1);
+        }
+      }
+    }
+
+    this.possibleCurrentPositions = stillPossiblePositions;
   }
 
   public void inferSilence() {

@@ -8,6 +8,7 @@ import org.mooncolony.moonmayor.captainsonarradarcompanion.trackers.TorpedoTrack
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by matthewtduffin on 03/10/16.
@@ -82,7 +83,8 @@ public class GameState {
     GridPoint torpedoTarget = new GridPoint(placingTorpedoRow, placingTorpedoCol);
     torpedoes.add(torpedoTarget);
 
-    radar.possibleCurrentPositions = torpedoTracker.track(torpedoTarget);
+    Set<GridPoint> possibleFiringPositions = torpedoTracker.track(torpedoTarget);
+    radar.crossReferenceTorpedo(possibleFiringPositions);
   }
 
   public void addSilence() {

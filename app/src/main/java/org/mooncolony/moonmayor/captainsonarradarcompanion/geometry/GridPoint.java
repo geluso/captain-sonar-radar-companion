@@ -1,5 +1,8 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion.geometry;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by moonmayor on 10/3/16.
  */
