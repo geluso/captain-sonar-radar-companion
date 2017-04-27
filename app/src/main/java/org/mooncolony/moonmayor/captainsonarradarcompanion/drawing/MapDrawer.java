@@ -50,12 +50,8 @@ public class MapDrawer {
 
   public void setDimensions() {
     DisplayMetrics display = activity.getResources().getDisplayMetrics();
-    // having trouble getting ImageView and BitMap to have the same dimensions.
-    // setting this manually for now.
-    //this.width = display.widthPixels;
-    //this.height = display.heightPixels;
-    this.width = 888;
-    this.height = 888;
+    this.width = display.widthPixels;
+    this.height = display.heightPixels;
 
     // constrain the ImageView to the exact dimensions of the bitmap.
     map.setMinimumHeight(this.width);
@@ -87,20 +83,19 @@ public class MapDrawer {
   }
 
   public int xToCol(float x) {
-    // well, these should really be the same with all square maps.
-    return yToRow(x);
+    float xx = x - this.initialXOffset;
+    xx = xx / this.xIterateOffset;
+    xx = Math.round(xx);
+
+    int col = (int) xx;
+    return col;
   }
 
   public int yToRow(float y) {
-    float gridSize = (float) (1.0 * this.width) / (this.getCols() + 2);
-    float yy = y - gridSize;
-    float rowDecimal = yy / gridSize;
-    int row = (int) Math.floor(rowDecimal);
-
-    // keep coordinate off column and row labels.
-    row = Math.max(0, row);
-    row = Math.min(this.getCols(), row);
-
+    float yy = y - this.initialYOffset;
+    yy = yy / this.yIterateOffset;
+    yy = Math.round(yy);
+    int row = (int) yy;
     return row;
   }
 

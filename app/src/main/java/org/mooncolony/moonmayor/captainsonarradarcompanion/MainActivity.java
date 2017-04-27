@@ -1,25 +1,17 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion;
 
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
-import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.mooncolony.moonmayor.captainsonarradarcompanion.custom_views.SquareImageView;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPoint;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.drawing.MapDrawer;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MarineMap;
@@ -27,7 +19,6 @@ import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MarineMap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import butterknife.OnItemSelected;
 import butterknife.OnTouch;
 
 public class MainActivity extends AppCompatActivity {
@@ -51,10 +42,6 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     ButterKnife.bind(this);
-
-    DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-    int height = displayMetrics.heightPixels;
-    mapView.getLayoutParams().width = height/2;
 
 //    String[] options = MarineMap.AVAILABLE_MAPS;
 //    ArrayAdapter<String> mapChoices = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, options);
