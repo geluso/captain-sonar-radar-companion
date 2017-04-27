@@ -225,10 +225,6 @@ public class MapDrawer {
   }
 
   private void drawPath() {
-    if (gameState.currentPath.size() == 0) {
-      return;
-    }
-
     int row1 = gameState.pathEndRow;
     int col1 = gameState.pathEndCol;
 
