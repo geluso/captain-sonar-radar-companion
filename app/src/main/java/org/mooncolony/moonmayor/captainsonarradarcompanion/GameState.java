@@ -1,5 +1,6 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion;
 
+import android.util.Log;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPoint;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.AlphaRealTime;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MarineMap;
@@ -77,17 +78,12 @@ public class GameState {
     int col = this.pathEndCol;
     GridPoint currentPoint = new GridPoint(row, col);
 
-    if (this.currentPath.size() <= 0) {
-      return;
-    }
-
-    for (int i  = this.currentPath.size() - 1; i <= 0; i--) {
+    for (int i  = this.currentPath.size() - 1; i >= 0; i--) {
       GridPoint direction = this.currentPath.get(i);
       currentPoint = currentPoint.back(direction);
     }
 
-    this.pathStartRow = currentPoint.row;
-    this.pathStartCol = currentPoint.col;
+    setPathStart(currentPoint.row, currentPoint.col);
   }
 
   public void updatePath(GridPoint gp) {
