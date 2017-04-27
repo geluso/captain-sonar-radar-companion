@@ -20,6 +20,22 @@ public class GridPoint {
     this.col = col;
   }
 
+  public GridPoint north() {
+    return this.add(NORTH);
+  }
+
+  public GridPoint south() {
+    return this.add(SOUTH);
+  }
+
+  public GridPoint east() {
+    return this.add(EAST);
+  }
+
+  public GridPoint west() {
+    return this.add(WEST);
+  }
+
   public GridPoint add(GridPoint other) {
     return new GridPoint(this.row + other.row, this.col + other.col);
   }

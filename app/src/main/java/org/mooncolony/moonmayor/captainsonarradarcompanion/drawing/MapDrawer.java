@@ -240,15 +240,22 @@ public class MapDrawer {
       int row2 = row1;
 
       if (direction == GridPoint.MINE) {
-        // determine which direction the submarine came from
-        // in order to deduce where a mine cannot be because
-        // submarines cannot lay a mine on their path.
+        // gather all immediate positions when the mine was laid
+        // eliminate false possibilities.
+        // subs can't travel through mines they've placed.
         GridPoint lastDirection = null;
+        GridPoint currentPoint = new GridPoint(row1, col1);
+        GridPoint nextDirection = null;
+
         if (i > 0) {
           lastDirection = gameState.currentPath.get(i - 1);
         }
 
-        drawMines(new GridPoint(row1, col1), lastDirection);
+        if ((i + 1) < gameState.currentPath.size()) {
+          nextDirection = gameState.currentPath.get(i + 1);
+        }
+
+        drawMines(lastDirection, currentPoint, nextDirection);
         continue;
       } else if (direction == GridPoint.TORPEDO) {
           // draw a T at the position in the path the submarine fired from.
@@ -365,15 +372,25 @@ public class MapDrawer {
     canvas.drawText("T", xx, yy, Paints.TORPEDO_POINT_ON_PATH);
   }
 
-  private void drawMines(GridPoint point, GridPoint direction) {
+  private void drawMines(GridPoint lastDirection, GridPoint currentPoint, GridPoint nextDirection) {
     float radius = (float) (this.circleRadius * .9);
     List<GridPoint> points = new ArrayList<>();
 
-    // a mine can't be laid on where the submarine came from.
-    if (direction != GridPoint.NORTH) {points.add(new GridPoint(point.row+1,point.col));}
-    if (direction != GridPoint.SOUTH) {points.add(new GridPoint(point.row-1,point.col));}
-    if (direction != GridPoint.EAST) {points.add(new GridPoint(point.row,point.col-1));}
-    if (direction != GridPoint.WEST) {points.add(new GridPoint(point.row,point.col+1));}
+    if (lastDirection != GridPoint.SOUTH && nextDirection != GridPoint.NORTH) {
+      points.add(currentPoint.north());
+    }
+
+    if (lastDirection != GridPoint.NORTH && nextDirection != GridPoint.SOUTH) {
+      points.add(currentPoint.south());
+    }
+
+    if (lastDirection != GridPoint.WEST && nextDirection != GridPoint.EAST) {
+      points.add(currentPoint.east());
+    }
+
+    if (lastDirection != GridPoint.EAST && nextDirection != GridPoint.WEST) {
+      points.add(currentPoint.west());
+    }
 
     for (GridPoint gp : points) {
       canvas.drawCircle(initialXOffset + gp.col * xIterateOffset, initialYOffset + gp.row * yIterateOffset, radius, Paints.RED);
