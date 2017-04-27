@@ -236,9 +236,11 @@ public class MapDrawer {
     for (int i = 0; i < gameState.currentPath.size(); i++) {
       GridPoint direction = gameState.currentPath.get(i);
 
-      if (direction == GridPoint.TORPEDO) {
+      if (direction == GridPoint.MINE) {
+        drawMines(currentLocation, i);
         continue;
       } else if (direction == GridPoint.TORPEDO) {
+        drawTorpedoFirePointInPath(currentLocation);
         continue;
       }
 
@@ -265,22 +267,8 @@ public class MapDrawer {
       int row2 = row1;
 
       if (direction == GridPoint.MINE) {
-        // gather all immediate positions when the mine was laid
-        // eliminate false possibilities.
-        // subs can't travel through mines they've placed.
-        GridPoint lastDirection = null;
         GridPoint currentPoint = new GridPoint(row1, col1);
-        GridPoint nextDirection = null;
-
-        if (i > 0) {
-          lastDirection = gameState.currentPath.get(i - 1);
-        }
-
-        if ((i + 1) < gameState.currentPath.size()) {
-          nextDirection = gameState.currentPath.get(i + 1);
-        }
-
-        drawMines(lastDirection, currentPoint, nextDirection);
+        drawMines(currentPoint, i);
         continue;
       } else if (direction == GridPoint.TORPEDO) {
           // draw a T at the position in the path the submarine fired from.
@@ -400,7 +388,21 @@ public class MapDrawer {
     canvas.drawText("T", xx, yy, Paints.TORPEDO_POINT_ON_PATH);
   }
 
-  private void drawMines(GridPoint lastDirection, GridPoint currentPoint, GridPoint nextDirection) {
+  private void drawMines(GridPoint currentPoint, int i) {
+    // gather all immediate positions when the mine was laid
+    // eliminate false possibilities.
+    // subs can't travel through mines they've placed.
+    GridPoint lastDirection = null;
+    GridPoint nextDirection = null;
+
+    if (i > 0) {
+      lastDirection = gameState.currentPath.get(i - 1);
+    }
+
+    if ((i + 1) < gameState.currentPath.size()) {
+      nextDirection = gameState.currentPath.get(i + 1);
+    }
+
     float radius = (float) (this.circleRadius * .9);
     List<GridPoint> points = new ArrayList<>();
 
