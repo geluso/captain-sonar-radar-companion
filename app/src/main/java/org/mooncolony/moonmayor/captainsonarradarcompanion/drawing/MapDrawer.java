@@ -240,8 +240,20 @@ public class MapDrawer {
       int row2 = row1;
 
       if (direction == GridPoint.MINE) {
-        drawMines(new GridPoint(row1, col1),i>0?gameState.currentPath.get(i-1):null);
+        // determine which direction the submarine came from
+        // in order to deduce where a mine cannot be because
+        // submarines cannot lay a mine on their path.
+        GridPoint lastDirection = null;
+        if (i > 0) {
+          lastDirection = gameState.currentPath.get(i - 1);
+        }
+
+        drawMines(new GridPoint(row1, col1), lastDirection);
         continue;
+      } else if (direction == GridPoint.TORPEDO) {
+          // draw a T at the position in the path the submarine fired from.
+          drawTorpedoFirePointInPath(new GridPoint(row1, col1));
+          continue;
       } else if (direction == GridPoint.NORTH) {
         row2++;
       } else if (direction == GridPoint.SOUTH) {
@@ -344,9 +356,20 @@ public class MapDrawer {
     }
   }
 
+  private void drawTorpedoFirePointInPath(GridPoint point) {
+    float xx = initialXOffset + point.col * xIterateOffset;
+    float yy = initialYOffset + point.row * yIterateOffset + yIterateOffset * .25f;
+    float textSize = .8f * xIterateOffset;
+
+    Paints.TORPEDO_POINT_ON_PATH.setTextSize(textSize);
+    canvas.drawText("T", xx, yy, Paints.TORPEDO_POINT_ON_PATH);
+  }
+
   private void drawMines(GridPoint point, GridPoint direction) {
     float radius = (float) (this.circleRadius * .9);
     List<GridPoint> points = new ArrayList<>();
+
+    // a mine can't be laid on where the submarine came from.
     if (direction != GridPoint.NORTH) {points.add(new GridPoint(point.row+1,point.col));}
     if (direction != GridPoint.SOUTH) {points.add(new GridPoint(point.row-1,point.col));}
     if (direction != GridPoint.EAST) {points.add(new GridPoint(point.row,point.col-1));}

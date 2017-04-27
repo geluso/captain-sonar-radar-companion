@@ -145,7 +145,8 @@ public class MainActivity extends AppCompatActivity {
 
     gameState.addTorpedo();
     gameState.placingTorpedo = false;
-    drawer.draw();
+
+    updateMap(GridPoint.TORPEDO);
   }
 
   @OnClick({R.id.cancelTorpedo})

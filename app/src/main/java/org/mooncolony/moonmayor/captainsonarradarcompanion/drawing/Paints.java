@@ -10,6 +10,7 @@ public class Paints {
   public static final Paint RED, WHITE, BLACK, YELLOW, GREEN, GREY;
   public static final Paint CIRCLE, WATER, ISLAND, PATH, TEXT, AREA;
   public static final Paint ENGINEER_TEXT, ENGINEER_CONNECTOR, CROSS_PAINT;
+  public static final Paint TORPEDO_POINT_ON_PATH;
 
   static {
     RED = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -34,6 +35,13 @@ public class Paints {
     TEXT.setStyle(Paint.Style.FILL);
     TEXT.setFakeBoldText(true);
     TEXT.setTextAlign(Paint.Align.CENTER);
+
+    TORPEDO_POINT_ON_PATH = new Paint(Paint.ANTI_ALIAS_FLAG);
+    TORPEDO_POINT_ON_PATH.setColor(Color.RED);
+    TORPEDO_POINT_ON_PATH.setStyle(Paint.Style.FILL);
+    TORPEDO_POINT_ON_PATH.setFakeBoldText(true);
+    TORPEDO_POINT_ON_PATH.setTextAlign(Paint.Align.CENTER);
+    //TORPEDO_POINT_ON_PATH.setTextSize(float in px);
 
     ENGINEER_TEXT = new Paint(Paint.ANTI_ALIAS_FLAG);
     ENGINEER_TEXT.setColor(Color.argb(80, 13, 71, 161));
