@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         drawer.draw();
       } else {
         //TODO: Check that the path lands at a valid circle
-        // gameState.setPathStart(row, col);
+        gameState.setPathStart(row, col);
         gameState.setPathEnd(row, col);
         drawer.draw();
       }

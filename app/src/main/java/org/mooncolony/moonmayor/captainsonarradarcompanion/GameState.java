@@ -68,6 +68,26 @@ public class GameState {
   public void setPathEnd(int row, int col) {
     this.pathEndRow = row;
     this.pathEndCol = col;
+
+    followPathEndToPathStart();
+  }
+
+  private void followPathEndToPathStart() {
+    int row = this.pathEndRow;
+    int col = this.pathEndCol;
+    GridPoint currentPoint = new GridPoint(row, col);
+
+    if (this.currentPath.size() <= 0) {
+      return;
+    }
+
+    for (int i  = this.currentPath.size() - 1; i <= 0; i--) {
+      GridPoint direction = this.currentPath.get(i);
+      currentPoint = currentPoint.back(direction);
+    }
+
+    this.pathStartRow = currentPoint.row;
+    this.pathStartCol = currentPoint.col;
   }
 
   public void updatePath(GridPoint gp) {

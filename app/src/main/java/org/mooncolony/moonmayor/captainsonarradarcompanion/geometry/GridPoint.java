@@ -42,4 +42,9 @@ public class GridPoint {
   public GridPoint add(GridPoint other) {
     return new GridPoint(this.row + other.row, this.col + other.col);
   }
-}
+
+  public GridPoint back(GridPoint other) {
+    return new GridPoint(this.row - other.row, this.col - other.col);
+  }
+
+  }

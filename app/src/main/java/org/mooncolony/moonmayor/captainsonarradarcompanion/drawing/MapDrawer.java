@@ -130,7 +130,8 @@ public class MapDrawer {
 
     drawTorpedoTracking();
     drawTorpedoes();
-    drawPath();
+    drawPathForward();
+    //drawPathBackward();
 
     map.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
   }
@@ -224,7 +225,35 @@ public class MapDrawer {
     canvas.drawRect(rect, Paints.WATER);
   }
 
-  private void drawPath() {
+  private void drawPathForward() {
+    int row1 = gameState.pathStartRow;
+    int col1 = gameState.pathStartCol;
+
+    GridPoint currentLocation = new GridPoint(row1, col1);
+
+    drawStartingCircle(col1,row1,Paints.GREEN);
+
+    for (int i = 0; i < gameState.currentPath.size(); i++) {
+      GridPoint direction = gameState.currentPath.get(i);
+
+      if (direction == GridPoint.TORPEDO) {
+        continue;
+      } else if (direction == GridPoint.TORPEDO) {
+        continue;
+      }
+
+      GridPoint nextLocation = currentLocation.add(direction);
+
+      drawLineSegment(currentLocation, nextLocation, Paints.PATH);
+
+      // update the current row and col to the next row and col.
+      currentLocation = nextLocation;
+    }
+
+    drawStartingCircle(currentLocation.col, currentLocation.row, Paints.RED);
+  }
+
+  private void drawPathBackward() {
     int row1 = gameState.pathEndRow;
     int col1 = gameState.pathEndCol;
 
@@ -283,6 +312,9 @@ public class MapDrawer {
     canvas.drawCircle(x, y, circleRadius / 2, paint);
   }
 
+  private void drawLineSegment(GridPoint current, GridPoint next, Paint paint) {
+    drawLineSegment(current.col, current.row, next.col, next.row, paint);
+  }
   private void drawLineSegment(int col1, int row1, int col2, int row2, Paint paint) {
     float x1 = initialXOffset + col1 * xIterateOffset;
     float y1 = initialYOffset + row1 * yIterateOffset;
