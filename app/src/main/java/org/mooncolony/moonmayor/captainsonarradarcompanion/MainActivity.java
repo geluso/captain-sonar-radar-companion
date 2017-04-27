@@ -65,10 +65,12 @@ public class MainActivity extends AppCompatActivity {
       int col = drawer.xToCol(x);
 
       if (gameState.placingTorpedo) {
-        gameState.placingTorpedoRow = row;
-        gameState.placingTorpedoCol = col;
-        drawer.draw();
-      } else {
+        if (row != gameState.placingTorpedoRow || col != gameState.placingTorpedoCol) {
+          gameState.placingTorpedoRow = row;
+          gameState.placingTorpedoCol = col;
+          drawer.draw();
+        }
+      } else if (row != gameState.pathEndRow || col != gameState.pathEndCol) {
         //TODO: Check that the path lands at a valid circle
         gameState.setPathEnd(row, col);
         drawer.draw();
