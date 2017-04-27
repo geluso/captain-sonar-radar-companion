@@ -31,11 +31,18 @@ public class MainActivity extends AppCompatActivity {
   @BindView(R.id.textView) TextView textView;
 
   @BindView(R.id.torpedoButton) View torpedoButton;
+  @BindView(R.id.sonarButton) View sonarButton;
 
   @BindView(R.id.compass) View compass;
   @BindView(R.id.torpedoMenu) View torpedoMenu;
   @BindView(R.id.confirmTorpedo) Button confirmTorpedo;
   @BindView(R.id.cancelTorpedo) Button cancelTorpedo;
+
+  @BindView(R.id.sonarMenu) View sonarMenu;
+  @BindView(R.id.region) TextView regionText;
+  @BindView(R.id.positiveSonar) Button positiveSonar;
+  @BindView(R.id.negativeSonar) Button negativeSonar;
+  @BindView(R.id.cancelSonar) Button cancelSonar;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -161,6 +168,39 @@ public class MainActivity extends AppCompatActivity {
   void showTorpedoMenu() {
     compass.setVisibility(View.GONE);
     torpedoMenu.setVisibility(View.VISIBLE);
+  }
+
+  @OnClick({R.id.sonarButton})
+  void sonarButtonClick() {
+    showSonarMenu();
+  }
+
+  @OnClick({R.id.positiveSonar})
+  void positiveSonar() {
+    hideSonarMenu();
+  }
+
+  @OnClick({R.id.negativeSonar})
+  void negativeSonar() {
+    hideSonarMenu();
+  }
+
+  @OnClick({R.id.cancelSonar})
+  void cancelSonar() {
+    hideSonarMenu();
+  }
+
+  void showSonarMenu() {
+    compass.setVisibility(View.GONE);
+    sonarMenu.setVisibility(View.VISIBLE);
+    gameState.isAskingSonar = true;
+    regionText.setText("1?");
+  }
+
+  void hideSonarMenu() {
+    compass.setVisibility(View.VISIBLE);
+    sonarMenu.setVisibility(View.GONE);
+    gameState.isAskingSonar = false;
   }
 
   void showCompass() {

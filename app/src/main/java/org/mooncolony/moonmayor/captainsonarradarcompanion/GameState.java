@@ -33,7 +33,7 @@ public class GameState {
   public int placingTorpedoRow = -1;
   public int placingTorpedoCol = -1;
 
-  public boolean placing;
+  public boolean isAskingSonar = false;
 
   public GameState() {
     newGame(AlphaRealTime.template);

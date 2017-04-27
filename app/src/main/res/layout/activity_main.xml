@@ -124,6 +124,11 @@
                 android:visibility="gone"
                 layout="@layout/torpedo_confirmation" />
 
+            <include
+                android:id="@+id/sonarMenu"
+                android:visibility="gone"
+                layout="@layout/sonar_prompt" />
+
 
             <LinearLayout
                 android:layout_width="0dp"
