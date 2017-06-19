@@ -57,7 +57,7 @@ The green dot represents where the sub started. The red dot represents
 where the sub is at the end of their path. The circled grid locations
 represent all possible locations where the sub might currently be.
 
-![Track movement](screenshots/01_track_enemy_movements.png | width=50%)
+![Track movement](screenshots/01_track_enemy_movements.png)
 
 You can drag the path around inside the map view.
 
