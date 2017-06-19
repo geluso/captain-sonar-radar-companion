@@ -72,18 +72,53 @@ public class MainActivity extends AppCompatActivity {
       int col = drawer.xToCol(x);
 
       if (gameState.placingTorpedo) {
-        if (row != gameState.placingTorpedoRow || col != gameState.placingTorpedoCol) {
-          gameState.placingTorpedoRow = row;
-          gameState.placingTorpedoCol = col;
-          drawer.draw();
-        }
-      } else if (row != gameState.pathEndRow || col != gameState.pathEndCol) {
-        //TODO: Check that the path lands at a valid circle
-        gameState.setPathEnd(row, col);
-        drawer.draw();
+        dealWithTorpedoTouch(row, col);
+      } else if (gameState.isAskingSonar) {
+        dealWithSonarTouch(row, col);
+      } else {
+        dealWithNormalTouch(row, col);
       }
     }
     return true;
+  }
+
+  void dealWithNormalTouch(int row, int col) {
+    if (row != gameState.pathEndRow || col != gameState.pathEndCol) {
+      //TODO: Check that the path lands at a valid circle
+      gameState.setPathEnd(row, col);
+      drawer.draw();
+    }
+  }
+
+  void dealWithSonarTouch(int row, int col) {
+    boolean isSmall = false;
+
+    if(gameState.radar.map.cols < 15) {
+      isSmall = true;
+    }
+
+    if (!isSmall) {
+      handleSonarSmall(row, col);
+    } else {
+      handleSonarBig(row, col);
+    }
+  }
+
+  void handleSonarSmall(int row, int col) {
+
+  }
+
+  void handleSonarBig(int row, int col) {
+
+  }
+
+  void dealWithTorpedoTouch(int row, int col) {
+    if (row != gameState.placingTorpedoRow || col != gameState.placingTorpedoCol) {
+      gameState.placingTorpedoRow = row;
+      gameState.placingTorpedoCol = col;
+      drawer.draw();
+    }
+
   }
 
   boolean mapRelease(MotionEvent event) {
