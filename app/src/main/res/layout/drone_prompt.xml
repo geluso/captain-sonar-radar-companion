@@ -14,19 +14,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-                android:id="@+id/positiveSonar"
+                android:id="@+id/positiveDrone"
                 android:text="Yes"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         <Button
-                android:id="@+id/negativeSonar"
+                android:id="@+id/negativeDrone"
                 android:text="No"
                 android:layout_weight="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         <Button
-                android:id="@+id/cancelSonar"
+                android:id="@+id/cancelDrone"
                 android:text="X"
                 android:layout_weight="1"
                 android:layout_width="match_parent"

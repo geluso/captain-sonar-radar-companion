@@ -1,6 +1,5 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -31,18 +30,18 @@ public class MainActivity extends AppCompatActivity {
   @BindView(R.id.textView) TextView textView;
 
   @BindView(R.id.torpedoButton) View torpedoButton;
-  @BindView(R.id.sonarButton) View sonarButton;
+  @BindView(R.id.droneButton) View sonarButton;
 
   @BindView(R.id.compass) View compass;
   @BindView(R.id.torpedoMenu) View torpedoMenu;
   @BindView(R.id.confirmTorpedo) Button confirmTorpedo;
   @BindView(R.id.cancelTorpedo) Button cancelTorpedo;
 
-  @BindView(R.id.sonarMenu) View sonarMenu;
+  @BindView(R.id.droneMenu) View droneMenu;
   @BindView(R.id.region) TextView regionText;
-  @BindView(R.id.positiveSonar) Button positiveSonar;
-  @BindView(R.id.negativeSonar) Button negativeSonar;
-  @BindView(R.id.cancelSonar) Button cancelSonar;
+  @BindView(R.id.positiveDrone) Button positiveDrone;
+  @BindView(R.id.negativeDrone) Button negativeDrone;
+  @BindView(R.id.cancelDrone) Button cancelDrone;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +72,8 @@ public class MainActivity extends AppCompatActivity {
 
       if (gameState.placingTorpedo) {
         dealWithTorpedoTouch(row, col);
-      } else if (gameState.isAskingSonar) {
-        dealWithSonarTouch(row, col);
+      } else if (gameState.isAskingDrone) {
+        dealWithDroneTouch(row, col);
       } else {
         dealWithNormalTouch(row, col);
       }
@@ -90,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
     }
   }
 
-  void dealWithSonarTouch(int row, int col) {
+  void dealWithDroneTouch(int row, int col) {
     // determine if we're on a 2x2 or 3x3 region map.
     boolean isSmall = false;
     if(gameState.radar.map.cols < 15) {
@@ -106,9 +105,10 @@ public class MainActivity extends AppCompatActivity {
     col /= 5;
 
     int regionId = regionColumns * row + col + 1;
+    gameState.currentDroneRegionId = regionId;
     regionText.setText("Sonar hit in region " + regionId + "?");
-    positiveSonar.setEnabled(true);
-    negativeSonar.setEnabled(true);
+    positiveDrone.setEnabled(true);
+    negativeDrone.setEnabled(true);
   }
 
   void dealWithTorpedoTouch(int row, int col) {
@@ -204,39 +204,51 @@ public class MainActivity extends AppCompatActivity {
     torpedoMenu.setVisibility(View.VISIBLE);
   }
 
-  @OnClick({R.id.sonarButton})
+  @OnClick({R.id.droneButton})
   void sonarButtonClick() {
     showSonarMenu();
   }
 
-  @OnClick({R.id.positiveSonar})
+  @OnClick({R.id.positiveDrone})
   void positiveSonar() {
+    gameState.analyzeDrone(true);
+    drawer.draw();
+
     hideSonarMenu();
   }
 
-  @OnClick({R.id.negativeSonar})
+  @OnClick({R.id.negativeDrone})
   void negativeSonar() {
+    gameState.analyzeDrone(false);
+    drawer.draw();
+
     hideSonarMenu();
   }
 
-  @OnClick({R.id.cancelSonar})
+  @OnClick({R.id.cancelDrone})
   void cancelSonar() {
     hideSonarMenu();
   }
 
   void showSonarMenu() {
     compass.setVisibility(View.GONE);
-    sonarMenu.setVisibility(View.VISIBLE);
-    gameState.isAskingSonar = true;
+    droneMenu.setVisibility(View.VISIBLE);
+
+    // technically the gameState doesn't have a currentDroneRegionId
+    // until someone touches a region after activating sonar.
+    gameState.isAskingDrone = true;
+    gameState.currentDroneRegionId = -1;
+
     regionText.setText("Touch a region.");
-    positiveSonar.setEnabled(false);
-    negativeSonar.setEnabled(false);
+    positiveDrone.setEnabled(false);
+    negativeDrone.setEnabled(false);
   }
 
   void hideSonarMenu() {
     compass.setVisibility(View.VISIBLE);
-    sonarMenu.setVisibility(View.GONE);
-    gameState.isAskingSonar = false;
+    droneMenu.setVisibility(View.GONE);
+    gameState.isAskingDrone = false;
+    gameState.currentDroneRegionId = -1;
   }
 
   void showCompass() {
@@ -333,6 +345,10 @@ public class MainActivity extends AppCompatActivity {
     textView.setText("");
     gameState.newGame();
     showCompass();
+
+    torpedoMenu.setVisibility(View.GONE);
+    droneMenu.setVisibility(View.GONE);
+
     drawer.draw();
   }
 

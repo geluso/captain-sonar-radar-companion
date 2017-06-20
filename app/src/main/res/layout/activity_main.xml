@@ -125,9 +125,9 @@
                 layout="@layout/torpedo_confirmation" />
 
             <include
-                android:id="@+id/sonarMenu"
+                android:id="@+id/droneMenu"
                 android:visibility="gone"
-                layout="@layout/sonar_prompt" />
+                layout="@layout/drone_prompt" />
 
 
             <LinearLayout
@@ -140,17 +140,17 @@
                     android:layout_height="0dp"
                     android:layout_margin="4dp"
                     android:background="#0f0"
-                    android:text="Sonar"
+                    android:text="Drone"
                     android:layout_weight="1"
-                    android:id="@+id/sonarButton"/>
+                    android:id="@+id/droneButton"/>
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_margin="4dp"
                     android:background="#0f0"
-                    android:text="Radar"
+                    android:text="Sonar"
                     android:layout_weight="1"
-                    android:id="@+id/radarButton"/>
+                    android:id="@+id/sonarButton"/>
 
             </LinearLayout>
 

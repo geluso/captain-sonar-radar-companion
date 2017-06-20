@@ -1,6 +1,5 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion.trackers;
 
-import android.util.Log;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPoint;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MarineMap;
 

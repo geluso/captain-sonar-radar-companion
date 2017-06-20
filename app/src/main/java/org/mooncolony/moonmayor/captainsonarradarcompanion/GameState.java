@@ -1,6 +1,5 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion;
 
-import android.util.Log;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPoint;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.AlphaRealTime;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MarineMap;
@@ -33,7 +32,8 @@ public class GameState {
   public int placingTorpedoRow = -1;
   public int placingTorpedoCol = -1;
 
-  public boolean isAskingSonar = false;
+  public boolean isAskingDrone = false;
+  public int currentDroneRegionId = -1;
 
   public GameState() {
     newGame(AlphaRealTime.template);
@@ -58,6 +58,7 @@ public class GameState {
     this.placingTorpedoRow = -1;
     this.placingTorpedoCol = -1;
 
+    // radar tracker is for tracking basic movement.
     this.radar = new RadarTracker(this.map);
   }
 
@@ -101,6 +102,10 @@ public class GameState {
 
     Set<GridPoint> possibleFiringPositions = torpedoTracker.track(torpedoTarget);
     radar.crossReferenceTorpedo(possibleFiringPositions);
+  }
+
+  public void analyzeDrone(boolean isSonarPositive) {
+    radar.drone(this.currentDroneRegionId, isSonarPositive);
   }
 
   public void addSilence() {
