@@ -10,60 +10,68 @@
         <!--android:title="Engineer"/>-->
 
     <item
-        android:id="@+id/reset_button"
-        android:icon="@drawable/ic_reset"
-        app:showAsAction="always"
-        android:title="Reset"/>
-
-    <item
-        android:id="@+id/alpha_real_time"
-        app:showAsAction="never"
-        android:title="Alpha Real Time"/>
-    <item
-        android:id="@+id/alpha_turn_by_turn"
-        app:showAsAction="never"
-        android:title="Alpha Turn By Turn"/>
+            android:id="@+id/reset_button"
+            android:icon="@drawable/ic_reset"
+            app:showAsAction="always"
+            android:title="Reset"/>
 
 
     <item
-        android:id="@+id/bravo_real_time"
-        app:showAsAction="never"
-        android:title="Bravo Real Time"/>
-    <item
-        android:id="@+id/bravo_turn_by_turn"
-        app:showAsAction="never"
-        android:title="Bravo Turn By Turn"/>
+            android:id="@+id/map_menu_button"
+            android:title="@string/select_map"
+            android:icon="@mipmap/ic_map"
+            app:showAsAction="always">
+
+    <menu>
+        <item
+            android:id="@+id/alpha_real_time"
+            app:showAsAction="never"
+            android:title="Alpha Real Time"/>
+        <item
+            android:id="@+id/alpha_turn_by_turn"
+            app:showAsAction="never"
+            android:title="Alpha Turn By Turn"/>
 
 
-    <item
-        android:id="@+id/charlie_real_time"
-        app:showAsAction="never"
-        android:title="Charlie Real Time"/>
-    <item
-        android:id="@+id/charlie_turn_by_turn"
-        app:showAsAction="never"
-        android:title="Charlie Turn By Turn"/>
+        <item
+            android:id="@+id/bravo_real_time"
+            app:showAsAction="never"
+            android:title="Bravo Real Time"/>
+        <item
+            android:id="@+id/bravo_turn_by_turn"
+            app:showAsAction="never"
+            android:title="Bravo Turn By Turn"/>
 
 
-    <item
-        android:id="@+id/delta_real_time"
-        app:showAsAction="never"
-        android:title="Delta Real Time"/>
-    <item
-        android:id="@+id/delta_turn_by_turn"
-        app:showAsAction="never"
-        android:title="Delta Turn By Turn"/>
+        <item
+            android:id="@+id/charlie_real_time"
+            app:showAsAction="never"
+            android:title="Charlie Real Time"/>
+        <item
+            android:id="@+id/charlie_turn_by_turn"
+            app:showAsAction="never"
+            android:title="Charlie Turn By Turn"/>
+
+
+        <item
+            android:id="@+id/delta_real_time"
+            app:showAsAction="never"
+            android:title="Delta Real Time"/>
+        <item
+            android:id="@+id/delta_turn_by_turn"
+            app:showAsAction="never"
+            android:title="Delta Turn By Turn"/>
 
 
 
-    <item
-        android:id="@+id/echo_real_time"
-        app:showAsAction="never"
-        android:title="Echo Real Time"/>
-    <item
-        android:id="@+id/echo_turn_by_turn"
-        app:showAsAction="never"
-        android:title="Echo Turn By Turn"/>
-
-
+        <item
+            android:id="@+id/echo_real_time"
+            app:showAsAction="never"
+            android:title="Echo Real Time"/>
+        <item
+            android:id="@+id/echo_turn_by_turn"
+            app:showAsAction="never"
+            android:title="Echo Turn By Turn"/>
+    </menu>
+    </item>
 </menu>

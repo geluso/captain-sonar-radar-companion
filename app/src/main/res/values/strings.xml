@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Captain Sonar Radar Companion</string>
     <string name="mapList_prompt">Pick a map</string>
+    <string name="select_map">Select Map</string>
     <string-array name="mapList">
         <item>Map Real Time Alpha</item>
         <item>Map Tiny</item>
