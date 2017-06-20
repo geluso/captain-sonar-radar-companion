@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
   @BindView(R.id.textView) TextView textView;
 
   @BindView(R.id.torpedoButton) View torpedoButton;
-  @BindView(R.id.droneButton) View sonarButton;
+  @BindView(R.id.droneButton) View droneButton;
 
   @BindView(R.id.compass) View compass;
   @BindView(R.id.torpedoMenu) View torpedoMenu;
@@ -42,6 +42,12 @@ public class MainActivity extends AppCompatActivity {
   @BindView(R.id.positiveDrone) Button positiveDrone;
   @BindView(R.id.negativeDrone) Button negativeDrone;
   @BindView(R.id.cancelDrone) Button cancelDrone;
+
+  @BindView(R.id.sonarButton) View sonarButton;
+  @BindView(R.id.sonarMenu) View sonarMenu;
+  @BindView(R.id.confirmSonar) Button confirmSonar;
+  @BindView(R.id.cancelSonar) Button cancelSonar;
+  @BindView(R.id.changeSonar) Button toggleSonarMode;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -205,8 +211,8 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @OnClick({R.id.droneButton})
-  void sonarButtonClick() {
-    showSonarMenu();
+  void droneButtonClick() {
+    showDroneMenu();
   }
 
   @OnClick({R.id.positiveDrone})
@@ -228,15 +234,17 @@ public class MainActivity extends AppCompatActivity {
     droneResult.droneResult = result;
 
     updateMap(droneResult);
-    hideSonarMenu();
+    hideDroneMenu();
   }
 
   @OnClick({R.id.cancelDrone})
-  void cancelSonar() {
-    hideSonarMenu();
+  void hideDroneMenu() {
+    showCompass();
+    gameState.isAskingDrone = false;
+    gameState.currentDroneRegionId = -1;
   }
 
-  void showSonarMenu() {
+  void showDroneMenu() {
     compass.setVisibility(View.GONE);
     droneMenu.setVisibility(View.VISIBLE);
 
@@ -250,16 +258,24 @@ public class MainActivity extends AppCompatActivity {
     negativeDrone.setEnabled(false);
   }
 
-  void hideSonarMenu() {
-    compass.setVisibility(View.VISIBLE);
-    droneMenu.setVisibility(View.GONE);
-    gameState.isAskingDrone = false;
-    gameState.currentDroneRegionId = -1;
+  @OnClick({R.id.sonarButton})
+  void sonarButtonClick() {
+    gameState.isRunningSonar = true;
+    compass.setVisibility(View.GONE);
+    sonarMenu.setVisibility(View.VISIBLE);
+  }
+
+  @OnClick({R.id.cancelSonar})
+  void sonarButtonCancel() {
+    gameState.isRunningSonar = false;
+    showCompass();
   }
 
   void showCompass() {
     compass.setVisibility(View.VISIBLE);
     torpedoMenu.setVisibility(View.GONE);
+    droneMenu.setVisibility(View.GONE);
+    sonarMenu.setVisibility(View.GONE);
   }
 
   private void appendText(String message) {

@@ -35,6 +35,8 @@ public class GameState {
   public boolean isAskingDrone = false;
   public int currentDroneRegionId = -1;
 
+  public boolean isRunningSonar = false;
+
   public GameState() {
     newGame(AlphaRealTime.template);
   }
