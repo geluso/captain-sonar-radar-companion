@@ -210,18 +210,24 @@ public class MainActivity extends AppCompatActivity {
   }
 
   @OnClick({R.id.positiveDrone})
-  void positiveSonar() {
-    gameState.analyzeDrone(true);
-    drawer.draw();
-
-    hideSonarMenu();
+  void positiveDroneResult() {
+    addDroneResult(true);
   }
 
   @OnClick({R.id.negativeDrone})
-  void negativeSonar() {
-    gameState.analyzeDrone(false);
-    drawer.draw();
+  void negativeDroneResult() {
+    addDroneResult(false);
+  }
 
+  void addDroneResult(boolean result) {
+    gameState.analyzeDrone(result);
+
+    GridPoint droneResult = new GridPoint(0, 0);
+    droneResult.type = GridPoint.DRONE_RESULT.type;
+    droneResult.droneRegionId = gameState.currentDroneRegionId;
+    droneResult.droneResult = result;
+
+    updateMap(droneResult);
     hideSonarMenu();
   }
 

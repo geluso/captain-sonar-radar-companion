@@ -9,7 +9,6 @@ import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.widget.ImageView;
 
 import org.mooncolony.moonmayor.captainsonarradarcompanion.GameState;
@@ -242,6 +241,9 @@ public class MapDrawer {
       } else if (direction == GridPoint.TORPEDO) {
         drawTorpedoFirePointInPath(currentLocation);
         continue;
+      } else if (direction.type.equals(GridPoint.DRONE_RESULT.type)) {
+        drawDroneResultInPath(currentLocation, direction);
+        continue;
       }
 
       GridPoint nextLocation = currentLocation.add(direction);
@@ -386,6 +388,25 @@ public class MapDrawer {
 
     Paints.TORPEDO_POINT_ON_PATH.setTextSize(textSize);
     canvas.drawText("T", xx, yy, Paints.TORPEDO_POINT_ON_PATH);
+  }
+
+  private void drawDroneResultInPath(GridPoint location, GridPoint information) {
+    float xx = initialXOffset + location.col * xIterateOffset;
+    float yy = initialYOffset + location.row * yIterateOffset + yIterateOffset * .25f;
+    float textSize = .8f * xIterateOffset;
+
+    Paint paint;
+    String text = "" + information.droneRegionId;
+    if (information.droneResult) {
+      text += "+";
+      paint = Paints.DRONE_RESULT_PAINT_POSITIVE;
+    } else {
+      text += "X";
+      paint = Paints.DRONE_RESULT_PAINT_NEGATIVE;
+    }
+
+    paint.setTextSize(textSize);
+    canvas.drawText(text, xx, yy, paint);
   }
 
   private void drawMines(GridPoint currentPoint, int i) {

@@ -11,6 +11,8 @@ public class Paints {
   public static final Paint CIRCLE, WATER, ISLAND, PATH, TEXT, AREA;
   public static final Paint ENGINEER_TEXT, ENGINEER_CONNECTOR, CROSS_PAINT;
   public static final Paint TORPEDO_POINT_ON_PATH;
+  public static final Paint DRONE_RESULT_PAINT_POSITIVE;
+  public static final Paint DRONE_RESULT_PAINT_NEGATIVE;
 
   static {
     RED = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -42,6 +44,18 @@ public class Paints {
     TORPEDO_POINT_ON_PATH.setFakeBoldText(true);
     TORPEDO_POINT_ON_PATH.setTextAlign(Paint.Align.CENTER);
     //TORPEDO_POINT_ON_PATH.setTextSize(float in px);
+
+    DRONE_RESULT_PAINT_POSITIVE = new Paint(Paint.ANTI_ALIAS_FLAG);
+    DRONE_RESULT_PAINT_POSITIVE.setColor(Color.GREEN);
+    DRONE_RESULT_PAINT_POSITIVE.setStyle(Paint.Style.FILL);
+    DRONE_RESULT_PAINT_POSITIVE.setFakeBoldText(true);
+    DRONE_RESULT_PAINT_POSITIVE.setTextAlign(Paint.Align.CENTER);
+
+    DRONE_RESULT_PAINT_NEGATIVE = new Paint(Paint.ANTI_ALIAS_FLAG);
+    DRONE_RESULT_PAINT_NEGATIVE.setColor(Color.RED);
+    DRONE_RESULT_PAINT_NEGATIVE.setStyle(Paint.Style.FILL);
+    DRONE_RESULT_PAINT_NEGATIVE.setFakeBoldText(true);
+    DRONE_RESULT_PAINT_NEGATIVE.setTextAlign(Paint.Align.CENTER);
 
     ENGINEER_TEXT = new Paint(Paint.ANTI_ALIAS_FLAG);
     ENGINEER_TEXT.setColor(Color.argb(80, 13, 71, 161));

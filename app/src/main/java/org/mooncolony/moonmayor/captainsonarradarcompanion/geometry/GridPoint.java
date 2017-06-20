@@ -15,12 +15,26 @@ public class GridPoint {
   public static final GridPoint MINE =  new GridPoint(0, 0);
   public static final GridPoint TORPEDO =  new GridPoint(0, 0);
 
+  // NASTY HACK: GridPoint is stuffed with information for the DRONE_RESULT.
+  // row: represents the regionId that was asked when the Drone happened.
+  // col: represents a boolean value storing the result of the Drone. 0 is false.
+  public static final GridPoint DRONE_RESULT =  new GridPoint(0, 0, "drone");
+
   public int row;
   public int col;
+  public String type;
+
+  public int droneRegionId;
+  public boolean droneResult;
 
   public GridPoint(int row, int col) {
+    this(row, col, "movement");
+  }
+
+  public GridPoint(int row, int col, String type) {
     this.row = row;
     this.col = col;
+    this.type = type;
   }
 
   public GridPoint north() {
