@@ -91,25 +91,22 @@ public class MainActivity extends AppCompatActivity {
   }
 
   void dealWithSonarTouch(int row, int col) {
+    // determine if we're on a 2x2 or 3x3 region map.
     boolean isSmall = false;
-
     if(gameState.radar.map.cols < 15) {
       isSmall = true;
     }
 
-    if (!isSmall) {
-      handleSonarSmall(row, col);
-    } else {
-      handleSonarBig(row, col);
+    int regionColumns = 3;
+    if (isSmall) {
+      regionColumns = 2;
     }
-  }
 
-  void handleSonarSmall(int row, int col) {
+    row /= 5;
+    col /= 5;
 
-  }
-
-  void handleSonarBig(int row, int col) {
-
+    int regionId = regionColumns * row + col + 1;
+    regionText.setText("Sonar hit in region " + regionId + "?");
   }
 
   void dealWithTorpedoTouch(int row, int col) {
