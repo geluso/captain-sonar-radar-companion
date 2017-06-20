@@ -444,9 +444,13 @@ public class MapDrawer {
     }
 
     for (GridPoint gp : points) {
-      canvas.drawCircle(initialXOffset + gp.col * xIterateOffset, initialYOffset + gp.row * yIterateOffset, radius, Paints.RED);
-      canvas.drawCircle(initialXOffset + gp.col * xIterateOffset, initialYOffset + gp.row * yIterateOffset, (float) .66 * radius, Paints.WHITE);
-      canvas.drawCircle(initialXOffset + gp.col * xIterateOffset, initialYOffset + gp.row * yIterateOffset, (float) .33 * radius, Paints.RED);
+      // only draw a mine if it's in a water location.
+      // don't draw mines on land.
+      if (this.gameState.radar.map.getCoord(gp)) {
+        canvas.drawCircle(initialXOffset + gp.col * xIterateOffset, initialYOffset + gp.row * yIterateOffset, radius, Paints.RED);
+        canvas.drawCircle(initialXOffset + gp.col * xIterateOffset, initialYOffset + gp.row * yIterateOffset, (float) .66 * radius, Paints.WHITE);
+        canvas.drawCircle(initialXOffset + gp.col * xIterateOffset, initialYOffset + gp.row * yIterateOffset, (float) .33 * radius, Paints.RED);
+      }
     }
   }
 
