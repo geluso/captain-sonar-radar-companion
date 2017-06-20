@@ -206,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   void showTorpedoMenu() {
-    compass.setVisibility(View.GONE);
+    closeAllMenus();
     torpedoMenu.setVisibility(View.VISIBLE);
   }
 
@@ -245,7 +245,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   void showDroneMenu() {
-    compass.setVisibility(View.GONE);
+    closeAllMenus();
     droneMenu.setVisibility(View.VISIBLE);
 
     // technically the gameState doesn't have a currentDroneRegionId
@@ -261,7 +261,7 @@ public class MainActivity extends AppCompatActivity {
   @OnClick({R.id.sonarButton})
   void sonarButtonClick() {
     gameState.isRunningSonar = true;
-    compass.setVisibility(View.GONE);
+    closeAllMenus();
     sonarMenu.setVisibility(View.VISIBLE);
   }
 
@@ -272,7 +272,18 @@ public class MainActivity extends AppCompatActivity {
   }
 
   void showCompass() {
+    closeAllMenus();
     compass.setVisibility(View.VISIBLE);
+  }
+
+  void closeAllMenus() {
+    gameState.isRunningSonar = false;
+    gameState.isAskingDrone = false;
+    gameState.placingTorpedo = false;
+
+    drawer.draw();
+
+    compass.setVisibility(View.GONE);
     torpedoMenu.setVisibility(View.GONE);
     droneMenu.setVisibility(View.GONE);
     sonarMenu.setVisibility(View.GONE);
