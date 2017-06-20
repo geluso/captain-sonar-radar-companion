@@ -107,6 +107,8 @@ public class MainActivity extends AppCompatActivity {
 
     int regionId = regionColumns * row + col + 1;
     regionText.setText("Sonar hit in region " + regionId + "?");
+    positiveSonar.setEnabled(true);
+    negativeSonar.setEnabled(true);
   }
 
   void dealWithTorpedoTouch(int row, int col) {
@@ -226,7 +228,9 @@ public class MainActivity extends AppCompatActivity {
     compass.setVisibility(View.GONE);
     sonarMenu.setVisibility(View.VISIBLE);
     gameState.isAskingSonar = true;
-    regionText.setText("1?");
+    regionText.setText("Touch a region.");
+    positiveSonar.setEnabled(false);
+    negativeSonar.setEnabled(false);
   }
 
   void hideSonarMenu() {
