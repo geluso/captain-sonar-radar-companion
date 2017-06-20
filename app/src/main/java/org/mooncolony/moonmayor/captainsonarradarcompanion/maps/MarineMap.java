@@ -10,6 +10,7 @@ public class MarineMap {
       AlphaRealTime.name, AlphaTurnByTurn.name,
       BravoRealTime.name, BravoTurnByTurn.name,
       CharlieRealTime.name, CharlieTurnByTurn.name,
+      DeltaRealTime.name, DeltaTurnByTurn.name,
       EchoRealTime.name, EchoTurnByTurn.name,
       MapTiny.name};
 
@@ -17,6 +18,7 @@ public class MarineMap {
       AlphaRealTime.template, AlphaTurnByTurn.template,
       BravoRealTime.template, BravoTurnByTurn.template,
       CharlieRealTime.template, CharlieTurnByTurn.template,
+      DeltaRealTime.template, DeltaTurnByTurn.template,
       EchoRealTime.template, EchoTurnByTurn.template,
       MapTiny.template
   };
