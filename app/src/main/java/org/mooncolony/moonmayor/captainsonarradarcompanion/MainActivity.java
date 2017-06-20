@@ -271,9 +271,10 @@ public class MainActivity extends AppCompatActivity {
         resetGame();
         break;
 
-      case R.id.engineer_button:
-        startActivity(new Intent(MainActivity.this,EngineerActivity.class));
-        break;
+        // disabling engineer activity.
+//      case R.id.engineer_button:
+//        startActivity(new Intent(MainActivity.this,EngineerActivity.class));
+//        break;
 
       case R.id.alpha_real_time: position = 0;
         break;
