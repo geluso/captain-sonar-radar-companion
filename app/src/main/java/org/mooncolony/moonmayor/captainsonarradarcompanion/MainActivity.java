@@ -6,10 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPoint;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.drawing.MapDrawer;
@@ -290,11 +287,11 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void appendText(String message) {
-    String newString = textView.getText().toString();
-    if (newString.length() != 0) {
-      message+=", ";
+    String current = textView.getText().toString();
+    if (current.length() != 0) {
+      current += ", ";
     }
-    textView.setText(message+newString);
+    textView.setText(current + message);
   }
 
   @Override
