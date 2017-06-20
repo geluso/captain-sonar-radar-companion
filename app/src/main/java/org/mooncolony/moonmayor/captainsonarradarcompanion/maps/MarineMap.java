@@ -6,6 +6,11 @@ import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPoint;
  * Created by moonmayor on 10/3/16.
  */
 public class MarineMap {
+  // It's hard to combine these array into just one array.
+  // The problem is that they're all classes. You'd have to
+  // do something like declaring: Class[] aa = {AlphaRealTime.class, ...}.
+  // But then since the array would be direct references to just type "Class"
+  // you can't access aa[0].name. Gotta figure out a good way to do that!
   public static final String[] AVAILABLE_MAPS = {
       AlphaRealTime.name, AlphaTurnByTurn.name,
       BravoRealTime.name, BravoTurnByTurn.name,
