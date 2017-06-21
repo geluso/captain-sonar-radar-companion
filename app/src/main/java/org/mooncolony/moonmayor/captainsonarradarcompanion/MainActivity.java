@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity {
 
     int regionId = regionColumns * row + col + 1;
     gameState.currentDroneRegionId = regionId;
-    regionText.setText("Sonar hit in region " + regionId + "?");
+    regionText.setText("Drone saw sub in region " + regionId + "?");
     positiveDrone.setEnabled(true);
     negativeDrone.setEnabled(true);
   }
@@ -221,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
 
   @OnClick({R.id.silenceButton})
   void silence() {
+    appendText("silence");
     gameState.addSilence();
     drawer.draw();
   }
@@ -290,6 +291,14 @@ public class MainActivity extends AppCompatActivity {
     droneResult.type = GridPoint.DRONE_RESULT.type;
     droneResult.droneRegionId = gameState.currentDroneRegionId;
     droneResult.droneResult = result;
+
+    String message = "Drone " + droneResult.droneRegionId;
+    if (droneResult.droneResult) {
+      message += "+";
+    } else {
+      message += "-";
+    }
+    appendText(message);
 
     updateMap(droneResult);
     hideDroneMenu();
