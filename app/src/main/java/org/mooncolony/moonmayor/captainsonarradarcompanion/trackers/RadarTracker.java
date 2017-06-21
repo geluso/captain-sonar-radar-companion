@@ -47,6 +47,10 @@ public class RadarTracker {
     possibleCurrentPositions = stillPossiblePositions;
   }
 
+  public void surface() {
+    lastMovement = null;
+  }
+
   public void crossReferenceTorpedo(Set<GridPoint> possibleFiringLocations) {
     Set<GridPoint> stillPossiblePositions = new HashSet<>();
 

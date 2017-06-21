@@ -225,6 +225,12 @@ public class MainActivity extends AppCompatActivity {
     drawer.draw();
   }
 
+  @OnClick({R.id.surfaceButton})
+  void surface() {
+    gameState.surface();
+    drawer.draw();
+  }
+
   @OnClick({R.id.torpedoButton})
   void torpedoButtonClick() {
     showTorpedoMenu();

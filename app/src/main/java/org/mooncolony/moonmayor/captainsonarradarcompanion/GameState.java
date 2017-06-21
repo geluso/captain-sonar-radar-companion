@@ -123,6 +123,10 @@ public class GameState {
     radar.inferSilence();
   }
 
+  public void surface() {
+    radar.surface();
+  }
+
   public void sonarStart() {
     this.isRunningSonar = true;
     this.sonarMode = "row,col";
