@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
   @BindView(R.id.textView) TextView textView;
 
   @BindView(R.id.silenceButton) View silenceButton;
-  @BindView(R.id.scenarioButton) View scenarioButton;
+  //@BindView(R.id.scenarioButton) View scenarioButton;
   @BindView(R.id.surfaceButton) View surfaceButton;
 
   @BindView(R.id.mineButton) View mineButton;
@@ -322,7 +322,7 @@ public class MainActivity extends AppCompatActivity {
 
     sonarMenu.setVisibility(View.VISIBLE);
     silenceButton.setVisibility(View.GONE);
-    scenarioButton.setVisibility(View.GONE);
+    //scenarioButton.setVisibility(View.GONE);
     surfaceButton.setVisibility(View.GONE);
     mineButton.setVisibility(View.GONE);
     torpedoButton.setVisibility(View.GONE);
@@ -391,7 +391,7 @@ public class MainActivity extends AppCompatActivity {
   void showCompass() {
     closeAllMenus();
     silenceButton.setVisibility(View.VISIBLE);
-    scenarioButton.setVisibility(View.VISIBLE);
+    //scenarioButton.setVisibility(View.VISIBLE);
     surfaceButton.setVisibility(View.VISIBLE);
 
     mineButton.setVisibility(View.VISIBLE);

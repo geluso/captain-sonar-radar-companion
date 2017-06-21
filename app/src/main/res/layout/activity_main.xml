@@ -44,41 +44,42 @@
         android:orientation="vertical"
         android:layout_weight="1">
 
-        <LinearLayout
-            android:layout_weight="1"
-            android:layout_width="match_parent"
+        <!-- Removed until Scenario is implemented -->
+        <!--<LinearLayout-->
+            <!--android:layout_weight="1"-->
+            <!--android:layout_width="match_parent"-->
 
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_height="0dp">
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:layout_margin="4dp"
-                android:text="Silence"
-                android:background="#ff0"
-                android:id="@+id/silenceButton"/>
+            <!--android:orientation="horizontal"-->
+            <!--android:gravity="center"-->
+            <!--android:layout_height="0dp">-->
+            <!--<Button-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_margin="4dp"-->
+                <!--android:text="Silence"-->
+                <!--android:background="#ff0"-->
+                <!--android:id="@+id/silenceButton"/>-->
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="match_parent"
-                android:layout_margin="4dp"
-                android:text="Scenario"
-                android:background="#ff0"
-                android:id="@+id/scenarioButton"/>
+            <!--&lt;!&ndash;<Button&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="0dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_margin="4dp"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:text="Scenario"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:background="#ff0"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:id="@+id/scenarioButton"/>&ndash;&gt;-->
 
-            <Button
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="match_parent"
-                android:layout_margin="4dp"
-                android:text="Surface"
-                android:background="#fff"
-                android:id="@+id/surfaceButton"/>
+            <!--<Button-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_weight="1"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:layout_margin="4dp"-->
+                <!--android:text="Surface"-->
+                <!--android:background="#fff"-->
+                <!--android:id="@+id/surfaceButton"/>-->
 
-        </LinearLayout>
+        <!--</LinearLayout>-->
 
         <LinearLayout
             android:orientation="horizontal"
@@ -92,20 +93,28 @@
                 android:orientation="vertical"
                 android:layout_weight="1">
                 <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="#ff0"
+                        android:text="Silence"
+                        android:id="@+id/silenceButton"/>
+                <Button
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_margin="4dp"
+                    android:layout_weight="1"
                     android:background="#f00"
                     android:text="Mine"
-                    android:layout_weight="1"
                     android:id="@+id/mineButton"/>
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_margin="4dp"
+                    android:layout_weight="1"
                     android:background="#f00"
                     android:text="Torp"
-                    android:layout_weight="1"
                     android:id="@+id/torpedoButton"/>
 
             </LinearLayout>
@@ -141,20 +150,28 @@
                 android:orientation="vertical"
                 android:layout_weight="1">
                 <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_margin="4dp"
+                        android:layout_weight="1"
+                        android:background="#fff"
+                        android:text="Surface"
+                        android:id="@+id/surfaceButton"/>
+                <Button
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_margin="4dp"
+                    android:layout_weight="1"
                     android:background="#0f0"
                     android:text="Drone"
-                    android:layout_weight="1"
                     android:id="@+id/droneButton"/>
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_margin="4dp"
+                    android:layout_weight="1"
                     android:background="#0f0"
                     android:text="Sonar"
-                    android:layout_weight="1"
                     android:id="@+id/sonarButton"/>
 
             </LinearLayout>
