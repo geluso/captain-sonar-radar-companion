@@ -13,19 +13,22 @@
             android:textAlignment="center"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textColor="@color/actionTextColor"/>
         <TextView android:id="@+id/sonarColumn"
             android:text="Column: 7"
             android:textAlignment="center"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textColor="@color/actionTextColor"/>
         <TextView android:id="@+id/sonarSector"
             android:text="Sector: 5"
             android:textAlignment="center"
             android:layout_weight="1"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textColor="@color/actionTextColor"/>
     </LinearLayout>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                   android:layout_width="match_parent"
