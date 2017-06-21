@@ -35,6 +35,8 @@ public class RadarTracker {
   }
 
   public void track(GridPoint direction) {
+    lastMovement = direction;
+
     Set<GridPoint> stillPossiblePositions = new HashSet<>();
     for (GridPoint position : this.possibleCurrentPositions) {
       GridPoint newPos = position.add(direction);
@@ -42,13 +44,11 @@ public class RadarTracker {
         stillPossiblePositions.add(newPos);
       }
     }
-
-    lastMovement = direction;
     possibleCurrentPositions = stillPossiblePositions;
   }
 
   public void surface() {
-    lastMovement = null;
+    lastMovement = GridPoint.SURFACED;
   }
 
   public void crossReferenceTorpedo(Set<GridPoint> possibleFiringLocations) {

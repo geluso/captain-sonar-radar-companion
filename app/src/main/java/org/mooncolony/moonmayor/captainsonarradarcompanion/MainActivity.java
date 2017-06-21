@@ -227,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
 
   @OnClick({R.id.surfaceButton})
   void surface() {
+    appendText("surfaced");
     gameState.surface();
     drawer.draw();
   }

@@ -12,8 +12,11 @@ public class GridPoint {
   public static final GridPoint EAST =  new GridPoint(0, 1);
   public static final GridPoint WEST =  new GridPoint(0, -1);
 
-  public static final GridPoint MINE =  new GridPoint(0, 0);
-  public static final GridPoint TORPEDO =  new GridPoint(0, 0);
+  // keep track of surfaced events.
+  public static final GridPoint SURFACED =  new GridPoint(0, 0, "surfaced");
+
+  public static final GridPoint MINE =  new GridPoint(0, 0, "mine");
+  public static final GridPoint TORPEDO =  new GridPoint(0, 0, "torpedo");
 
   // NASTY HACK: GridPoint is stuffed with information for the DRONE_RESULT.
   // row: represents the regionId that was asked when the Drone happened.

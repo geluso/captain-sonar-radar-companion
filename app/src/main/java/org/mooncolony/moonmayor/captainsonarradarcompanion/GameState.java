@@ -124,6 +124,7 @@ public class GameState {
   }
 
   public void surface() {
+    currentPath.add(GridPoint.SURFACED);
     radar.surface();
   }
 
