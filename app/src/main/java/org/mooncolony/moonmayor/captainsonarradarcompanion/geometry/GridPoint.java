@@ -53,6 +53,20 @@ public class GridPoint {
     return this.add(WEST);
   }
 
+  public GridPoint oppositeDirection() {
+    if (this == GridPoint.NORTH) {
+      return GridPoint.SOUTH;
+    } else if (this == GridPoint.SOUTH) {
+      return GridPoint.NORTH;
+    } else if (this == GridPoint.EAST) {
+      return GridPoint.WEST;
+    } else if (this == GridPoint.WEST) {
+      return GridPoint.EAST;
+    } else {
+      return null;
+    }
+  }
+
   public GridPoint add(GridPoint other) {
     return new GridPoint(this.row + other.row, this.col + other.col);
   }
@@ -61,4 +75,23 @@ public class GridPoint {
     return new GridPoint(this.row - other.row, this.col - other.col);
   }
 
+  @Override
+  public String toString() {
+    String repr = "(" + this.row + "," + this.col + ")[" + this.type + "]";
+    return repr;
   }
+
+  @Override
+  public int hashCode() {
+    return toString().hashCode();
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+
+    GridPoint gridPoint = (GridPoint) o;
+    return this.row == gridPoint.row && this.col == gridPoint.col && this.type == gridPoint.type;
+  }
+}
