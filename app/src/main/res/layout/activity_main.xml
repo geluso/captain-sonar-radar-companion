@@ -9,6 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
+    android:background="@color/darkBackground"
     tools:context="org.mooncolony.moonmayor.captainsonarradarcompanion.MainActivity">
 
     <ImageView
@@ -154,7 +155,7 @@
                         android:layout_height="0dp"
                         android:layout_margin="4dp"
                         android:layout_weight="1"
-                        android:background="#fff"
+                        android:background="@color/lightBackground"
                         android:text="Surface"
                         android:id="@+id/surfaceButton"/>
                 <Button
