@@ -11,6 +11,7 @@ public class RadarTracker {
   public Set<GridPoint> water;
   public Set<GridPoint> islands;
   public Set<GridPoint> possibleCurrentPositions;
+  public GridPoint lastMovement;
 
   public RadarTracker(MarineMap map) {
     this.map = map;
@@ -42,6 +43,7 @@ public class RadarTracker {
       }
     }
 
+    lastMovement = direction;
     possibleCurrentPositions = stillPossiblePositions;
   }
 
@@ -65,7 +67,15 @@ public class RadarTracker {
     GridPoint[] directions = {GridPoint.NORTH, GridPoint.SOUTH, GridPoint.WEST, GridPoint.EAST};
 
     for (GridPoint position : this.possibleCurrentPositions) {
+      // technically, silence includes moving in 0-4 directions.
+      // this accounts for zero movement.
+      stillPossiblePositions.add(position);
+
       for (GridPoint direction : directions) {
+        // submarines can't go back across the last way they came.
+        if (lastMovement != null && direction == lastMovement.oppositeDirection()) {
+          continue;
+        }
 
         // take the first movement.
         GridPoint newPos = position.add(direction);
