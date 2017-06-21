@@ -1,5 +1,6 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -26,6 +27,11 @@ public class MainActivity extends AppCompatActivity {
   @BindView(R.id.mapView) ImageView mapView;
   @BindView(R.id.textView) TextView textView;
 
+  @BindView(R.id.silenceButton) View silenceButton;
+  @BindView(R.id.scenarioButton) View scenarioButton;
+  @BindView(R.id.surfaceButton) View surfaceButton;
+
+  @BindView(R.id.mineButton) View mineButton;
   @BindView(R.id.torpedoButton) View torpedoButton;
   @BindView(R.id.droneButton) View droneButton;
 
@@ -42,6 +48,11 @@ public class MainActivity extends AppCompatActivity {
 
   @BindView(R.id.sonarButton) View sonarButton;
   @BindView(R.id.sonarMenu) View sonarMenu;
+
+  @BindView(R.id.sonarRow) TextView sonarRow;
+  @BindView(R.id.sonarColumn) TextView sonarColumn;
+  @BindView(R.id.sonarSector) TextView sonarSector;
+
   @BindView(R.id.confirmSonar) Button confirmSonar;
   @BindView(R.id.cancelSonar) Button cancelSonar;
   @BindView(R.id.changeSonar) Button toggleSonarMode;
@@ -77,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
         dealWithTorpedoTouch(row, col);
       } else if (gameState.isAskingDrone) {
         dealWithDroneTouch(row, col);
+      } else if (gameState.isRunningSonar) {
+        dealWithSonarTouch(row, col);
       } else {
         dealWithNormalTouch(row, col);
       }
@@ -114,13 +127,54 @@ public class MainActivity extends AppCompatActivity {
     negativeDrone.setEnabled(true);
   }
 
-  void dealWithTorpedoTouch(int row, int col) {
-    if (row != gameState.placingTorpedoRow || col != gameState.placingTorpedoCol) {
-      gameState.placingTorpedoRow = row;
-      gameState.placingTorpedoCol = col;
-      drawer.draw();
+  boolean rowOutOfBounds(int row) {
+    if (row < 0) {
+      return true;
     }
 
+    if (row > this.gameState.radar.map.rows - 1) {
+      return true;
+    }
+
+    return false;
+  }
+
+  boolean colOutOfBounds(int col) {
+    if (col < 0) {
+      return true;
+    }
+
+    if (col > this.gameState.radar.map.cols - 1) {
+      return true;
+    }
+
+    return false;
+  }
+
+  void dealWithTorpedoTouch(int row, int col) {
+    if (row != gameState.placingTorpedoRow || col != gameState.placingTorpedoCol) {
+      if (!rowOutOfBounds(row)) {
+        gameState.placingTorpedoRow = row;
+      }
+      if (!colOutOfBounds(col)) {
+        gameState.placingTorpedoCol = col;
+      }
+      drawer.draw();
+    }
+  }
+
+  void dealWithSonarTouch(int row, int col) {
+    if (row != gameState.placingSonarRow || col != gameState.placingSonarCol) {
+      if (!rowOutOfBounds(row)) {
+        gameState.placingSonarRow = row;
+      }
+      if (!colOutOfBounds(col)) {
+        gameState.placingSonarCol = col;
+      }
+
+      updateSonarCoordinates();
+      drawer.draw();
+    }
   }
 
   boolean mapRelease(MotionEvent event) {
@@ -257,9 +311,70 @@ public class MainActivity extends AppCompatActivity {
 
   @OnClick({R.id.sonarButton})
   void sonarButtonClick() {
-    gameState.isRunningSonar = true;
     closeAllMenus();
+
     sonarMenu.setVisibility(View.VISIBLE);
+    silenceButton.setVisibility(View.GONE);
+    scenarioButton.setVisibility(View.GONE);
+    surfaceButton.setVisibility(View.GONE);
+    mineButton.setVisibility(View.GONE);
+    torpedoButton.setVisibility(View.GONE);
+    droneButton.setVisibility(View.GONE);
+    sonarButton.setVisibility(View.GONE);
+
+    gameState.sonarStart();
+    drawer.draw();
+    updateSonarMenu();
+  }
+
+  @OnClick({R.id.changeSonar})
+  void changeSonar() {
+    gameState.sonarToggleMode();
+    updateSonarMenu();
+  }
+
+  void updateSonarCoordinates() {
+    String columnLetters = " ABCDEFGHIJKLMNO";
+    int row = gameState.placingSonarRow + 1;
+    int col = gameState.placingSonarCol + 1;
+    sonarRow.setText("Row: " + row);
+    sonarColumn.setText("Column: " + columnLetters.charAt(col));
+
+    int sector = this.gameState.radar.map.pointToQuadrant(row, col);
+    sonarSector.setText("Sector: " + sector);
+  }
+
+  void updateSonarMenu() {
+    toggleSonarMode.setText("Mode: " + gameState.sonarMode);
+
+    TextView noStrikeThrough1, noStrikeThrough2, strikeThrough;
+    if (gameState.sonarMode.equals("row,col")) {
+      noStrikeThrough1 = sonarRow;
+      noStrikeThrough2 = sonarColumn;
+      strikeThrough = sonarSector;
+    } else if (gameState.sonarMode.equals("sector,row")) {
+      noStrikeThrough2 = sonarSector;
+      noStrikeThrough1 = sonarRow;
+      strikeThrough = sonarColumn;
+    } else if (gameState.sonarMode.equals("sector,col") || true) {
+      noStrikeThrough2 = sonarSector;
+      noStrikeThrough1 = sonarColumn;
+      strikeThrough = sonarRow;
+    }
+
+    noStrikeThrough1.setPaintFlags(noStrikeThrough1.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+    noStrikeThrough2.setPaintFlags(noStrikeThrough2.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+    strikeThrough.setPaintFlags(strikeThrough.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+  }
+
+  @OnClick({R.id.confirmSonar})
+  void confirmSonar() {
+    gameState.sonarConfirm();
+  }
+
+  @OnClick({R.id.cancelSonar})
+  void cancelSonar() {
+    gameState.sonarCancel();
   }
 
   @OnClick({R.id.cancelSonar})
@@ -270,7 +385,17 @@ public class MainActivity extends AppCompatActivity {
 
   void showCompass() {
     closeAllMenus();
+    silenceButton.setVisibility(View.VISIBLE);
+    scenarioButton.setVisibility(View.VISIBLE);
+    surfaceButton.setVisibility(View.VISIBLE);
+
+    mineButton.setVisibility(View.VISIBLE);
+    torpedoButton.setVisibility(View.VISIBLE);
+
     compass.setVisibility(View.VISIBLE);
+
+    droneButton.setVisibility(View.VISIBLE);
+    sonarButton.setVisibility(View.VISIBLE);
   }
 
   void closeAllMenus() {
@@ -381,5 +506,4 @@ public class MainActivity extends AppCompatActivity {
 
     drawer.draw();
   }
-
 }

@@ -36,6 +36,10 @@ public class GameState {
   public int currentDroneRegionId = -1;
 
   public boolean isRunningSonar = false;
+  public int placingSonarRow = -1;
+  public int placingSonarCol = -1;
+  // one of three modes: ["row,col", "sector,row", "sector,col"]
+  public String sonarMode = "row,col";
 
   public GameState() {
     newGame(AlphaRealTime.template);
@@ -62,6 +66,11 @@ public class GameState {
 
     // radar tracker is for tracking basic movement.
     this.radar = new RadarTracker(this.map);
+
+    this.isRunningSonar = false;
+    this.sonarMode = "row,col";
+    this.placingSonarRow = -1;
+    this.placingSonarCol = -1;
   }
 
   public void setPathStart(int row, int col) {
@@ -112,5 +121,44 @@ public class GameState {
 
   public void addSilence() {
     radar.inferSilence();
+  }
+
+  public void sonarStart() {
+    this.isRunningSonar = true;
+    this.sonarMode = "row,col";
+    this.placingSonarRow = this.map.rows / 2;
+    this.placingSonarCol = this.map.cols / 2;
+  }
+
+  public void sonarCancel() {
+    this.isRunningSonar = false;
+  }
+
+  public void sonarToggleMode() {
+    if (this.sonarMode.equals("row,col")) {
+      this.sonarMode = "sector,row";
+    } else if (this.sonarMode.equals("sector,row")) {
+      this.sonarMode = "sector,col";
+    } else {
+      this.sonarMode = "row,col";
+    }
+  }
+
+  public void sonarConfirm() {
+    this.isRunningSonar = false;
+    int row = this.placingSonarRow;
+    int col = this.placingSonarCol;
+    int sector = this.map.pointToQuadrant(row, col);
+
+    // zero out whichever piece of information was not given.
+    if (this.sonarMode.equals("row,col")) {
+      sector = 0;
+    } else if (this.sonarMode.equals("sector,row")) {
+      col = 0;
+    } else if (this.sonarMode.equals("sector,col")) {
+      row = 0;
+    }
+
+    this.radar.sonar(row, col, sector);
   }
 }

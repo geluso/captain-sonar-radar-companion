@@ -72,6 +72,10 @@ public class MarineMap {
     return water;
   }
 
+  public int pointToQuadrant(int row, int col) {
+    return pointToQuadrant(new GridPoint(row, col));
+  }
+
   public int pointToQuadrant(GridPoint point) {
     int regionColumns = 3;
     if (this.rows == 10) {

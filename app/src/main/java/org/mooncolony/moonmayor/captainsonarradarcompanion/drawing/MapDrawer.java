@@ -127,6 +127,12 @@ public class MapDrawer {
       drawTorpedo(row, col);
     }
 
+    if (gameState.isRunningSonar) {
+      int row = gameState.placingSonarRow;
+      int col = gameState.placingSonarCol;
+      drawTargetingLines(row, col);
+    }
+
     drawTorpedoTracking();
     drawTorpedoes();
     drawPathForward();
