@@ -370,17 +370,15 @@ public class MainActivity extends AppCompatActivity {
   @OnClick({R.id.confirmSonar})
   void confirmSonar() {
     gameState.sonarConfirm();
+    showCompass();
+    drawer.draw();
   }
 
   @OnClick({R.id.cancelSonar})
   void cancelSonar() {
     gameState.sonarCancel();
-  }
-
-  @OnClick({R.id.cancelSonar})
-  void sonarButtonCancel() {
-    gameState.isRunningSonar = false;
     showCompass();
+    drawer.draw();
   }
 
   void showCompass() {

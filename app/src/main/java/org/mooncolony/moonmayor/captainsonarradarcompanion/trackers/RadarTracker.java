@@ -99,9 +99,9 @@ public class RadarTracker {
   }
 
   // The user provides two pieces of information of the three parameters defined here.
-  // The unused third piece of information should be passed in as a zero.
+  // The unused third piece of information should be passed in as -1.
   // Therefore, if a user says they're at "row 2, quadrant 1" then this function should
-  // be called as: sonar(2, 0, 1);
+  // be called as: sonar(2, -1, 1);
   public void sonar(int row, int col, int quadrant) {
     Set<GridPoint> stillPossiblePositions = new HashSet<>();
 

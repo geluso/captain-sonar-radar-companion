@@ -152,11 +152,11 @@ public class GameState {
 
     // zero out whichever piece of information was not given.
     if (this.sonarMode.equals("row,col")) {
-      sector = 0;
+      sector = -1;
     } else if (this.sonarMode.equals("sector,row")) {
-      col = 0;
+      col = -1;
     } else if (this.sonarMode.equals("sector,col")) {
-      row = 0;
+      row = -1;
     }
 
     this.radar.sonar(row, col, sector);
