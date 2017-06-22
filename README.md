@@ -1,5 +1,11 @@
 <h1>Captain Sonar Radar Tool</h1>
 
+<p class="text-right">
+<a href="https://play.google.com/store/apps/details?id=org.mooncolony.moonmayor.captainsonarradarcompanion">
+<img src="http://5tephen.com/img/play_store_badges/play_store_25.png" alt="Get Captain Sonar Radar Tool on the Android Play Store!">
+</a>
+</p>
+
 <p class="flexbox">
 <img class="flexitem" src="http://5tephen.com/img/captain_sonar_screens/120_00.png">
 <img class="flexitem" src="http://5tephen.com/img/captain_sonar_screens/120_01.png">
@@ -59,8 +65,3 @@ Why would anyone want to use this app?
 Built by <a href="https://duffin22.github.io/">Matt Duffin</a> and myself.
 </p>
 
-<p class="text-right">
-<a href="https://play.google.com/store/apps/details?id=org.mooncolony.moonmayor.captainsonarradarcompanion">
-<img src="http://5tephen.com/img/play_store_badges/play_store_25.png" alt="Get Captain Sonar Radar Tool on the Android Play Store!">
-</a>
-</p>
