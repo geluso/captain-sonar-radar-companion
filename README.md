@@ -1,94 +1,68 @@
-# captain-sonar-radar-companion
-Welcome to the Captain Sonar Radar Companion. If you haven't
-played the Captain Sonar board game, then watch this video.
+<div class="item">
+	<h1>Captain Sonar Radar Tool</h1>
 
-https://www.youtube.com/watch?v=Yjo4iXyDPtw&t=57s
+	<p class="flexbox">
+		<img class="flexitem" src="http://5tephen.com/img/captain_sonar_screens/120_00.png">
+		<img class="flexitem" src="http://5tephen.com/img/captain_sonar_screens/120_01.png">
+		<img class="flexitem" src="http://5tephen.com/img/captain_sonar_screens/120_02.png">
+		<img class="flexitem" src="http://5tephen.com/img/captain_sonar_screens/120_03.png">
+		<img class="flexitem" src="http://5tephen.com/img/captain_sonar_screens/120_04.png">
+	</p>
 
-This application is a tool that takes over the Radar role.
-You enter enemy movements and the tool helps you deduce
-where the enemy might be. You might want to use this tool
-if you already know all the radar tracking tricks and just
-want to get on with the game already.
+	<p>
+		A free, ad-free, Andriod app to be used in conjuction with playing Captain Sonar.
+		This tool assists the Radar operator by computing possible submarine positions according to their
+		movements, their actions, and reconnaissance.
+	</p>
 
-In the future this application may be extended so games can
-actually be played. Or, maybe a mode will be added where you
-play against an AI. Or (my favorite idea) this radar tracking
-tool will allow for Multi-Band Radar Tracking. Multiple subs
-could be in the same region at once and this tool would help
-you track them all!! How cool would that be?
+	<p>
+	If you're unfamiliar with the the Captain Sonar board game, watch <a href="https://www.youtube.com/watch?v=Yjo4iXyDPtw&amp;t=57s">this video!</a>
+	</p>
 
-## The Board Game
-Captain Sonar is a board game that simulates two submarines
-hunting each other. Players each have a copy of a map of
-water with islands interspersed everywhere. A divider goes
-between the players so they can't see each others maps.
-Players each choose a secret starting location, wherever
-they want on the map, and then hunt each other down. Players
-take turns announcing which way their sub is heading
-(North, East, South, West). As players announce their
-movements players to to deduce where the other player is
-by drawing the path of their movements and making sure it
-hasn't run into any islands.
+	<p>
+		Captain Sonar is a great board game where players act as submarines hunting each other down.
+		Players play on identical maps with their own submarines hidden from each other. Each player
+		takes turns moving their sub around the map and they must announce the movements their making.
+		Each play listens to the enemy's movements and tries to track them down by tracing their path
+		and figuring out where they might be on the map without the path they've heard running over
+		islands.
+	</p>
 
-In the physical board game each player has a transparent piece
-of plastic. Players trace the path of the enemy submarine with
-a marker and move the plastic around over the map looking to see
-if the path goes through any islands. Tracking the enemy sub is
-as fun as it is algorithmic!
+	<p>
+	In addition to movement, players have special actions available to them. Each action
+	requires movement to charge up before it can be used. There's two reconnaissance actions
+	that reveal information about the enemy's location. There's one evasive action which allows
+	a player to move their sub without telling the enemy which way they've gone. And, of course,
+	there's destructive actions players can charge up to lay mines and fire torpedoes to
+	try to destroy each other.
+	</p>
 
-## This Tool
-This application is a tool that does radar tracking for you. Simply enter the
-movements of the enemy submarine and see the map update with their current
-possible locations.
+	<p>
+	Normally players track the enemy sub with an erasable marker, drawing the enemy's path on
+	a transparent piece of plastic. This app strives to be used in conjunction with the traditional
+	marker to speed-up, verify, and augment the traditional Radar role.
+	</p>
 
-The tool includes features to input information about torpedoes,
-mines, using the Sonar and Radar abilities, and accounting for
-the Silence ability.
+	<p>
+	Why would anyone want to use this app?
+	</p>
 
-When an enemy fires a torpedo at a coordinate the tool will cross
-reference that coordinate with the currently known positions.
+	<ul>
+		<li>Just for fun.</li>
+		<li>First-time Radar operators.</li>
+		<li>To speed up play time, especially in 1-vs-1 turn-based games.</li>
+		<li>To track your own sub to see what the enemy sees.</li>
+		<li>Multi-sub matches with Radar tracking subs on multiple frequencies.</li>
+		<li>You've admitted to yourself the Radar role is ultimately algorithmic.</li>
+	</ul>
 
-When an enemy drops a mine you'll see an "M" indicator on their
-path. You'll be able to see where mines might be as you drag the
-path around.
+	<p>
+	Built by <a href="https://duffin22.github.io/">Matt Duffin</a> and myself.
+	</p>
 
-## The Interface
-The green dot represents where the sub started. The red dot represents
-where the sub is at the end of their path. The circled grid locations
-represent all possible locations where the sub might currently be.
-
-![Track movement](screenshots/01_track_enemy_movements.png)
-
-You can drag the path around inside the map view.
-
-![Trace their path](screenshots/02_move_around_their_path.png)
-
-Press the torpedo button and crosshairs appear in the map. Drag the
-crosshairs to the location where the torpedo was fired. Press "Confirm
-Torpedo."
-
-![Enter torpedo coordinates](screenshots/03_enter_torpedo_coordinates.png)
-
-The tool cross references the torpedo coordinates with the possible
-positions of the submarine. Any position that wasn't within firing
-range will be eliminated.
-
-![Cross reference firing position and path](screenshots/04_cross_reference_torpedos.png)
-
-There's a "T" left on the path that indicates where the sub fired
-the torpedo from.
-
-![Deduce their absolute location](screenshots/05_deduce_their_absolute_location.png)
-
-Press the "Silence" button when the enemy activates their ability to move
-up to four spaces in any direction without revealing which direction they
-went. You'll see the tool expand the current possible positions of the enemy
-submarine.
-
-![Activating "Silence" increases possibilities](screenshots/06_silence_increases_possibilities.png)
-
-## TODO
-- custom map option
-- option to switch path view off
-- switch between possible current position & possible start positions
-- torpedo mode doesn't always switch back to path mode properly
+	<p class="text-right">
+	<a href="https://play.google.com/store/apps/details?id=org.mooncolony.moonmayor.captainsonarradarcompanion">
+		<img src="img/play_store_badges/play_store_25.png" alt="Get Captain Sonar Radar Tool on the Android Play Store!">
+	</a>
+	</p>
+</div>
