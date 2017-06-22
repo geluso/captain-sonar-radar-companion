@@ -61,6 +61,6 @@ Built by <a href="https://duffin22.github.io/">Matt Duffin</a> and myself.
 
 <p class="text-right">
 <a href="https://play.google.com/store/apps/details?id=org.mooncolony.moonmayor.captainsonarradarcompanion">
-<img src="img/play_store_badges/play_store_25.png" alt="Get Captain Sonar Radar Tool on the Android Play Store!">
+<img src="http://5tephen.com/img/play_store_badges/play_store_25.png" alt="Get Captain Sonar Radar Tool on the Android Play Store!">
 </a>
 </p>
