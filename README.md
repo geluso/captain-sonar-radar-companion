@@ -1,4 +1,3 @@
-<div class="item">
 	<h1>Captain Sonar Radar Tool</h1>
 
 	<p class="flexbox">
@@ -65,4 +64,3 @@
 		<img src="img/play_store_badges/play_store_25.png" alt="Get Captain Sonar Radar Tool on the Android Play Store!">
 	</a>
 	</p>
-</div>
