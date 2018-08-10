@@ -32,5 +32,5 @@ dependencies {
     compile group: 'com.android.support', name: 'appcompat-v7', version: '25.3.0'
     compile group: 'com.android.support', name: 'support-compat', version: '25.3.0'
     compile group: 'com.android.support', name: 'animated-vector-drawable', version: '25.3.0'
-
+    compile group: 'com.android.support', name: 'design', version: '25.3.0'
 }

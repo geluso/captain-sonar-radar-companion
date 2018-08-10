@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -24,126 +24,11 @@
         android:layout_height="wrap_content"
         />
 
-    <HorizontalScrollView
+    <android.support.v4.view.ViewPager
+        android:id="@+id/container"
+        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:background="#0D47A1"
-        android:layout_margin="2dp"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_margin="4dp"
-            android:textSize="24sp"
-            android:textColor="#fafafa"
-            android:id="@+id/textView"
-            android:layout_height="wrap_content"
-            android:maxLines="1"/>
-    </HorizontalScrollView>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:orientation="vertical"
-        android:layout_weight="1">
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_weight="2"
-            android:layout_height="0dp"
-            android:layout_width="match_parent">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="1">
-                <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:background="#ff0"
-                        android:text="Silence"
-                        android:id="@+id/silenceButton"/>
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:background="#f00"
-                    android:text="Mine"
-                    android:id="@+id/mineButton"/>
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:background="#f00"
-                    android:text="Torp"
-                    android:id="@+id/torpedoButton"/>
-
-            </LinearLayout>
-
-
-            <include
-                android:id="@+id/compass"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:layout_margin="4dp"
-                layout="@layout/compass" />
-
-            <include
-                android:id="@+id/torpedoMenu"
-                android:visibility="gone"
-                layout="@layout/torpedo_confirmation" />
-
-            <include
-                android:id="@+id/droneMenu"
-                android:visibility="gone"
-                layout="@layout/drone_prompt" />
-
-            <include
-                    android:id="@+id/sonarMenu"
-                    android:visibility="gone"
-                    layout="@layout/sonar_prompt" />
-
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:layout_weight="1">
-                <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_margin="4dp"
-                        android:layout_weight="1"
-                        android:background="@color/lightBackground"
-                        android:text="Surface"
-                        android:id="@+id/surfaceButton"/>
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:background="#0f0"
-                    android:text="Drone"
-                    android:id="@+id/droneButton"/>
-                <Button
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_margin="4dp"
-                    android:layout_weight="1"
-                    android:background="#0f0"
-                    android:text="Sonar"
-                    android:id="@+id/sonarButton"/>
-
-            </LinearLayout>
-
-
-        </LinearLayout>
-
-    </LinearLayout>
-
-
+    </android.support.v4.view.ViewPager>
 </LinearLayout>

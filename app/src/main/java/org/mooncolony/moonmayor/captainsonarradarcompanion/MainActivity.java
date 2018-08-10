@@ -2,6 +2,7 @@ package org.mooncolony.moonmayor.captainsonarradarcompanion;
 
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import android.widget.*;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPoint;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.drawing.MapDrawer;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MarineMap;
+import org.mooncolony.moonmayor.captainsonarradarcompanion.roles.RolePagerAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,16 +21,17 @@ import butterknife.OnClick;
 import butterknife.OnTouch;
 
 public class MainActivity extends AppCompatActivity {
+  private ViewPager mViewPager;
+  private RolePagerAdapter mRolePagerAdapter;
 
   GameState gameState;
   MapDrawer drawer;
 
-//  @BindView(R.id.mapSpinner) Spinner spinner;
+  // @BindView(R.id.mapSpinner) Spinner spinner;
   @BindView(R.id.mapView) ImageView mapView;
-  @BindView(R.id.textView) TextView textView;
+  @BindView(R.id.movementHistory) TextView movementHistory;
 
   @BindView(R.id.silenceButton) View silenceButton;
-  //@BindView(R.id.scenarioButton) View scenarioButton;
   @BindView(R.id.surfaceButton) View surfaceButton;
 
   @BindView(R.id.mineButton) View mineButton;
@@ -61,16 +64,24 @@ public class MainActivity extends AppCompatActivity {
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    ButterKnife.bind(this);
 
-//    String[] options = MarineMap.AVAILABLE_MAPS;
-//    ArrayAdapter<String> mapChoices = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, options);
-//    spinner.setAdapter(mapChoices);
+    //  String[] options = MarineMap.AVAILABLE_MAPS;
+    //  ArrayAdapter<String> mapChoices = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, android.R.id.text1, options);
+    //  spinner.setAdapter(mapChoices);
+
+    mRolePagerAdapter = new RolePagerAdapter(getSupportFragmentManager());
+
+    mViewPager = (ViewPager) findViewById(R.id.container);
+    mViewPager.setAdapter(mRolePagerAdapter);
+
+    View view = findViewById(R.id.movementHistory);
+
+    // wait to bind butterknife until after view pager is attached
+    ButterKnife.bind(this);
 
     // initialize the map
     gameState = new GameState();
     this.drawer = new MapDrawer(this, mapView, gameState);
-
   }
 
   //TODO: update to new layout
@@ -426,11 +437,11 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void appendText(String message) {
-    String current = textView.getText().toString();
+    String current = movementHistory.getText().toString();
     if (current.length() != 0) {
       current += ", ";
     }
-    textView.setText(current + message);
+    movementHistory.setText(current + message);
   }
 
   @Override
@@ -511,7 +522,7 @@ public class MainActivity extends AppCompatActivity {
   }
 
   private void resetGame() {
-    textView.setText("");
+    movementHistory.setText("");
     gameState.newGame();
     showCompass();
 
