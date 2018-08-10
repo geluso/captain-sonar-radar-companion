@@ -10,7 +10,7 @@ import org.mooncolony.moonmayor.captainsonarradarcompanion.drawing.MapDrawer;
 public class RolePagerAdapter extends FragmentPagerAdapter {
     private GameState mGame;
     private MapDrawer mMap;
-    public RadarRoleFragment mCurrentFragment;
+    public RoleFragment mCurrentFragment;
 
     public RolePagerAdapter(FragmentManager fm, GameState game, MapDrawer map) {
         super(fm);
@@ -20,7 +20,10 @@ public class RolePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        mCurrentFragment = new RadarRoleFragment();
+        mCurrentFragment = new CaptainRoleFragment();
+        if (position == 1) {
+            mCurrentFragment = new RadarRoleFragment();
+        }
         mCurrentFragment.setArgs(mGame, mMap);
         return mCurrentFragment;
     }

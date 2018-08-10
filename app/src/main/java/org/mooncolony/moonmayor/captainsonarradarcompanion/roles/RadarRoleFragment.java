@@ -21,7 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class RadarRoleFragment extends Fragment {
+public class RadarRoleFragment extends RoleFragment {
     @BindView(R.id.movementHistory) TextView movementHistory;
 
     @BindView(R.id.silenceButton) View silenceButton;
@@ -53,32 +53,6 @@ public class RadarRoleFragment extends Fragment {
     @BindView(R.id.cancelSonar) Button cancelSonar;
     @BindView(R.id.changeSonar) Button toggleSonarMode;
 
-    private static GameState staticGame;
-    private static MapDrawer staticDrawer;
-
-    private GameState gameState;
-    private MapDrawer drawer;
-
-
-    public RadarRoleFragment() {
-        super();
-        System.out.println("fragment created");
-
-        if (staticGame != null) {
-            this.gameState = staticGame;
-        }
-        if (staticDrawer != null) {
-            this.drawer = staticDrawer;
-        }
-    }
-
-    public void setArgs(GameState game, MapDrawer drawer) {
-        this.gameState = game;
-        this.drawer = drawer;
-
-        staticGame = game;
-        staticDrawer = drawer;
-    }
 
     @Nullable
     @Override
@@ -97,15 +71,7 @@ public class RadarRoleFragment extends Fragment {
         } else if (gameState.isRunningSonar) {
             dealWithSonarTouch(row, col);
         } else {
-            dealWithNormalTouch(row, col);
-        }
-    }
-
-    void dealWithNormalTouch(int row, int col) {
-        if (row != gameState.pathEndRow || col != gameState.pathEndCol) {
-            //TODO: Check that the path lands at a valid circle
-            gameState.setPathEnd(row, col);
-            drawer.draw();
+            super.processTouch(row, col);
         }
     }
 
