@@ -6,6 +6,7 @@ import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MarineMap;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.trackers.RadarTracker;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.trackers.TorpedoTracker;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -13,7 +14,7 @@ import java.util.Set;
 /**
  * Created by matthewtduffin on 03/10/16.
  */
-public class GameState {
+public class GameState implements Serializable {
   public RadarTracker radar;
 
   private String currentMapTemplate;
