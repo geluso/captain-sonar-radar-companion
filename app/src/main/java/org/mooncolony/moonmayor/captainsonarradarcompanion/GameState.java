@@ -29,6 +29,12 @@ public class GameState implements Serializable {
   public TorpedoTracker torpedoTracker;
   public List<GridPoint> torpedoes;
 
+  // tracking our own submarine's position
+  public boolean hasChosenStartSpace;
+  public List<GridPoint> myCurrentPath;
+  public int myPathStartCol, myPathStartRow;
+  public int myCurrentCol, myCurrentRow;
+
   public boolean placingTorpedo = false;
   public int placingTorpedoRow = -1;
   public int placingTorpedoCol = -1;
@@ -67,6 +73,14 @@ public class GameState implements Serializable {
 
     // radar tracker is for tracking basic movement.
     this.radar = new RadarTracker(this.map);
+
+    hasChosenStartSpace = false;
+    myCurrentPath = new ArrayList<>();
+    myPathStartCol = (int) Math.floor(Math.random() * this.map.cols);
+    myPathStartRow = (int) Math.floor(Math.random() * this.map.rows);
+
+    myCurrentRow = myPathStartRow;
+    myCurrentCol = myPathStartCol;
 
     this.isRunningSonar = false;
     this.sonarMode = "row,col";

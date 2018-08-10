@@ -137,9 +137,7 @@ public class MapDrawer {
     drawTorpedoes();
 
     drawPathForward();
-
-
-    //drawPathBackward();
+    drawMyPosition();
 
     map.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
   }
@@ -476,5 +474,11 @@ public class MapDrawer {
   private void addCircle(int col, int row, int greenOrRed) {
     Paint paint = greenOrRed == Color.RED ? Paints.RED : Paints.CIRCLE;
     canvas.drawCircle(initialXOffset + col * xIterateOffset, initialYOffset + row * yIterateOffset, 3 * circleRadius / 4, paint);
+  }
+
+  private void drawMyPosition() {
+    int row = gameState.myCurrentRow;
+    int col = gameState.myCurrentCol;
+    drawStartingCircle(col, row, Paints.YELLOW);
   }
 }
