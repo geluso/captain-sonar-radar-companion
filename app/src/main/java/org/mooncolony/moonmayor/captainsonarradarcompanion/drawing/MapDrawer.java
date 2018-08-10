@@ -477,8 +477,4 @@ public class MapDrawer {
     Paint paint = greenOrRed == Color.RED ? Paints.RED : Paints.CIRCLE;
     canvas.drawCircle(initialXOffset + col * xIterateOffset, initialYOffset + row * yIterateOffset, 3 * circleRadius / 4, paint);
   }
-
-  private void drawCurrentPosition() {
-    drawStartingCircle(gameState.currentRow, gameState.currentCol, Paints.YELLOW);
-  }
 }
