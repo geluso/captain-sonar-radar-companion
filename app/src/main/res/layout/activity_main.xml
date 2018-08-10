@@ -45,43 +45,6 @@
         android:orientation="vertical"
         android:layout_weight="1">
 
-        <!-- Removed until Scenario is implemented -->
-        <!--<LinearLayout-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_width="match_parent"-->
-
-            <!--android:orientation="horizontal"-->
-            <!--android:gravity="center"-->
-            <!--android:layout_height="0dp">-->
-            <!--<Button-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_margin="4dp"-->
-                <!--android:text="Silence"-->
-                <!--android:background="#ff0"-->
-                <!--android:id="@+id/silenceButton"/>-->
-
-            <!--&lt;!&ndash;<Button&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_width="0dp"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:layout_margin="4dp"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:text="Scenario"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:background="#ff0"&ndash;&gt;-->
-                <!--&lt;!&ndash;android:id="@+id/scenarioButton"/>&ndash;&gt;-->
-
-            <!--<Button-->
-                <!--android:layout_width="0dp"-->
-                <!--android:layout_weight="1"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:layout_margin="4dp"-->
-                <!--android:text="Surface"-->
-                <!--android:background="#fff"-->
-                <!--android:id="@+id/surfaceButton"/>-->
-
-        <!--</LinearLayout>-->
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_weight="2"
