@@ -27,7 +27,7 @@ If you're unfamiliar with the the Captain Sonar board game, watch <a href="https
 <p>
 Captain Sonar is a great board game where players act as submarines hunting each other down.
 Players play on identical maps with their own submarines hidden from each other. Each player
-takes turns moving their sub around the map and they must announce the movements tthey'ree making
+takes turns moving their sub around the map and they must announce the movements they're making
 Each play listens to the enemy's movements and tries to track them down by tracing their path
 and figuring out where they might be on the map without the path they've heard running over
 islands.
