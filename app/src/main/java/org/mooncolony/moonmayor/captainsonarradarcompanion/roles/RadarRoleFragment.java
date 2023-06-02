@@ -24,6 +24,7 @@ public class RadarRoleFragment extends RoleFragment {
     View torpedoButton;
     View droneButton;
 
+    TextView radarRolePrompt;
     View compass;
     View torpedoMenu;
     Button confirmTorpedo;
@@ -49,7 +50,6 @@ public class RadarRoleFragment extends RoleFragment {
     @Nullable
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.role_radar, container, false);
-        View view = rootView.findViewById(R.id.movementHistory);
 
         movementHistory = rootView.findViewById(R.id.movementHistory);
         silenceButton = rootView.findViewById(R.id.silenceButton);
@@ -59,6 +59,7 @@ public class RadarRoleFragment extends RoleFragment {
         torpedoButton = rootView.findViewById(R.id.torpedoButton);
         droneButton = rootView.findViewById(R.id.droneButton);
 
+        radarRolePrompt = rootView.findViewById(R.id.radarRolePrompt);
         compass = rootView.findViewById(R.id.compass);
         torpedoMenu = rootView.findViewById(R.id.torpedoMenu);
         confirmTorpedo = rootView.findViewById(R.id.confirmTorpedo);
@@ -418,6 +419,7 @@ public class RadarRoleFragment extends RoleFragment {
         mineButton.setVisibility(View.VISIBLE);
         torpedoButton.setVisibility(View.VISIBLE);
 
+        radarRolePrompt.setVisibility(View.VISIBLE);
         compass.setVisibility(View.VISIBLE);
 
         droneButton.setVisibility(View.VISIBLE);
@@ -431,6 +433,7 @@ public class RadarRoleFragment extends RoleFragment {
 
         drawer.draw();
 
+        radarRolePrompt.setVisibility(View.GONE);
         compass.setVisibility(View.GONE);
         torpedoMenu.setVisibility(View.GONE);
         droneMenu.setVisibility(View.GONE);

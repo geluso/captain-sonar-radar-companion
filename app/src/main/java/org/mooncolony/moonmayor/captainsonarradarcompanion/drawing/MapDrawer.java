@@ -137,7 +137,7 @@ public class MapDrawer {
     drawTorpedoes();
 
     drawPathForward();
-    drawMyPosition();
+    //drawMyPosition();
 
     map.setImageDrawable(new BitmapDrawable(activity.getResources(), this.bitmap));
   }
