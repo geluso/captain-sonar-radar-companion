@@ -1,8 +1,8 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion.roles;
 
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import org.mooncolony.moonmayor.captainsonarradarcompanion.GameState;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.drawing.MapDrawer;
@@ -20,17 +20,18 @@ public class RolePagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        mCurrentFragment = new CaptainRoleFragment();
-        if (position == 1) {
-            mCurrentFragment = new RadarRoleFragment();
-        }
+//        mCurrentFragment = new CaptainRoleFragment();
+//        if (position == 1) {
+//            mCurrentFragment = new RadarRoleFragment();
+//        }
+        mCurrentFragment = new RadarRoleFragment();
         mCurrentFragment.setArgs(mGame, mMap);
         return mCurrentFragment;
     }
 
     @Override
     public int getCount() {
-        return 3;
+        return 1;
     }
 
     public void dispatchTouch(int row, int col) {

@@ -1,6 +1,6 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion.roles;
 
-import android.support.v4.app.Fragment;
+import androidx.fragment.app.Fragment;
 
 import org.mooncolony.moonmayor.captainsonarradarcompanion.GameState;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.drawing.MapDrawer;

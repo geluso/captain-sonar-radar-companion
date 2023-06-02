@@ -2,8 +2,6 @@ package org.mooncolony.moonmayor.captainsonarradarcompanion.roles;
 
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -11,55 +9,230 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.mooncolony.moonmayor.captainsonarradarcompanion.GameState;
+import androidx.annotation.Nullable;
+
 import org.mooncolony.moonmayor.captainsonarradarcompanion.R;
-import org.mooncolony.moonmayor.captainsonarradarcompanion.drawing.MapDrawer;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.geometry.GridPoint;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-
 public class RadarRoleFragment extends RoleFragment {
-    @BindView(R.id.movementHistory) TextView movementHistory;
+    TextView movementHistory;
 
-    @BindView(R.id.silenceButton) View silenceButton;
-    @BindView(R.id.surfaceButton) View surfaceButton;
+    View silenceButton;
+    View surfaceButton;
 
-    @BindView(R.id.mineButton) View mineButton;
-    @BindView(R.id.torpedoButton) View torpedoButton;
-    @BindView(R.id.droneButton) View droneButton;
+    View mineButton;
+    View torpedoButton;
+    View droneButton;
 
-    @BindView(R.id.compass) View compass;
-    @BindView(R.id.torpedoMenu) View torpedoMenu;
-    @BindView(R.id.confirmTorpedo) Button confirmTorpedo;
-    @BindView(R.id.cancelTorpedo) Button cancelTorpedo;
+    View compass;
+    View torpedoMenu;
+    Button confirmTorpedo;
+    Button cancelTorpedo;
 
-    @BindView(R.id.droneMenu) View droneMenu;
-    @BindView(R.id.region) TextView regionText;
-    @BindView(R.id.positiveDrone) Button positiveDrone;
-    @BindView(R.id.negativeDrone) Button negativeDrone;
-    @BindView(R.id.cancelDrone) Button cancelDrone;
+    View droneMenu;
+    TextView regionText;
+    Button positiveDrone;
+    Button negativeDrone;
+    Button cancelDrone;
 
-    @BindView(R.id.sonarButton) View sonarButton;
-    @BindView(R.id.sonarMenu) View sonarMenu;
+    View sonarButton;
+    View sonarMenu;
 
-    @BindView(R.id.sonarRow) TextView sonarRow;
-    @BindView(R.id.sonarColumn) TextView sonarColumn;
-    @BindView(R.id.sonarSector) TextView sonarSector;
+    TextView sonarRow;
+    TextView sonarColumn;
+    TextView sonarSector;
 
-    @BindView(R.id.confirmSonar) Button confirmSonar;
-    @BindView(R.id.cancelSonar) Button cancelSonar;
-    @BindView(R.id.changeSonar) Button toggleSonarMode;
-
+    Button confirmSonar;
+    Button cancelSonar;
+    Button toggleSonarMode;
 
     @Nullable
-    @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.role_radar, container, false);
         View view = rootView.findViewById(R.id.movementHistory);
-        ButterKnife.bind(this, rootView);
+
+        movementHistory = rootView.findViewById(R.id.movementHistory);
+        silenceButton = rootView.findViewById(R.id.silenceButton);
+        surfaceButton = rootView.findViewById(R.id.surfaceButton);
+
+        mineButton = rootView.findViewById(R.id.mineButton);
+        torpedoButton = rootView.findViewById(R.id.torpedoButton);
+        droneButton = rootView.findViewById(R.id.droneButton);
+
+        compass = rootView.findViewById(R.id.compass);
+        torpedoMenu = rootView.findViewById(R.id.torpedoMenu);
+        confirmTorpedo = rootView.findViewById(R.id.confirmTorpedo);
+        cancelTorpedo = rootView.findViewById(R.id.cancelTorpedo);
+
+        droneMenu = rootView.findViewById(R.id.droneMenu);
+        regionText = rootView.findViewById(R.id.region);
+        positiveDrone = rootView.findViewById(R.id.positiveDrone);
+        negativeDrone = rootView.findViewById(R.id.negativeDrone);
+        cancelDrone = rootView.findViewById(R.id.cancelDrone);
+
+        sonarButton = rootView.findViewById(R.id.sonarButton);
+        sonarMenu = rootView.findViewById(R.id.sonarMenu);
+
+        sonarRow = rootView.findViewById(R.id.sonarRow);
+        sonarColumn = rootView.findViewById(R.id.sonarColumn);
+        sonarSector = rootView.findViewById(R.id.sonarSector);
+
+        confirmSonar = rootView.findViewById(R.id.confirmSonar);
+        cancelSonar = rootView.findViewById(R.id.cancelSonar);
+        toggleSonarMode = rootView.findViewById(R.id.changeSonar);
+
+        rootView.findViewById(R.id.northButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                appendText("N");
+                updateMap(GridPoint.NORTH);
+            }
+        });
+
+        rootView.findViewById(R.id.eastButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                appendText("N");
+                updateMap(GridPoint.EAST);
+            }
+        });
+
+        rootView.findViewById(R.id.southButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                appendText("N");
+                updateMap(GridPoint.SOUTH);
+            }
+        });
+
+        rootView.findViewById(R.id.westButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                appendText("N");
+                updateMap(GridPoint.WEST);
+            }
+        });
+
+        rootView.findViewById(R.id.mineButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                appendText("mine");
+                gameState.addMine();
+                drawer.draw();
+            }
+        });
+
+        rootView.findViewById(R.id.silenceButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                appendText("silence");
+                gameState.addSilence();
+                drawer.draw();
+            }
+        });
+
+        rootView.findViewById(R.id.surfaceButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                appendText("surfaced");
+                gameState.surface();
+                drawer.draw();
+            }
+        });
+
+        rootView.findViewById(R.id.torpedoButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showTorpedoMenu();
+
+                // target the center of the board at first and allow user to move it around.
+                gameState.placingTorpedo = true;
+                gameState.placingTorpedoRow = gameState.radar.map.rows / 2;
+                gameState.placingTorpedoCol = gameState.radar.map.cols / 2;
+
+                drawer.draw();
+            }
+        });
+
+        rootView.findViewById(R.id.confirmTorpedo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                appendText("torpedo");
+                showCompass();
+
+                gameState.addTorpedo();
+                gameState.placingTorpedo = false;
+
+                updateMap(GridPoint.TORPEDO);
+            }
+        });
+
+        rootView.findViewById(R.id.cancelTorpedo).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCompass();
+
+                gameState.placingTorpedo = false;
+                drawer.draw();
+            }
+        });
+
+        rootView.findViewById(R.id.droneButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDroneMenu();
+            }
+        });
+
+        rootView.findViewById(R.id.positiveDrone).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addDroneResult(true);
+            }
+        });
+
+        rootView.findViewById(R.id.negativeDrone).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addDroneResult(false);
+            }
+        });
+
+        rootView.findViewById(R.id.cancelDrone).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideDroneMenu();
+            }
+        });
+
+        rootView.findViewById(R.id.sonarButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sonarButtonClick();
+            }
+        });
+
+        rootView.findViewById(R.id.changeSonar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                changeSonar();
+            }
+        });
+
+        rootView.findViewById(R.id.confirmSonar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                confirmSonar();
+            }
+        });
+
+        rootView.findViewById(R.id.cancelSonar).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelSonar();
+            }
+        });
+
         return rootView;
     }
 
@@ -123,97 +296,9 @@ public class RadarRoleFragment extends RoleFragment {
         }
     }
 
-    @OnClick({R.id.northButton})
-    void northButtonClick() {
-        appendText("N");
-        updateMap(GridPoint.NORTH);
-    }
-    @OnClick({R.id.eastButton})
-    void eastButtonClick() {
-        appendText("E");
-        updateMap(GridPoint.EAST);
-    }
-    @OnClick({R.id.southButton})
-    void southButtonClick() {
-        appendText("S");
-        updateMap(GridPoint.SOUTH);
-    }
-    @OnClick({R.id.westButton})
-    void westButtonClick() {
-        appendText("W");
-        updateMap(GridPoint.WEST);
-    }
-
-    @OnClick({R.id.mineButton})
-    void mineButtonClick() {
-        appendText("mine");
-        gameState.addMine();
-        drawer.draw();
-    }
-
-    @OnClick({R.id.silenceButton})
-    void silence() {
-        appendText("silence");
-        gameState.addSilence();
-        drawer.draw();
-    }
-
-    @OnClick({R.id.surfaceButton})
-    void surface() {
-        appendText("surfaced");
-        gameState.surface();
-        drawer.draw();
-    }
-
-    @OnClick({R.id.torpedoButton})
-    void torpedoButtonClick() {
-        showTorpedoMenu();
-
-        // target the center of the board at first and allow user to move it around.
-        gameState.placingTorpedo = true;
-        gameState.placingTorpedoRow = gameState.radar.map.rows / 2;
-        gameState.placingTorpedoCol = gameState.radar.map.cols / 2;
-
-        drawer.draw();
-    }
-
-    @OnClick({R.id.confirmTorpedo})
-    void confirmTorpedo() {
-        appendText("torpedo");
-        showCompass();
-
-        gameState.addTorpedo();
-        gameState.placingTorpedo = false;
-
-        updateMap(GridPoint.TORPEDO);
-    }
-
-    @OnClick({R.id.cancelTorpedo})
-    void cancelTorpedo() {
-        showCompass();
-
-        gameState.placingTorpedo = false;
-        drawer.draw();
-    }
-
     void showTorpedoMenu() {
         closeAllMenus();
         torpedoMenu.setVisibility(View.VISIBLE);
-    }
-
-    @OnClick({R.id.droneButton})
-    void droneButtonClick() {
-        showDroneMenu();
-    }
-
-    @OnClick({R.id.positiveDrone})
-    void positiveDroneResult() {
-        addDroneResult(true);
-    }
-
-    @OnClick({R.id.negativeDrone})
-    void negativeDroneResult() {
-        addDroneResult(false);
     }
 
     void addDroneResult(boolean result) {
@@ -236,7 +321,6 @@ public class RadarRoleFragment extends RoleFragment {
         hideDroneMenu();
     }
 
-    @OnClick({R.id.cancelDrone})
     void hideDroneMenu() {
         showCompass();
         gameState.isAskingDrone = false;
@@ -257,7 +341,6 @@ public class RadarRoleFragment extends RoleFragment {
         negativeDrone.setEnabled(false);
     }
 
-    @OnClick({R.id.sonarButton})
     void sonarButtonClick() {
         closeAllMenus();
 
@@ -275,7 +358,6 @@ public class RadarRoleFragment extends RoleFragment {
         updateSonarMenu();
     }
 
-    @OnClick({R.id.changeSonar})
     void changeSonar() {
         gameState.sonarToggleMode();
         updateSonarMenu();
@@ -315,14 +397,12 @@ public class RadarRoleFragment extends RoleFragment {
         strikeThrough.setPaintFlags(strikeThrough.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
     }
 
-    @OnClick({R.id.confirmSonar})
     void confirmSonar() {
         gameState.sonarConfirm();
         showCompass();
         drawer.draw();
     }
 
-    @OnClick({R.id.cancelSonar})
     void cancelSonar() {
         gameState.sonarCancel();
         showCompass();

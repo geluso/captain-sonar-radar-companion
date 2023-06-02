@@ -1,22 +1,18 @@
 package org.mooncolony.moonmayor.captainsonarradarcompanion;
 
-import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.*;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
+
 import org.mooncolony.moonmayor.captainsonarradarcompanion.drawing.MapDrawer;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.maps.MarineMap;
 import org.mooncolony.moonmayor.captainsonarradarcompanion.roles.RolePagerAdapter;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnTouch;
 
 public class MainActivity extends AppCompatActivity {
   private ViewPager mViewPager;
@@ -25,40 +21,39 @@ public class MainActivity extends AppCompatActivity {
   GameState gameState;
   MapDrawer drawer;
 
-  @BindView(R.id.mapView) ImageView mapView;
+  ImageView mapView;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    // wait to bind butterknife until after view pager is attached
-    ButterKnife.bind(this);
-
     // initialize the map
     gameState = new GameState();
+    mapView = findViewById(R.id.mapView);
     this.drawer = new MapDrawer(this, mapView, gameState);
 
     mRolePagerAdapter = new RolePagerAdapter(getSupportFragmentManager(), gameState, this.drawer);
     mViewPager = (ViewPager) findViewById(R.id.container);
     mViewPager.setAdapter(mRolePagerAdapter);
 
-  }
+    mapView.setOnTouchListener(new View.OnTouchListener() {
+      @Override
+      public boolean onTouch(View v, MotionEvent event) {
+        int action = event.getAction();
+        if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_MOVE || action == MotionEvent.ACTION_DOWN) {
+          float x = event.getX();
+          float y = event.getY();
 
-  //TODO: update to new layout
-  @OnTouch({R.id.mapView})
-  boolean mapTouch(MotionEvent event) {
-    int action = event.getAction();
-    if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_MOVE || action == MotionEvent.ACTION_DOWN) {
-      float x = event.getX();
-      float y = event.getY();
+          int row = drawer.yToRow(y);
+          int col = drawer.xToCol(x);
 
-      int row = drawer.yToRow(y);
-      int col = drawer.xToCol(x);
+          mRolePagerAdapter.dispatchTouch(row, col);
+        }
+        return true;
+      }
+    });
 
-      mRolePagerAdapter.dispatchTouch(row, col);
-    }
-    return true;
   }
 
   @Override
@@ -80,11 +75,6 @@ public class MainActivity extends AppCompatActivity {
       case R.id.reset_button:
         resetGame();
         break;
-
-        // disabling engineer activity.
-//      case R.id.engineer_button:
-//        startActivity(new Intent(MainActivity.this,EngineerActivity.class));
-//        break;
 
       case R.id.alpha_real_time: position = 0;
         break;

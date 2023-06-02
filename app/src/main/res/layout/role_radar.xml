@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -62,13 +64,29 @@
                     android:id="@+id/torpedoButton"/>
             </LinearLayout>
 
-            <include
-                android:id="@+id/compass"
+            <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="2"
-                android:layout_margin="4dp"
-                layout="@layout/compass" />
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/radarRole"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:maxLines="3"
+                    android:text="Enter Enemy Actions"
+                    android:textColor="#fafafa"
+                    android:textSize="24sp" />
+
+                <include
+                    android:id="@+id/compass"
+                    layout="@layout/compass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
             <include
                 android:id="@+id/torpedoMenu"
